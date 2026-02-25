@@ -91,6 +91,20 @@
     .kando-dot { font-size:0.7em; color:var(--muted); }
     .ai-comment { background:#f8faff; border-left:4px solid var(--primary); border-radius:8px; padding:16px 18px; margin-top:16px; font-size:0.93em; line-height:1.75; white-space:pre-wrap; }
 
+    /* 感動の7類型注釈 */
+    .kando-note { background:#f0f7ff; border-radius:10px; padding:16px 18px; margin-top:16px; border:1px solid #c7dcf7; }
+    .kando-note-intro { font-size:0.92em; line-height:1.75; margin-bottom:10px; }
+    details.kando-expand summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:6px; font-size:0.88em; color:var(--primary); font-weight:600; padding:4px 0; user-select:none; }
+    details.kando-expand summary::-webkit-details-marker { display:none; }
+    details.kando-expand summary .expand-icon { font-size:0.8em; transition:transform 0.2s; display:inline-block; }
+    details.kando-expand[open] summary .expand-icon { transform:rotate(90deg); }
+    .kando-types { margin-top:14px; display:grid; gap:10px; }
+    .kando-type-item { background:white; border-radius:8px; padding:12px 14px; border-left:3px solid var(--primary); }
+    .kando-type-item h4 { font-size:0.9em; font-weight:700; color:var(--primary); margin-bottom:5px; }
+    .kando-type-item p { font-size:0.87em; line-height:1.75; color:var(--text); }
+    .kando-citation { margin-top:14px; font-size:0.8em; color:var(--muted); line-height:1.7; border-top:1px solid var(--border); padding-top:10px; }
+    .kando-citation a { color:var(--primary); text-decoration:none; word-break:break-all; }
+
     /* 口コミ一覧 */
     .filter-bar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; align-items:center; }
     .filter-bar select { padding:6px 10px; border:1px solid var(--border); border-radius:6px; font-size:0.88em; }
@@ -185,6 +199,43 @@
     <span class="kando-score">0.4</span>
     <span class="kando-rate">13.9%</span>
   </div></div>
+</div>
+<div class="kando-note">
+  <p class="kando-note-intro">テーマパークは感動を提供する場。感動には７種類あり、テーマパークではこれらを組み合わせて感動を生み出している。</p>
+  <details class="kando-expand">
+    <summary><span class="expand-icon">▶</span> 感動の７類型とは？（クリックして展開）</summary>
+    <div class="kando-types">
+      <div class="kando-type-item">
+        <h4>① しきい値突破型</h4>
+        <p>いわゆる消費者の基準（しきい値）を真正面から超えるものです。感動で一番イメージされることではないでしょうか。「過去に食べたものより美味しい」、「他のどの体験よりも楽しい」などです。五感を刺激して体験価値を上げたり、いろいろな手段がありますが、シンプルに本業に力を入れることでもあります。消費者の価値基準が高まってきている現代では、なかなかしきい値を突破しないことが多いですね。期待値が高いので、期待どおりだったという商品・サービスにあふれているように思います。そして、それでは感動が生まれません。非合理的のように思われるかもしれませんが、とことん突き抜ける覚悟が必要です。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>② 意外性型</h4>
+        <p>テーマパークだと、スケジュールに書いていない時間や場所でキャラクターが登場したり、アトラクションが予想外の動きをしたりする。こうした「予測の裏切り」がもたらす感動です。即効性があるので、僕がオススメするのはこの意外性型が多いです。サプライズもイメージしやすいですが、「消費者がまったく期待していない部分（裏側の対応や、ちょっとした気遣いなど）」に圧倒的な力を注ぐと、この意外性は強烈なフックになります。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>③ 共鳴・共感型</h4>
+        <p>ディズニーランドのパレードやショーの登場人物に自分を重ね合わせる。辛い境遇や困難を乗り越える姿に涙する。これが共鳴の力です。いかに相手に「これは自分のことだ」と自分事に感じてもらうかが大事です。この記事の冒頭に「AIが答える」とか書いたのも、自分事と感じてもらうためです。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>④ 救済型</h4>
+        <p>ディズニーランドで例えると、迷子対応、ポップコーンをこぼしてしまったときのリフィルや清掃が該当します。不安なとき、困ったときに助けてくれたことは記憶に残ります。上級者はあえて不便な状況を残して、スタッフが手を差し伸べやすい環境を作ったりします。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>⑤ 崇高型</h4>
+        <p>世界的スターであるミッキーマウスに会える。シンデレラ城など圧倒的な造形美。日常では絶対にお目にかかれない「憧れ」や「神聖さ」に触れたときの、畏敬の念に近い感動です。ブランドのカリスマ性だったり、歴史の深さなども該当しますね。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>⑥ 参加型</h4>
+        <p>感動は、外側よりも内側から参加した方が何倍にも増幅します。カチューシャなど一緒に着けたりすることは、その準備ですね。一人で達成するよりも、チームで達成した方が感動したという経験のある方もいるのではないでしょうか？</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>⑦ 成長型</h4>
+        <p>以前遊びに来たときの身長では乗れなかったアトラクションに、大きくなって乗れるようになったとか。消費者の成長と共に歩み、人生のフェーズに合わせて価値を提供し続ける設計がなされています。「できた」という自己効力感の積み重ねは心が動きますね。</p>
+      </div>
+    </div>
+    <p class="kando-citation">引用：<a href="https://x.com/smileguardian/status/2026050568658341967" target="_blank">https://x.com/smileguardian/status/2026050568658341967</a>　株式会社スマイルガーディアン代表取締役　清水群　※ディズニーランドとUSJ出身のテーマパークコンサルタント</p>
+  </details>
 </div>
 <div class="ai-comment">💬 コンサルタントコメント
 
