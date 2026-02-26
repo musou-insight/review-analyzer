@@ -5,9 +5,10 @@ from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 
 
-async def scrape_tabelog(url: str) -> list[dict]:
-    """食べログから口コミを全ページ取得する（10件/ページ）。"""
-    print("🍽️  食べログ スクレイピング開始...")
+async def scrape_tabelog(url: str, max_reviews: int | None = None) -> list[dict]:
+    """食べログから口コミを取得する。max_reviews 指定時はその件数で打ち切る。"""
+    limit_msg = f"（上限 {max_reviews} 件）" if max_reviews else "（全件）"
+    print(f"🍽️  食べログ スクレイピング開始... {limit_msg}")
     reviews = []
 
     # 口コミ一覧ページの URL に変換（末尾が / の場合も対応）
@@ -45,6 +46,11 @@ async def scrape_tabelog(url: str) -> list[dict]:
 
             reviews.extend(new_reviews)
             print(f"    📥 ページ {page_num}: {len(new_reviews)}件 / 累計 {len(reviews)}件")
+
+            if max_reviews and len(reviews) >= max_reviews:
+                reviews = reviews[:max_reviews]
+                print(f"  ✅ 取得上限 {max_reviews} 件に到達")
+                break
 
             # 次ページリンクを確認
             next_btn = soup.find("a", class_=re.compile(r"c-pagination__arrow--next|next"))

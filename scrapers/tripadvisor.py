@@ -5,9 +5,10 @@ from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 
 
-async def scrape_tripadvisor(url: str) -> list[dict]:
-    """TripAdvisor から口コミを全ページ取得する（15件/ページ）。"""
-    print("✈️  TripAdvisor スクレイピング開始...")
+async def scrape_tripadvisor(url: str, max_reviews: int | None = None) -> list[dict]:
+    """TripAdvisor から口コミを取得する。max_reviews 指定時はその件数で打ち切る。"""
+    limit_msg = f"（上限 {max_reviews} 件）" if max_reviews else "（全件）"
+    print(f"✈️  TripAdvisor スクレイピング開始... {limit_msg}")
     reviews = []
 
     async with async_playwright() as p:
@@ -68,6 +69,11 @@ async def scrape_tripadvisor(url: str) -> list[dict]:
 
             reviews.extend(new_reviews)
             print(f"    📥 ページ {page_num}: {len(new_reviews)}件 / 累計 {len(reviews)}件")
+
+            if max_reviews and len(reviews) >= max_reviews:
+                reviews = reviews[:max_reviews]
+                print(f"  ✅ 取得上限 {max_reviews} 件に到達")
+                break
 
             # 次ページ確認
             next_btn = soup.find("a", attrs={"data-page-number": str(page_num + 1)})

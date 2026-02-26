@@ -5,9 +5,10 @@ from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
 
 
-async def scrape_google_maps(url: str) -> list[dict]:
-    """Google マップから口コミを全件取得する。"""
-    print("🗺️  Google マップ スクレイピング開始...")
+async def scrape_google_maps(url: str, max_reviews: int | None = None) -> list[dict]:
+    """Google マップから口コミを取得する。max_reviews 指定時はその件数で打ち切る。"""
+    limit_msg = f"（上限 {max_reviews} 件）" if max_reviews else "（全件）"
+    print(f"🗺️  Google マップ スクレイピング開始... {limit_msg}")
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -144,6 +145,10 @@ async def scrape_google_maps(url: str) -> list[dict]:
             if (i + 1) % 10 == 0 or count != last_count:
                 print(f"    📥 取得件数: {count}件（試行 {i+1}）")
 
+            if max_reviews and count >= max_reviews:
+                print(f"  ✅ 取得上限 {max_reviews} 件に到達（試行 {i+1}）")
+                break
+
             if count <= last_count:
                 stuck += 1
                 if stuck >= 8:
@@ -155,6 +160,8 @@ async def scrape_google_maps(url: str) -> list[dict]:
 
         soup = BeautifulSoup(await page.content(), "html.parser")
         reviews = _parse_google_reviews(soup)
+        if max_reviews:
+            reviews = reviews[:max_reviews]
         await browser.close()
 
     print(f"  ✅ Google マップ: {len(reviews)}件取得")
