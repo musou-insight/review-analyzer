@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>店舗レビュー分析 一覧</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic UI", sans-serif;
+      background: #f0f2f5;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #2d3561;
+    }
+    header p {
+      margin-top: 0.4rem;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.25rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.4rem 1.6rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.14); }
+    .card-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2d3561;
+    }
+    .card-time {
+      font-size: 0.8rem;
+      color: #888;
+    }
+    .card-link {
+      display: inline-block;
+      margin-top: 0.4rem;
+      padding: 0.45rem 1rem;
+      background: #4f46e5;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      align-self: flex-start;
+      transition: background 0.2s;
+    }
+    .card-link:hover { background: #4338ca; }
+    .empty { text-align: center; color: #999; padding: 2rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏪 店舗レビュー分析 一覧</h1>
+    <p>各店舗のAI分析レポートをまとめています</p>
+  </header>
+  <div class="grid">
+    <div class="card">
+      <div class="card-name">FUTURE TRAIN KYOTO DINER & CAFE</div>
+      <div class="card-time">更新: 2026年02月26日 12:00</div>
+      <a class="card-link" href="/FUTURE_TRAIN_KYOTO_DINER_&_CAFE/report.html" target="_blank">レポートを開く →</a>
+    </div>
+    <div class="card">
+      <div class="card-name">京都鉄道博物館</div>
+      <div class="card-time">更新: 2026年02月26日 11:58</div>
+      <a class="card-link" href="/京都鉄道博物館/report.html" target="_blank">レポートを開く →</a>
+    </div>
+    <div class="card">
+      <div class="card-name">東京ディズニーランド</div>
+      <div class="card-time">更新: 2026年02月26日 11:51</div>
+      <a class="card-link" href="/東京ディズニーランド/report.html" target="_blank">レポートを開く →</a>
+    </div>
+  </div>
+</body>
+</html>

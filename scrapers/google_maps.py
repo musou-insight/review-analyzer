@@ -1,8 +1,24 @@
 import asyncio
 import random
 import re
+from urllib.parse import urlparse, unquote
 from playwright.async_api import async_playwright
 from bs4 import BeautifulSoup
+
+
+def _extract_place_name(url: str) -> str:
+    """Google マップ URL から場所名を抽出する。"""
+    try:
+        path = urlparse(url).path  # /maps/place/東京ディズニーランド/@...
+        parts = [p for p in path.split("/") if p]
+        # parts: ['maps', 'place', 'encoded_name', '@lat,...', ...]
+        if len(parts) >= 3 and parts[1] == "place":
+            name = unquote(parts[2])
+            if name and not name.startswith("@"):
+                return name
+    except Exception:
+        pass
+    return ""
 
 
 async def scrape_google_maps(url: str, max_reviews: int | None = None) -> list[dict]:
@@ -37,8 +53,26 @@ async def scrape_google_maps(url: str, max_reviews: int | None = None) -> list[d
         """)
         page = await context.new_page()
 
-        await page.goto(url, wait_until="domcontentloaded", timeout=60000)
-        await asyncio.sleep(3)
+        # URL から場所名を抽出し、検索ボックス経由で開く
+        # （直接 URL を開くとヘッドレス検知でリダイレクトされ別の場所になるため）
+        place_name = _extract_place_name(url)
+        if place_name:
+            print(f"  🔍 検索ワード: {place_name}")
+            await page.goto("https://www.google.com/maps", wait_until="domcontentloaded", timeout=60000)
+            await asyncio.sleep(3)
+            search_box = await page.query_selector('input[name="q"]')
+            if search_box:
+                await search_box.fill(place_name)
+                await asyncio.sleep(1)
+                await search_box.press("Enter")
+                await asyncio.sleep(5)
+            else:
+                # フォールバック: 直接 URL
+                await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+                await asyncio.sleep(3)
+        else:
+            await page.goto(url, wait_until="domcontentloaded", timeout=60000)
+            await asyncio.sleep(3)
 
         # Cookie 同意ダイアログを閉じる
         for selector in ['button[aria-label*="同意"]', 'button[aria-label*="Accept"]']:
@@ -209,11 +243,13 @@ def _parse_google_reviews(soup: BeautifulSoup) -> list[dict]:
                 continue
             seen.add(text)
 
-            # 評点（aria-label="星5つ中4つ" のような形式）
+            # 評点（"5 つ星" / "4 つ星のうち..." / "4 out of 5 stars" 等）
             rating = 0.0
             for el in block.find_all(attrs={"aria-label": True}):
                 label = el.get("aria-label", "")
-                m = re.search(r"(\d)(?:\.\d)?(?:つ|星| star)", label)
+                m = re.search(r"(\d+(?:\.\d+)?)\s*つ星", label)
+                if not m:
+                    m = re.search(r"(\d+(?:\.\d+)?)\s+star", label, re.IGNORECASE)
                 if m:
                     rating = float(m.group(1))
                     break
