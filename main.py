@@ -5,6 +5,7 @@ import argparse
 import asyncio
 import json
 import os
+import subprocess
 import sys
 
 import nest_asyncio
@@ -147,6 +148,13 @@ def main() -> None:
     from reporter import generate_report
 
     generate_report(args.name, analysis, output_path=args.output)
+
+    # ---- Netlify へ自動デプロイ ----
+    print("\n📤 Netlify へ自動デプロイ中...")
+    share_sh = os.path.join(os.path.dirname(os.path.abspath(__file__)), "share.sh")
+    result = subprocess.run(["bash", share_sh, args.name], capture_output=False)
+    if result.returncode != 0:
+        print("⚠️ デプロイに失敗しました。手動で bash share.sh を実行してください。")
 
 
 if __name__ == "__main__":

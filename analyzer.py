@@ -156,23 +156,39 @@ def _extract_keywords(reviews: list[dict]) -> list[dict]:
 def _analyze_experience(reviews: list[dict], keywords: list[dict]) -> dict:
     print("  ✨ 顧客体験価値を分析中...")
     total = len(reviews)
-    sample_text = "\n".join(f"{r['text'][:150]}" for r in reviews[:30])
-    keyword_summary = "、".join(f"{k['word']}({k['count']}件)" for k in keywords[:20])
+
+    # ポジ・ネガキーワードを分離
+    pos_kws = [k for k in keywords if k.get("sentiment") == "positive"]
+    neg_kws = [k for k in keywords if k.get("sentiment") == "negative"]
+    pos_summary = "、".join(f"{k['word']}({k['count']}件)" for k in pos_kws[:15])
+    neg_summary = "、".join(f"{k['word']}({k['count']}件)" for k in neg_kws[:15])
+
+    # 低評価・ネガティブ口コミを優先してサンプルに含める
+    low_rated = [r for r in reviews if r.get("rating") is not None and float(r.get("rating", 5)) <= 3]
+    high_rated = [r for r in reviews if r not in low_rated]
+    # 低評価を最大15件 + 高評価から15件
+    sample = low_rated[:15] + high_rated[:15]
+    sample_text = "\n".join(f"[★{r.get('rating','?')}] {r['text'][:200]}" for r in sample)
 
     prompt = f"""以下の飲食店口コミデータを分析し、客観的なデータに基づいて記述してください。
 
 【基本情報】総口コミ数:{total}件
-【頻出キーワード Top20】{keyword_summary}
-【代表的な口コミ】{sample_text}
+【ポジティブキーワード Top15】{pos_summary}
+【ネガティブキーワード Top15】{neg_summary}
+【代表的な口コミ（低評価優先サンプル）】
+{sample_text}
 
 ## 記述ルール（厳守）
 - 主観的な評価語（「強い」「優れている」「課題」「人気」「支持されている」など）は使わない
-- 必ずロ コミ件数・キーワード出現件数・割合などの数値を根拠として示す
+- 必ず口コミ件数・キーワード出現件数・割合などの数値を根拠として示す
   - 良い例：「〇〇を評価する声が△件みられる」「□□というキーワードが△件の口コミに出現している」
   - 良い例：「〇〇を指摘する声が△件あり、改善することで顧客体験が向上する可能性がある」
   - 悪い例：「〇〇が高く評価されている」「〇〇が課題です」
 - headline は「〇〇の声が多い飲食体験」など、データから言える事実ベースの表現にする
 - summary は口コミ全体の傾向を件数・割合ベースで要約する（150文字程度）
+- strengths は主要なポジティブ評価を2〜3件にまとめる（網羅的にしなくてよい）
+- weaknesses は改善の余地がある点を網羅的に列挙する（件数が少なくても改善価値のある指摘は必ず含める）
+  - 例：アクセス・わかりにくさ・待ち時間・価格・情報不足なども対象
 - strengths の description は「〇〇というキーワードが△件出現」「〇〇を評価する口コミが△件」など件数を含める
 - weaknesses の description は「〇〇を指摘する声が△件みられる」など件数を含める
 

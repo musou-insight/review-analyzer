@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>串カツ田中 梅小路店 口コミ分析レポート</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --primary: #1a73e8;
+      --bg: #f0f4f9;
+      --card: #ffffff;
+      --border: #e0e0e0;
+      --text: #2c2c2c;
+      --muted: #666;
+      --pos: #0d6e3b; --pos-bg: #d1fae5;
+      --neg: #991b1b; --neg-bg: #fee2e2;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Segoe UI", sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 28px 16px; }
+    .section { background: var(--card); border-radius: 14px; padding: 28px; margin-bottom: 24px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+    h1 { font-size: 1.9em; font-weight: 700; }
+    h2 { font-size: 1.25em; font-weight: 700; padding-bottom: 10px; border-bottom: 2px solid var(--primary); margin-bottom: 18px; color: var(--primary); }
+    h3 { font-size: 1.05em; font-weight: 600; margin-bottom: 6px; }
+    .meta { color: var(--muted); font-size: 0.88em; margin-top: 4px; margin-bottom: 20px; }
+
+    /* サイトカード */
+    .site-cards { display: flex; gap: 14px; flex-wrap: wrap; }
+    .site-card { flex:1; min-width:140px; border-radius:10px; padding:14px 18px; color:white; }
+    .site-card .s-label { font-size:0.82em; opacity:0.9; }
+    .site-card .s-count { font-size:2.1em; font-weight:700; line-height:1.2; }
+
+    /* 体験価値 */
+    .headline { font-size:1.3em; font-weight:700; color:var(--primary); margin:10px 0 6px; }
+    .summary-text { font-size:0.97em; margin-bottom:16px; }
+    .value-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px; }
+    @media(max-width:600px){.value-grid{grid-template-columns:1fr;}}
+    .value-box { border-radius:10px; padding:14px 16px; }
+    .value-box.positive { background:var(--pos-bg); border-left:4px solid var(--pos); }
+    .value-box.negative { background:var(--neg-bg); border-left:4px solid var(--neg); }
+    .value-box.positive h3 { color:var(--pos); }
+    .value-box.negative h3 { color:var(--neg); }
+    .value-desc { font-size:0.9em; margin-top:4px; }
+    .target-box { background:#eff6ff; border-radius:10px; padding:14px 18px; margin-top:10px; }
+    .target-box p { font-size:0.92em; margin-top:4px; }
+
+    /* キーワードテーブル共通 */
+    .kw-legend { display:flex; gap:16px; margin-bottom:12px; flex-wrap:wrap; }
+    .legend-item { display:flex; align-items:center; gap:5px; font-size:0.85em; color:var(--muted); }
+    .legend-dot { display:inline-block; width:12px; height:12px; border-radius:50%; }
+    .kw-table { width:100%; border-collapse:collapse; font-size:0.92em; }
+    .kw-table thead th { text-align:left; padding:8px 10px; background:#f8faff; border-bottom:2px solid var(--border); font-size:0.85em; color:var(--muted); }
+    .kw-table tbody tr:hover { background:#f8faff; }
+    .kw-table td { padding:7px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .kw-rank { width:36px; color:var(--muted); font-size:0.85em; text-align:center; }
+    .kw-word { font-weight:600; min-width:90px; }
+    .kw-badge { width:55px; }
+    .kw-bar-cell { width:100%; }
+    .kw-bar-wrap { background:#f1f5f9; border-radius:4px; height:14px; width:100%; }
+    .kw-bar { height:14px; border-radius:4px; }
+    .kw-count { width:55px; text-align:right; color:var(--muted); font-size:0.88em; white-space:nowrap; }
+
+    /* 時系列キーワード */
+    .ts-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    @media(max-width:700px){.ts-grid{grid-template-columns:1fr;}}
+    .ts-panel h3 { font-size:1em; margin-bottom:10px; padding:6px 10px; border-radius:6px; }
+    .ts-panel.recent h3 { background:#dbeafe; color:#1d4ed8; }
+    .ts-panel.older  h3 { background:#f3f4f6; color:#374151; }
+    .change-up   { color:#059669; font-weight:700; }
+    .change-down { color:#dc2626; font-weight:700; }
+    .change-zero { color:var(--muted); }
+    .ts-change-table { width:100%; border-collapse:collapse; font-size:0.88em; margin-top:16px; }
+    .ts-change-table th { background:#f8faff; padding:7px 10px; border-bottom:2px solid var(--border); text-align:left; color:var(--muted); font-size:0.83em; }
+    .ts-change-table td { padding:6px 10px; border-bottom:1px solid var(--border); vertical-align:middle; }
+    .ts-count-cell { text-align:center; font-size:0.88em; }
+
+    /* 感動の7類型注釈 */
+    .kando-note { background:#f0f7ff; border-radius:10px; padding:16px 18px; margin-top:16px; border:1px solid #c7dcf7; }
+    .kando-note-intro { font-size:0.92em; line-height:1.75; margin-bottom:10px; }
+    details.kando-expand summary { cursor:pointer; list-style:none; display:inline-flex; align-items:center; gap:6px; font-size:0.88em; color:var(--primary); font-weight:600; padding:4px 0; user-select:none; }
+    details.kando-expand summary::-webkit-details-marker { display:none; }
+    details.kando-expand summary .expand-icon { font-size:0.8em; transition:transform 0.2s; display:inline-block; }
+    details.kando-expand[open] summary .expand-icon { transform:rotate(90deg); }
+    .kando-types { margin-top:14px; display:grid; gap:10px; }
+    .kando-type-item { background:white; border-radius:8px; padding:12px 14px; border-left:3px solid var(--primary); }
+    .kando-type-item h4 { font-size:0.9em; font-weight:700; color:var(--primary); margin-bottom:5px; }
+    .kando-type-item p { font-size:0.87em; line-height:1.75; color:var(--text); }
+    .kando-citation { margin-top:14px; font-size:0.8em; color:var(--muted); line-height:1.7; border-top:1px solid var(--border); padding-top:10px; }
+    .kando-citation a { color:var(--primary); text-decoration:none; word-break:break-all; }
+
+    /* 感動レーダー */
+    .kando-layout { display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; }
+    @media(max-width:700px){.kando-layout{grid-template-columns:1fr;}}
+    .kando-chart-wrap { position:relative; height:360px; }
+    .kando-detail { display:grid; gap:8px; }
+    .kando-row { display:flex; align-items:center; gap:8px; padding:6px 10px; border-radius:8px; background:#f8faff; }
+    .kando-row.strength { background:#dbeafe; }
+    .kando-row.weakness { background:#fee2e2; }
+    .kando-label { font-size:0.88em; font-weight:600; min-width:110px; }
+    .kando-bar-wrap { flex:1; background:#e5e7eb; border-radius:4px; height:10px; }
+    .kando-bar { height:10px; border-radius:4px; background:var(--primary); }
+    .kando-score { font-size:0.85em; color:var(--muted); width:32px; text-align:right; }
+    .kando-rate { font-size:0.78em; color:var(--muted); width:55px; text-align:right; }
+    .kando-dot { font-size:0.7em; color:var(--muted); }
+    .ai-comment { background:#f8faff; border-left:4px solid var(--primary); border-radius:8px; padding:16px 18px; margin-top:16px; font-size:0.93em; line-height:1.75; white-space:pre-wrap; }
+
+    /* 口コミ一覧 */
+    .filter-bar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; align-items:center; }
+    .filter-bar select { padding:6px 10px; border:1px solid var(--border); border-radius:6px; font-size:0.88em; }
+    .filter-label { font-size:0.82em; color:var(--muted); }
+    #review-count { font-size:0.88em; color:var(--muted); margin-bottom:10px; }
+    #review-list { display:grid; gap:10px; }
+    .rc { border:1px solid var(--border); border-radius:8px; padding:12px 14px; }
+    .rc-meta { font-size:0.78em; color:var(--muted); margin-bottom:6px; }
+    .rc-text { font-size:0.91em; line-height:1.65; }
+    .badge { display:inline-block; padding:2px 8px; border-radius:10px; font-size:0.75em; background:#e8f0fe; color:var(--primary); margin-bottom:4px; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- ヘッダー -->
+  <div class="section">
+    <h1>📊 串カツ田中 梅小路店</h1>
+    <p class="meta">口コミ分析レポート ／ 収集日: 2026年02月26日 ／ 総口コミ数: 200件（直近3ヶ月: 200件 ／ それ以前: 0件）</p>
+    <div class="site-cards">
+    <div class="site-card" style="background:#4285F4;">
+      <div class="s-label">Google マップ</div>
+      <div class="s-count">200</div>
+    </div></div>
+  </div>
+
+  <!-- 顧客体験価値 -->
+  <div class="section">
+    <h2>顧客体験価値分析</h2>
+    
+    <p class="headline">「スタッフ対応と活気ある雰囲気を評価する声が多い飲食体験」</p>
+    <p class="summary-text">総口コミ数200件中、「雰囲気」(36件)、「元気」(32件)、「美味しい」(31件)が頻出する。スタッフの接客品質と店内の活気、料理の品質と価格に対する高い評価がうかがえる。特に子供連れへの配慮を評価する声も複数みられ、「また来たい」(11件)というリピート意向の高さにつながっている。一方で、料理提供時間や混雑状況に関する指摘も複数件みられる。</p>
+    <div class="value-grid"><div class="value-box positive"><h3>✅ 接客品質</h3><p class="value-desc">「元気」が32件、「親切」が13件、「笑顔」が8件、「丁寧」が7件、「明るい」が5件の口コミに出現しており、スタッフの接客品質を評価する声が多くみられる。特定のスタッフ名を挙げて感謝する口コミも複数件ある。</p></div><div class="value-box positive"><h3>✅ 店内の雰囲気と活気</h3><p class="value-desc">「雰囲気」が36件、「活気」が21件、「楽しい」が15件の口コミに出現しており、店内の雰囲気や活気が良いと感じる声が多くみられる。「明るい」が5件、「素敵」が8件の口コミにも出現している。</p></div><div class="value-box positive"><h3>✅ 料理の品質とコストパフォーマンス</h3><p class="value-desc">「美味しい」が31件、「最高」が24件の口コミに出現しており、料理の品質を評価する声が多くみられる。「安い」が5件、その他に「リーズナブル」という表現が複数件みられ、価格に対する満足度も高いことがうかがえる。</p></div><div class="value-box positive"><h3>✅ 家族向けサービスと高いリピート意向</h3><p class="value-desc">「また来たい」が11件、「また行きたい」が7件の口コミに出現しており、リピート意向が高いことがうかがえる。子供連れに対する配慮（じゃんけんサービス、たこ焼きサービス、ソフトクリーム作り、子供用の椅子など）を評価する口コミが複数件みられる。</p></div><div class="value-box negative"><h3>⚠️ 料理やドリンクの提供時間</h3><p class="value-desc">料理やドリンクの提供が遅いと感じる声が複数件みられる。「調理が必要なフードメニューは少し提供が遅い気もする」「飲み物やスピードメニューの提供が少し遅く感じた」「スマホで注文するのですが、出てくるまで少し時間がかかる時もあります」といった指摘がある。</p></div><div class="value-box negative"><h3>⚠️ 混雑状況と席の快適性</h3><p class="value-desc">混雑により待ち時間が発生するケースや、席の配置に関する指摘が複数件みられる。「ランチタイムを外しての来店で席を片付ける間だけ数分待ちました」「いつも混んでるイメ」「テーブル席はパイプ丸椅子というカジュアルな雰囲気」「テーブル席は、相席に近い感じでした」といった声がみられる。</p></div></div>
+  </div>
+
+  <!-- 感動の7類型レーダー -->
+  <div class="section">
+    <h2>感動の7類型分析</h2>
+    
+<p style="color:var(--muted);font-size:0.85em;margin-bottom:16px;">
+  分析口コミ数: 200件 ／ スコア: 0〜5点 ／ 出現率: 各類型に言及のある口コミの割合<br>
+  <span style="color:#1a73e8">💪 強み上位2類型</span>　<span style="color:#dc2626">⚠️ 弱み下位2類型</span>　<span style="color:var(--muted)">● 信頼度低（件数3件未満）</span>
+</p>
+<div class="kando-layout">
+  <div class="kando-chart-wrap">
+    <canvas id="kandoChart"></canvas>
+  </div>
+  <div class="kando-detail">
+  <div class="kando-row strength">
+    <span class="kando-label">①しきい値突破 💪</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:33%;"></div></div>
+    <span class="kando-score">1.7</span>
+    <span class="kando-rate">55.5%</span>
+  </div>
+  <div class="kando-row ">
+    <span class="kando-label">②意外性</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:15%;"></div></div>
+    <span class="kando-score">0.7</span>
+    <span class="kando-rate">26.5%</span>
+  </div>
+  <div class="kando-row weakness">
+    <span class="kando-label">③共鳴・共感 ⚠️</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:4%;"></div></div>
+    <span class="kando-score">0.2</span>
+    <span class="kando-rate">10.5%</span>
+  </div>
+  <div class="kando-row strength">
+    <span class="kando-label">④救済 💪</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:37%;"></div></div>
+    <span class="kando-score">1.9</span>
+    <span class="kando-rate">70.5%</span>
+  </div>
+  <div class="kando-row weakness">
+    <span class="kando-label">⑤崇高 ⚠️</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:1%;"></div></div>
+    <span class="kando-score">0.0</span>
+    <span class="kando-rate">2.5%</span>
+  </div>
+  <div class="kando-row ">
+    <span class="kando-label">⑥参加</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:11%;"></div></div>
+    <span class="kando-score">0.6</span>
+    <span class="kando-rate">20.5%</span>
+  </div>
+  <div class="kando-row ">
+    <span class="kando-label">⑦成長</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:19%;"></div></div>
+    <span class="kando-score">1.0</span>
+    <span class="kando-rate">37.5%</span>
+  </div></div>
+</div>
+<div class="kando-note">
+  <p class="kando-note-intro">テーマパークは感動を提供する場。感動には７種類あり、テーマパークではこれらを組み合わせて感動を生み出している。</p>
+  <details class="kando-expand">
+    <summary><span class="expand-icon">▶</span> 感動の７類型とは？（クリックして展開）</summary>
+    <div class="kando-types">
+      <div class="kando-type-item">
+        <h4>① しきい値突破型</h4>
+        <p>消費者の基準（しきい値）を真正面から超えるもの。「過去に食べたものより美味しい」、「他のどの体験よりも楽しい」など。五感を刺激して体験価値を上げたり、いろいろな手段がありますが、シンプルに本業に力を入れることでもある。消費者の価値基準が高まってきている現代では、なかなかしきい値を突破しないことが多くなっている。とことん突き抜ける覚悟が必要になります。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>② 意外性型</h4>
+        <p>スケジュールに書いていない時間や場所でキャラクターが登場したり、アトラクションが予想外の動きをしたりして、「予測の裏切り」がもたらす感動。即効性がある。「消費者がまったく期待していない部分（裏側の対応や、ちょっとした気遣いなど）」に圧倒的な力を注ぐと、この意外性は強烈なフックになります。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>③ 共鳴・共感型</h4>
+        <p>ディズニーランドのパレードやショーの登場人物に自分を重ね合わせるもの。辛い境遇や困難を乗り越える姿に涙する。これが共鳴の力。いかに相手に「これは自分のことだ」と自分事に感じてもらうかが大事。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>④ 救済型</h4>
+        <p>ディズニーランドで例えると、迷子対応、ポップコーンをこぼしてしまったときのリフィルや清掃が該当。不安なとき、困ったときに助けてくれたことは記憶に残る。上級者はあえて不便な状況を残して、スタッフが手を差し伸べやすい環境を作ったりします。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>⑤ 崇高型</h4>
+        <p>世界的スターであるミッキーマウスに会える。シンデレラ城など圧倒的な造形美。日常では絶対にお目にかかれない「憧れ」や「神聖さ」に触れたときの、畏敬の念に近い感動。ブランドのカリスマ性だったり、歴史の深さなども該当します。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>⑥ 参加型</h4>
+        <p>外側よりも内側から参加した方が何倍にも感動は増幅するもの。カチューシャなどを一緒に着けたりするのは、その準備に当たる。一人で達成するよりも、チームで達成した方が感動につながります。</p>
+      </div>
+      <div class="kando-type-item">
+        <h4>⑦ 成長型</h4>
+        <p>消費者の成長と共に歩み、人生のフェーズに合わせて新たな価値を提供し続けることで感動を生むもの。以前は身長制限で乗れなかった乗り物が大人になって乗れるようになったなど。最初から消費者の成長に合わせた設計がなされ、「できるようになった」という自己効力感の積み重ねに心が動きます。</p>
+      </div>
+    </div>
+    <p class="kando-citation">出典：<a href="https://x.com/smileguardian/status/2026050568658341967" target="_blank">https://x.com/smileguardian/status/2026050568658341967</a>　株式会社スマイルガーディアン代表取締役　清水群　※ディズニーランドとUSJ出身のテーマパークコンサルタント</p>
+  </details>
+</div>
+<div class="ai-comment">📊 分析結果
+
+口コミ分析データによると、「救済」がスコア1.9/5、検出率70.5%で最も高い。「スタッフのお兄さんが優しく説明していただき、とても居心地が良かった」「お若いのにとても気持ち良い接客で心地よく過ごせました」「どのスタッフさんもどこに出しても恥ずかしくないレベル接客で精鋭なのだな」といった、スタッフの質の高い接客や対応が顧客体験に寄与している。また、「お値段も安く美味しく頂けました」といったコストパフォーマンスへの言及も複数見られる。
+
+次に「しきい値突破」がスコア1.7/5、検出率55.5%と高く、「初訪問でしたが」「オープンを聞いてお邪魔しました」「自宅の近くにけっこう有名なお店がオープンしたので楽しみでした」といった、期待を超える体験や新規性に対する満足が確認できる。
+
+「成長」はスコア1.0/5、検出率37.5%であり、「毎日でも行きたいぐらい素晴らしいお店でした」「２回目の訪問です」といった継続的な利用意向を示す口コミが関連する可能性がある。「意外性」はスコア0.7/5、検出率26.5%、「参加」はスコア0.6/5、検出率20.5%であり、「子供じゃんけんでドリンク無料になったり」といった顧客が直接関与するイベントへの言及が一部見られる。
+
+一方、「共鳴・共感」はスコア0.2/5、検出率10.5%、「崇高」はスコア0.0/5、検出率2.5%と非常に低い検出率とスコアであり、これらの類型に該当する具体的な口コミはほとんど確認できない。</div>
+  </div>
+
+  <!-- キーワードランキング -->
+  <div class="section">
+    <h2>キーワード頻度ランキング（Top 30）</h2>
+    
+<div class="kw-legend">
+  <span class="legend-item"><span class="legend-dot" style="background:#34d399;"></span>ポジティブ</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#f87171;"></span>ネガティブ</span>
+  <span class="legend-item"><span class="legend-dot" style="background:#94a3b8;"></span>中立</span>
+</div>
+<table class="kw-table">
+  <thead><tr><th>#</th><th>キーワード</th><th>種別</th><th>頻度</th><th>回数</th></tr></thead>
+  <tbody>
+  <tr>
+    <td class="kw-rank">1</td>
+    <td class="kw-word">雰囲気</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:100%;background:#34d399;"></div></div></td>
+    <td class="kw-count">36回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">2</td>
+    <td class="kw-word">元気</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:89%;background:#34d399;"></div></div></td>
+    <td class="kw-count">32回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">3</td>
+    <td class="kw-word">美味しい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:86%;background:#34d399;"></div></div></td>
+    <td class="kw-count">31回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">4</td>
+    <td class="kw-word">最高</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:67%;background:#34d399;"></div></div></td>
+    <td class="kw-count">24回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">5</td>
+    <td class="kw-word">活気</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:58%;background:#34d399;"></div></div></td>
+    <td class="kw-count">21回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">6</td>
+    <td class="kw-word">楽しい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:42%;background:#34d399;"></div></div></td>
+    <td class="kw-count">15回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">7</td>
+    <td class="kw-word">良い</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:39%;background:#34d399;"></div></div></td>
+    <td class="kw-count">14回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">8</td>
+    <td class="kw-word">親切</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:36%;background:#34d399;"></div></div></td>
+    <td class="kw-count">13回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">9</td>
+    <td class="kw-word">また来たい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:31%;background:#34d399;"></div></div></td>
+    <td class="kw-count">11回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">10</td>
+    <td class="kw-word">素敵</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+    <td class="kw-count">8回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">11</td>
+    <td class="kw-word">満足</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+    <td class="kw-count">8回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">12</td>
+    <td class="kw-word">笑顔</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+    <td class="kw-count">8回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">13</td>
+    <td class="kw-word">楽しめる</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+    <td class="kw-count">8回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">14</td>
+    <td class="kw-word">また行きたい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:19%;background:#34d399;"></div></div></td>
+    <td class="kw-count">7回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">15</td>
+    <td class="kw-word">丁寧</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:19%;background:#34d399;"></div></div></td>
+    <td class="kw-count">7回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">16</td>
+    <td class="kw-word">おすすめ</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:17%;background:#34d399;"></div></div></td>
+    <td class="kw-count">6回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">17</td>
+    <td class="kw-word">安い</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:14%;background:#34d399;"></div></div></td>
+    <td class="kw-count">5回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">18</td>
+    <td class="kw-word">楽しみ</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:14%;background:#34d399;"></div></div></td>
+    <td class="kw-count">5回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">19</td>
+    <td class="kw-word">明るい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:14%;background:#34d399;"></div></div></td>
+    <td class="kw-count">5回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">20</td>
+    <td class="kw-word">嬉しい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:14%;background:#34d399;"></div></div></td>
+    <td class="kw-count">5回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">21</td>
+    <td class="kw-word">綺麗</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:14%;background:#34d399;"></div></div></td>
+    <td class="kw-count">5回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">22</td>
+    <td class="kw-word">無料</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11%;background:#34d399;"></div></div></td>
+    <td class="kw-count">4回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">23</td>
+    <td class="kw-word">便利</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11%;background:#34d399;"></div></div></td>
+    <td class="kw-count">4回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">24</td>
+    <td class="kw-word">豊富</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11%;background:#34d399;"></div></div></td>
+    <td class="kw-count">4回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">25</td>
+    <td class="kw-word">優しい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">26</td>
+    <td class="kw-word">素晴らしい</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">27</td>
+    <td class="kw-word">熱々</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">28</td>
+    <td class="kw-word">サクサク</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">29</td>
+    <td class="kw-word">待ち</td>
+    <td class="kw-badge"><span style="background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:10px;font-size:0.78em;">ネガ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#f87171;"></div></div></td>
+    <td class="kw-count">3回</td>
+  </tr>
+  <tr>
+    <td class="kw-rank">30</td>
+    <td class="kw-word">大満足</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3回</td>
+  </tr></tbody>
+</table>
+  </div>
+
+  <!-- 時系列キーワード変化 -->
+  <div class="section">
+    <h2>時系列キーワード変化（直近3ヶ月 vs それ以前）</h2>
+    
+<p style="color:var(--muted);font-size:0.88em;margin-bottom:16px;">
+  直近3ヶ月: <strong>200件</strong> ／ それ以前: <strong>0件</strong>
+</p>
+<div class="ts-grid">
+  <div class="ts-panel recent">
+    <h3>📅 直近3ヶ月（200件）の頻出キーワード</h3>
+    <table class="kw-table">
+      <thead><tr><th>キーワード</th><th>頻度</th><th>出現率</th></tr></thead>
+      <tbody>
+      <tr>
+        <td class="kw-word">雰囲気</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:100%;background:#34d399;"></div></div></td>
+        <td class="kw-count">36件 (18.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">元気</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:89%;background:#34d399;"></div></div></td>
+        <td class="kw-count">32件 (16.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">美味しい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:86%;background:#34d399;"></div></div></td>
+        <td class="kw-count">31件 (15.5%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">最高</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:67%;background:#34d399;"></div></div></td>
+        <td class="kw-count">24件 (12.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">活気</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:58%;background:#34d399;"></div></div></td>
+        <td class="kw-count">21件 (10.5%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">楽しい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:42%;background:#34d399;"></div></div></td>
+        <td class="kw-count">15件 (7.5%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">良い</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:39%;background:#34d399;"></div></div></td>
+        <td class="kw-count">14件 (7.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">親切</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:36%;background:#34d399;"></div></div></td>
+        <td class="kw-count">13件 (6.5%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">また来たい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:31%;background:#34d399;"></div></div></td>
+        <td class="kw-count">11件 (5.5%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">素敵</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+        <td class="kw-count">8件 (4.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">満足</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+        <td class="kw-count">8件 (4.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">笑顔</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+        <td class="kw-count">8件 (4.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">楽しめる</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:22%;background:#34d399;"></div></div></td>
+        <td class="kw-count">8件 (4.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">また行きたい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:19%;background:#34d399;"></div></div></td>
+        <td class="kw-count">7件 (3.5%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">丁寧</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:19%;background:#34d399;"></div></div></td>
+        <td class="kw-count">7件 (3.5%)</td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div class="ts-panel older">
+    <h3>🗂️ それ以前（0件）の頻出キーワード</h3>
+    <table class="kw-table">
+      <thead><tr><th>キーワード</th><th>頻度</th><th>出現率</th></tr></thead>
+      <tbody>
+      <tr>
+        <td class="kw-word">雰囲気</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">元気</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">美味しい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">最高</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">活気</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">楽しい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">良い</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">親切</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">また来たい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">素敵</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">満足</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">笑顔</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">楽しめる</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">また行きたい</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">丁寧</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:0%;background:#34d399;"></div></div></td>
+        <td class="kw-count">0件 (0.0%)</td>
+      </tr></tbody>
+    </table>
+  </div>
+</div>
+
+<h3 style="margin-top:24px;margin-bottom:10px;">変化の大きいキーワード</h3>
+<div class="ts-grid">
+  <div>
+    <p style="font-size:0.85em;color:#1d4ed8;margin-bottom:6px;">▲ 直近3ヶ月で増加</p>
+    <table class="ts-change-table">
+      <thead><tr><th>キーワード</th><th>以前</th><th>直近</th><th>変化</th></tr></thead>
+      <tbody>
+      <tr>
+        <td class="kw-word">雰囲気</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">18.0%</td>
+        <td class="ts-count-cell"><span class="change-up">▲ 18.0pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">元気</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">16.0%</td>
+        <td class="ts-count-cell"><span class="change-up">▲ 16.0pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">美味しい</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">15.5%</td>
+        <td class="ts-count-cell"><span class="change-up">▲ 15.5pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">最高</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">12.0%</td>
+        <td class="ts-count-cell"><span class="change-up">▲ 12.0pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">活気</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">10.5%</td>
+        <td class="ts-count-cell"><span class="change-up">▲ 10.5pt</span></td>
+      </tr></tbody>
+    </table>
+  </div>
+  <div>
+    <p style="font-size:0.85em;color:#dc2626;margin-bottom:6px;">▼ 直近3ヶ月で減少</p>
+    <table class="ts-change-table">
+      <thead><tr><th>キーワード</th><th>以前</th><th>直近</th><th>変化</th></tr></thead>
+      <tbody>
+      <tr>
+        <td class="kw-word">優しい</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">1.5%</td>
+        <td class="ts-count-cell"><span class="change-down">▼ 1.5pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">素晴らしい</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">1.5%</td>
+        <td class="ts-count-cell"><span class="change-down">▼ 1.5pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">熱々</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">1.5%</td>
+        <td class="ts-count-cell"><span class="change-down">▼ 1.5pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">サクサク</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">1.5%</td>
+        <td class="ts-count-cell"><span class="change-down">▼ 1.5pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">待ち</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">1.5%</td>
+        <td class="ts-count-cell"><span class="change-down">▼ 1.5pt</span></td>
+      </tr></tbody>
+    </table>
+  </div>
+</div>
+  </div>
+
+  <!-- 口コミ一覧 -->
+  <div class="section">
+    <h2>口コミ一覧</h2>
+    <div class="filter-bar">
+      <span class="filter-label">絞り込み:</span>
+      <select id="f-source" onchange="filterReviews()">
+        <option value="">すべてのサイト</option>
+        <option value="google_maps">Google マップ</option>
+        <option value="tabelog">食べログ</option>
+        <option value="tripadvisor">TripAdvisor</option>
+      </select>
+    </div>
+    <div id="review-count"></div>
+    <div id="review-list"></div>
+  </div>
+
+</div>
+<script>
+const REVIEWS = [{"source": "google_maps", "reviewer_name": "yu mo4 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "1 週間前", "text": "初訪問でしたが、スタッフのお兄さんが優しく説明していただき、とても居心地が良かったです。活気があってお店の雰囲気も良く美味しくいただきました。", "location": ""}, {"source": "google_maps", "reviewer_name": "ぽんたか1 件のクチコミ · 5 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "ここは、知り合いの方からオープンを聞いてお邪魔しました\nランチタイムを外しての来店で席を片付ける間だけ数分待ちました\nスタッフさん、お若いのにとても気持ち良い接客で心地よく過ごせました！\n中でも＂ケーキさん\"酔っ払いに付き合って下さってありがとう\n\nここは正直\n穴場にしたいので誰にも言いたく無いなーwww", "location": ""}, {"source": "google_maps", "reviewer_name": "佐藤友一6 件のクチコミ · 6 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "とてもスタッフも楽しく盛り上げてくれて、楽しい、美味しい、安い、が3つ揃った最高のお店でした。\n\n毎日でも行きたいぐらい素晴らしいお店でした。", "location": ""}, {"source": "google_maps", "reviewer_name": "ともじ2 件のクチコミ · 2 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "美味しいです。熱々で提供してくださり、とても雰囲気もよく、スタッフのみなさんも丁寧でした。また行きたいです。", "location": ""}, {"source": "google_maps", "reviewer_name": "平野滋英4 件のクチコミ · 4 枚の写真", "rating": 5.0, "date": "3 週間前", "text": "お食事も美味しくリーズナブルなのに接客まで良くて気に入りました。メニューも豊富。\nどのスタッフさんもどこに出しても恥ずかしくないレベル接客で精鋭なのだなと感じます。\n今日はたいがさんに接客してもらいましたがまた来るときも楽しみです。", "location": ""}, {"source": "google_maps", "reviewer_name": "kiyoaki tanaka3 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "元気で美味しい！素敵なお店ができてくれました。", "location": ""}, {"source": "google_maps", "reviewer_name": "ゆうすけ。ローカルガイド · 12 件のクチコミ · 28 枚の写真", "rating": 5.0, "date": "最終編集: 1 か月前", "text": "すごく接客がよくて、お値段も安く美味しく頂けました", "location": ""}, {"source": "google_maps", "reviewer_name": "딸기우유1 件のクチコミ · 3 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "オープンしたてで、皆さん活気が溢れていて雰囲気が良かったです。特にけんしょうさんが一生懸命接客していて、雰囲気を盛り上げてらっしゃったので良かったと思います^›⩊‹^", "location": ""}, {"source": "google_maps", "reviewer_name": "toshio hayashiローカルガイド · 14 件のクチコミ · 78 枚の写真", "rating": 4.0, "date": "3 か月前", "text": "自宅の近くにけっこう有名なお店がオープンしたので楽しみでした\nかすうどんは鰹出汁が効いていて好きなおぼろ昆布のトッピングもあり大変美味しく頂きました\n出汁まで飲み干したのでお腹いっぱいで満足しました\nまた来たいと思えるお店で、時々来たいです", "location": ""}, {"source": "google_maps", "reviewer_name": "とりめめ2 件のクチコミ · 3 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "２回目の訪問です。子供じゃんけんでドリンク無料になったりドリンクパスもあって安くでドリンクが飲める有料チケットもあります。\n特にたらこ串とチーズ串がおすすめです！", "location": ""}, {"source": "google_maps", "reviewer_name": "はやしみのり1 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "店員さんの対応も良かったし\n料理も美味しかった\nまた、行こうと思います", "location": ""}, {"source": "google_maps", "reviewer_name": "海ローカルガイド · 64 件のクチコミ · 214 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "オープンしたてで、きれいでした。\nスタッフ皆さん元気で、愛想良かったです", "location": ""}, {"source": "google_maps", "reviewer_name": "京の猫まんま2 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "お酒も食べ物も美味しい\n付け加えてスタッフさんが明るくて\n活気が店の雰囲気を盛り立てている\nリピートします", "location": ""}, {"source": "google_maps", "reviewer_name": "tabi nezuminローカルガイド · 986 件のクチコミ · 8,802 枚の写真", "rating": 4.0, "date": "3 か月前", "text": "2025年11月1日(土)オープン、梅小路公園近くの串カツ屋さん。奥に座敷スペースも少しありますがテーブル席はパイプ丸椅子というカジュアルな雰囲気です。\n串カツは衣サクサク、他のフードも美味しく、店員さん達も明るく元気。調理が必要なフードメニューは少し提供が遅い気もするけれどまだオープンしたてだからかもしれません。ちょい飲みにぴったりの良いお店です。", "location": ""}, {"source": "google_maps", "reviewer_name": "wooo_ yeah1 件のクチコミ · 1 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "最近できたお店。他の店舗に行ったことはないが、アットホームな雰囲気がいいと思う。たくさん注文してしまったのもあるが、飲み物やスピードメニューの提供が少し遅く感じたので⭐︎4にします。\n近所に串カツの店ができて嬉しいのでリピートします！", "location": ""}, {"source": "google_maps", "reviewer_name": "村田壮2 件のクチコミ · 1 枚の写真", "rating": 4.0, "date": "1 か月前", "text": "美味しく食事もでき、接客も楽しかったです！\nまた、近いうちに伺います🍺\nスタッフ、ハチ、ゆうと笑顔と配慮最高でした！\nありがとうー", "location": ""}, {"source": "google_maps", "reviewer_name": "たふみん4 件のクチコミ · 3 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "子供を連れて行きましたが、子供にも優しく接してくれました。\nまた、子供がいるとたこ焼きサービスがあることを知らなかったのですが教えていただきました。\n県外から行ったため遠いのでまた行くことは叶いませんが、近かったら通いたい程皆さん優しかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "坂口亜香里10 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "1 週間前", "text": "美味しかったです。\n子供も暇にならず好きなものだけ食べれるのでご機嫌で帰れました。メニューも豊富！\n店員さんも親切で素敵でした！", "location": ""}, {"source": "google_maps", "reviewer_name": "北條毅ローカルガイド · 40 件のクチコミ · 129 枚の写真", "rating": 5.0, "date": "最終編集: 1 週間前", "text": "美味しくて、安い、活気があってオススメ！\n京樹くんが最高です。", "location": ""}, {"source": "google_maps", "reviewer_name": "美味しい食事ローカルガイド · 51 件のクチコミ · 215 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "スタッフ皆さん明るく元気で\n良かったです", "location": ""}, {"source": "google_maps", "reviewer_name": "カルビーポテト2 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "活気があって小学生以下のドリンクじゃんけんや、テーブルで作るたこ焼きが面白いです。\n串一本から注文できてサクサクして美味しいです。\nスマホで注文するのですが、出てくるまで少し時間がかかる時もあります。\nデザートは小学生以下の子は自分でソフトクリームを作れるので楽しいと思います。\n\nいつも混んでるイメージなのですが、案内も早くて店員さんも明るく元気にサービスしてくれます。\nありがとうございました。", "location": ""}, {"source": "google_maps", "reviewer_name": "Emy H3 件のクチコミ · 11 枚の写真", "rating": 5.0, "date": "最終編集: 2 か月前", "text": "自分で作るたこ焼きの生地がすごく美味しいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "藤本小梨絵2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "めっちゃ美味しかった！\n店員さんも丁寧で元気いっぱいで楽しく食事できました！", "location": ""}, {"source": "google_maps", "reviewer_name": "あきこ1 件のクチコミ", "rating": 5.0, "date": "3 週間前", "text": "おいしかったしお店の雰囲気も良かったしまた来たいです", "location": ""}, {"source": "google_maps", "reviewer_name": "もっち。3 件のクチコミ · 2 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "まだ予約システムがないけれど、回転は早いです。無限ニンニクホルモン串、はやく復活してーーー！", "location": ""}, {"source": "google_maps", "reviewer_name": "酒ローカルガイド · 55 件のクチコミ · 198 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "祝日の夕方5時ぐらいに、行きましたが何組が待ちがありました。\n子供連れ家族のお客さんが、多かったです\nテーブル席は、相席に近い感じでした\n掘りごたつの席だったのでゆっくり座れました\nスタッフ全員、頑張っていて気持ち良かったです\n駅からも近く便利だと思います\nチンチロ楽しいです", "location": ""}, {"source": "google_maps", "reviewer_name": "國石正成3 件のクチコミ", "rating": 5.0, "date": "4 週間前", "text": "めっちゃ美味しかった。\n定員さんの対応も最高でした♪\nありがとうございます😊", "location": ""}, {"source": "google_maps", "reviewer_name": "みーまー1 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "前から行ってみたいなと思っていて、これでよかったです！\nお店の方も皆さん対応が良くて、特に娘への気配りが良くてとても嬉しかったです。\n子供用の椅子もあり、子連れの方でも来やすいお店だと思います。\nまた是非食べに来たいです。", "location": ""}, {"source": "google_maps", "reviewer_name": "石黒芳昭1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "まさーの対応が素晴らしかったので、また来たいと思っています。メニューも豊富で最高でした。", "location": ""}, {"source": "google_maps", "reviewer_name": "ひろみちゃん2 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "さきさん2人とも\n接客サービス最高！\nまた来ます！", "location": ""}, {"source": "google_maps", "reviewer_name": "成松麗奈5 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "スタッフの方々がとても元気よく､すごく楽しい時間を過ごしました！\n肉どうふがとても美味しくてびっくりしました^_^", "location": ""}, {"source": "google_maps", "reviewer_name": "浦島太朗7 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "飲食店が少ない中、居酒屋ができて良かったです。オープンしたばっかりで店内も店員さんの雰囲気もよく、元気いっぱいの店内で居心地よかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "星山真也ローカルガイド · 23 件のクチコミ · 104 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "さすがの串カツ田中さん！\n\n美味しい串カツと元気な接客で良い時間でした！\n\nご馳走様でした！\n\nチンチロもゾロ目でた！", "location": ""}, {"source": "google_maps", "reviewer_name": "長井志穂2 件のクチコミ", "rating": 4.0, "date": "2 週間前", "text": "子連れにも入りやすいお店で、サービスも良かったです！最後のアイス無料は子供もとても喜んでました！\nまた違う店舗でも行ってみたいとおもいます。", "location": ""}, {"source": "google_maps", "reviewer_name": "Kゆか2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "家族で利用しました。子供向けのサービスがとても多く大満足でした。お店の雰囲気もお料理も美味しくまた利用したいと思いました。", "location": ""}, {"source": "google_maps", "reviewer_name": "sakiko2 件のクチコミ", "rating": 4.0, "date": "3 か月前", "text": "活気があって美味しい♡\nファミリー客の方が多く、店内の雰囲気も良くて良かったです！家の近くに串カツ田中さんが出来て嬉しいのでまたきます〜", "location": ""}, {"source": "google_maps", "reviewer_name": "a i9 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "こまっきーさん、長く頑張って下さい😊\n店員さんの皆さんが、すごく気が利いていて、子連れでも、めっちゃ楽しめました！ごちそうさまでした😊すごく良いお店です⭐️", "location": ""}, {"source": "google_maps", "reviewer_name": "勘原紗矢4 件のクチコミ", "rating": 5.0, "date": "3 週間前", "text": "スタッフの方みんなが笑顔で素早くお料理などを提供してくれてとてもよかったです。\n特にゆうと君よかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "福田龍弥2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "接客も良く、美味しかったです。\nまた行きたいです。", "location": ""}, {"source": "google_maps", "reviewer_name": "初見梓2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "むちゃくちゃ美味しかったし、店員さんも優しくてまた、来たいです♡", "location": ""}, {"source": "google_maps", "reviewer_name": "ああ1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんの爽やかな対応、お店も新しいので清潔感があり、美味しくお食事できました。", "location": ""}, {"source": "google_maps", "reviewer_name": "んぽちゃむ4 件のクチコミ", "rating": 3.0, "date": "3 か月前", "text": "頼んだものが全く来なくて自分達より後に頼んでる人はとっくに来てる状況でした。なんか忘れてた感じかな？その時はいい気がしなかった。\nただオープンしたばっかりなので仕方ないかなと後々思いました。\nここのお店は大好きなので是非また行きたいと思います！味はとても美味しいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "安井忍1 件のクチコミ", "rating": 4.0, "date": "1 か月前", "text": "子どもへのサービスが、とても充実していてまた来たいと思いました。\n美味しかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "南ゆうこローカルガイド · 1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "とてもにぎやかで活気のあるお店でした。\nまた機会があれば来たいと思います。", "location": ""}, {"source": "google_maps", "reviewer_name": "へんにゃの1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "安くて美味くて最高！\n子ども連れでも利用しやすいので、梅小路公園で遊んだ後にも便利です", "location": ""}, {"source": "google_maps", "reviewer_name": "岡本大和ローカルガイド · 71 件のクチコミ · 136 枚の写真", "rating": 3.0, "date": "2 週間前", "text": "安い、美味しい、店員さんがとても親切で丁寧。気持ちのよい時間を過ごせました。子供椅子もあるし座敷もあります。惜しい点は、満席だったからか料理提供に時間がかかったこと（最初のオーダーが出揃うまで30分以上かかった）、ビールがぬるかったことです。", "location": ""}, {"source": "google_maps", "reviewer_name": "英明井上ローカルガイド · 15 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "最終編集: 1 週間前", "text": "まず美味しい。\nで、店内が照明だけではなく明るい。\n客室の中央にトイレがあるので、どの席に座ってもすぐ行ける。", "location": ""}, {"source": "google_maps", "reviewer_name": "toshi yuki1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "楽しくお酒が飲めた‼️\n若い店員さんが多いがその分明るく楽しそうに仕事していた", "location": ""}, {"source": "google_maps", "reviewer_name": "アンパンマンポテト4 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "元気のある店員さんも多く、活気があり、子供連れでも楽しく利用させていただきました！", "location": ""}, {"source": "google_maps", "reviewer_name": "G. O.13 件のクチコミ · 3 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "はるさんの接客で華金にさらに華が添えられました！！！", "location": ""}, {"source": "google_maps", "reviewer_name": "奥田まどか6 件のクチコミ · 1 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "スタッフの雰囲気が良く、小学生に対してのサービスなどがすごくてまた来たいと思いました！\nたらこの串カツ最高でした！", "location": ""}, {"source": "google_maps", "reviewer_name": "安本琴音1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "料理も全部美味しくて店内も清潔で楽しかったです！ゆうとさんのお陰でとても充実した時間を過ごせました！ゆうとまた来るよ！！おしぼりありがとう！！", "location": ""}, {"source": "google_maps", "reviewer_name": "さく2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ゆうとさんがめっちゃいい人でした！特にユッケとだし巻き美味しかったです！お店の雰囲気もいい感じでまた来たいと思います！", "location": ""}, {"source": "google_maps", "reviewer_name": "かよこ3 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんの接客もよくて楽しく食事させてもらいました。", "location": ""}, {"source": "google_maps", "reviewer_name": "結4 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "またきたいです!!お店の雰囲気と店員さんも明るくて楽しく食事出来ました", "location": ""}, {"source": "google_maps", "reviewer_name": "みぃ2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "家が近くなので利用させてもらいました！\n店員さんもみなさん元気が良くて、お店の雰囲気も良かったのでまた利用させてもらいます⭐︎", "location": ""}, {"source": "google_maps", "reviewer_name": "木谷真理香ローカルガイド · 6 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "めちゃくちゃ元気もらえるお店でまた来たいと思いました！ゆうとくんとちゃんゆらさんがとても親切に対応してくれました！", "location": ""}, {"source": "google_maps", "reviewer_name": "原口秀人1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "最高の体験でした！人気すぎて待ちはありますが、待つ価値あります。子供2人の家族連れでしたが、美味しく楽しく過ごさせていただきました。", "location": ""}, {"source": "google_maps", "reviewer_name": "中澤友里1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "お料理も美味しく、店員さんも皆さん、気さくで、楽しい時間を過ごせました！", "location": ""}, {"source": "google_maps", "reviewer_name": "M T1 件のクチコミ", "rating": 4.0, "date": "2 週間前", "text": "子連れに優しい、いいお店でした！！\n最後にガチャガチャもさしてくれました🧸", "location": ""}, {"source": "google_maps", "reviewer_name": "くれなぎ2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんの雰囲気が良く、料理も美味しかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "apri tera1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "支払いの時にお得なクーポン？みたいなのを案内され、安くなった。\n非常に顧客に対して優しい。\n又、お店の商品自体が安く、また来たい。ちょっとした時に行こうかな？と感じることができた。\nただ、早く訪問しないと人気で入れない。", "location": ""}, {"source": "google_maps", "reviewer_name": "名田晃1 件のクチコミ", "rating": 5.0, "date": "最終編集: 3 か月前", "text": "全部美味しいです。活気もあり、最高のお店ができました。", "location": ""}, {"source": "google_maps", "reviewer_name": "Yasumichi Miyakageローカルガイド · 1 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "元気なスタッフさんの接客も気持ちよく、また、熱々の串カツも美味しかったです。ごちそうさまでした。", "location": ""}, {"source": "google_maps", "reviewer_name": "ジョリーンR62 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんからお料理から最高に美味しかったです！これはリピート確実です🤩", "location": ""}, {"source": "google_maps", "reviewer_name": "Teikou Chou3 件のクチコミ · 19 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "揚げたてで美味しい😋", "location": ""}, {"source": "google_maps", "reviewer_name": "M pppm1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "店内もとても活気がよく、提供も早かったです。また行きたいと思いました。", "location": ""}, {"source": "google_maps", "reviewer_name": "齋藤 希望21240072 件のクチコミ", "rating": 5.0, "date": "1 週間前", "text": "ケーキくんの対応がとっても良い接客で楽しく呑めました！ご飯も美味しくて京都きてとっても楽しめました！", "location": ""}, {"source": "google_maps", "reviewer_name": "R3 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "初めての利用でしたが店員さんも親切でとても楽しい時間を過ごせましたー！", "location": ""}, {"source": "google_maps", "reviewer_name": "hikushi fu5 件のクチコミ", "rating": 4.0, "date": "1 か月前", "text": "新しい店なので\n清潔で店員のやる気や元気があって\nとても良いです", "location": ""}, {"source": "google_maps", "reviewer_name": "ああ2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "串カツとても美味しかったです！19歳以下にじゃんけんで割引になるかもしれないシステムが面白かったです^^\n見送りの際に店員さんの元気がよく、楽しい気持ちにさせてくれました！！", "location": ""}, {"source": "google_maps", "reviewer_name": "橋本嘉彦5 件のクチコミ · 4 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "初めてきました、とても活気のある店です。\n串も揚げたてでとても美味しかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "ここね2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんが親切でおいしかったですദ്ദി＞ᴗ＜)🎀✧", "location": ""}, {"source": "google_maps", "reviewer_name": "に8 件のクチコミ · 1 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "安定に美味しかったです！\n定員さんの愛想もよく素敵な人たちばかりでした！\nお店も新しく綺麗でした。\nワンちゃんも一緒に入れるとの事なので次は愛犬も一緒に連れてきます♪", "location": ""}, {"source": "google_maps", "reviewer_name": "まほ1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "宿泊先で偶然入ったお店です\n初めての来店で勝手が解らず\n子供もいるのでもたもたしてしまったのですが\n店員さんが優しく丁寧で嬉しかったです\nマヨネーズ抜きなど個別の注文にも対応していただき助かりました\nお食事もとても美味しかったです\nごちそうさまでした", "location": ""}, {"source": "google_maps", "reviewer_name": "ko higuローカルガイド · 28 件のクチコミ · 22 枚の写真", "rating": 4.0, "date": "3 か月前", "text": "とても居心地が良かったです。\n1人でカウンター利用でしたが、２時間以上滞在してしまいました。\nハッピーアワーもとてもいいです", "location": ""}, {"source": "google_maps", "reviewer_name": "メコメックンローカルガイド · 24 件のクチコミ · 31 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "回転が速く活気がありました。\nスタッフの方が皆笑顔で対応されていて、速い上手い安いの三拍子揃っていました！\nリピ確定なお店です◎", "location": ""}, {"source": "google_maps", "reviewer_name": "尾崎直子3 件のクチコミ", "rating": 5.0, "date": "4 週間前", "text": "店員さんが親切で料理も美味しかったです。また来ます。", "location": ""}, {"source": "google_maps", "reviewer_name": "ひ1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "スタッフの皆さん明るく接客してくださって楽しく食事ができました！とてもおいしかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "いちごクレープ2 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "店員さんの愛想が良く食べていて心地よかった", "location": ""}, {"source": "google_maps", "reviewer_name": "Hi3 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "明るいスタッフで楽しい時間でした。お料理、お酒もおいしかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "オマダ3 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "博物館帰りの夕食に最適！子連れでも楽しめる活気あるお店\n京都鉄道博物館や梅小路公園で遊んだ後、夕食に利用しました。\n• 立地: 駅や観光地から近く、アクセス抜群なのが嬉しいです。\n• 雰囲気: 店内は明るく活気があり、店員さんの笑顔も素敵でした。テーブル席が多く、子供用の椅子もあるため、子連れでも安心して利用できました。\n• 料理: 串カツはどれも衣が薄くてサックサク！特に「エビ」と「アスパラ」が絶品でした。もちろん、甘辛さがやみつきになります。\n• サイドメニュー: 子供が喜んだのが、自分で焼けるたこ焼きです。家族でわいわい楽しめ、食事がイベントになりました。サイドメニューのポテトサラダも量が多く満足です。\n【総評】\n串カツが美味しいのはもちろん、子連れに優しく、賑やかな雰囲気で楽しい食事時間を過ごせました。梅小路エリアでの食事場所を探している方、特にご家族連れにおすすめしたいお店です！", "location": ""}, {"source": "google_maps", "reviewer_name": "Kyaw Kyaw5 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ちりとり鍋🍲\n寒い時期にしか楽しめない限定メニューなので是非試してみてください。2人以下ならちりとり鍋小、\n４人以上なら大がおすすめ!", "location": ""}, {"source": "google_maps", "reviewer_name": "弾丸チャチャ1 件のクチコミ", "rating": 5.0, "date": "2 週間前", "text": "子供のサービスが充実してて、息子も喜んで食事ができました。", "location": ""}, {"source": "google_maps", "reviewer_name": "たまごやき2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ここほんっとに美味しい！！！\n無限ニンニクホルモン串年内でなくなるそうなので食べに😭\n\nメーッチャ美味しかったよおお！", "location": ""}, {"source": "google_maps", "reviewer_name": "r u5 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "美味しかったです✨✨\n店員さんも元気やったり、面白かったりするのでいいと思います✨", "location": ""}, {"source": "google_maps", "reviewer_name": "A H3 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "スタッフの方が元気いっぱいで勢いのあるお店でした！子どもが楽しめるメニューも多く、家族で楽しめました！", "location": ""}, {"source": "google_maps", "reviewer_name": "ウバラマサヒロ3 件のクチコミ · 4 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "予約が出来なかったのが残念だったけど、雰囲気も良く、店員さんも皆親切でした。\nケーキ君が可愛かった(*^^*)", "location": ""}, {"source": "google_maps", "reviewer_name": "小村卓弘2 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "美味しくて元気なお店でした！", "location": ""}, {"source": "google_maps", "reviewer_name": "atsukota I (atyu)2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "スタッフの方皆さん元気いっぱいで気がきき気持ちよく、たらふくいただきました〜", "location": ""}, {"source": "google_maps", "reviewer_name": "Jローカルガイド · 57 件のクチコミ · 32 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "梅小路界隈でリーズナブルに食べれる串カツ田中がオープンしてたヽ(´▽｀)/\nスタッフの皆さん笑顔で元気よく全てにおいて好感が持てました^ ^", "location": ""}, {"source": "google_maps", "reviewer_name": "リズガーレ1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "美味しくて、サービスがとてもいいところです。最高", "location": ""}, {"source": "google_maps", "reviewer_name": "のよさんももたろ14 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "3 週間前", "text": "狭いけど、店員さんの声掛けや和気あいあいとした雰囲気がとってもよくお酒も安くてチンチロの遊びも良かったのでまたきたいです", "location": ""}, {"source": "google_maps", "reviewer_name": "ハシモトヨシカズ1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "お店の雰囲気が良く、料理がとても美味しい\nまた、行きたいなと思った", "location": ""}, {"source": "google_maps", "reviewer_name": "平野康太7 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "愛想よくてとても美味しかったです！また行きたいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "槇OKローカルガイド · 126 件のクチコミ · 532 枚の写真", "rating": 5.0, "date": "最終編集: 2 か月前", "text": "乾杯の音頭取りとか店の方の若者ハイテンションが良かったけど、しっぽり話をしたい場合はどうかな？、とにかく酒飲みであてがいらない友人が多いので最高🍺", "location": ""}, {"source": "google_maps", "reviewer_name": "守澤伸一3 件のクチコミ · 2 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "接客もよく、味も美味しくて、近所にできて本当に嬉しいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "k.i3 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "子供を連れて行きましたが、子供へのサービスがすごく良かったです。串も沢山種類があり、とても美味しかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "柴田真実1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "食事も美味しく、店の店員さんの接客も楽しいので最高です！", "location": ""}, {"source": "google_maps", "reviewer_name": "e1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "はじめて利用させてもらいました。\n定員さんも活気溢れてて、すごく対応もよく、楽しく過ごせました✨\nまた絶対きます〜！！！", "location": ""}, {"source": "google_maps", "reviewer_name": "fukiko yamamoto1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "楽しめました\n子どもへのサービスがたくさんあって、子どもが大満足です。\nソフトクリーム無料、飲み物じゃんけんなど\n美味しく楽しくいただきました\n昼間から飲める最高のお店", "location": ""}, {"source": "google_maps", "reviewer_name": "おか1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "まささんってバイトの人が毎回大きな声で、ガヤガヤしたお店でも元気で良かった！\nこちらまでも元気になりますよ", "location": ""}, {"source": "google_maps", "reviewer_name": "Yuzuki Harada2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "日曜日の17:00頃にお邪魔しました。お席は9割くらい埋まっていました。小学生以下くらいのお子さんも多くて、とてもわいわいしてて、賑やかな雰囲気の店内です。\n店員さんも丁寧で、明るい方が多い雰囲気です。ケーキさんがよく対応してくださり楽しく食事できました！ユウトさんも丁寧でまたおじゃましたいと思います！！", "location": ""}, {"source": "google_maps", "reviewer_name": "ゆい1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "雰囲気、食事、接客最高！！\n子供とじゃんけんや大人が楽しめるチンチロ飲みがあって最高に楽しめました！！\nかすうどんが美味しいからおすすめです！！", "location": ""}, {"source": "google_maps", "reviewer_name": "rei iwaki2 件のクチコミ", "rating": 5.0, "date": "3 週間前", "text": "気持ちのいい接客で、メニューも美味しかったです", "location": ""}, {"source": "google_maps", "reviewer_name": "manamon manamana4 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "子連れでいきました！店員さんも優しく、お店の雰囲気も楽しくて気軽に外食を楽しむことができました！また行きたいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "前田佐絵美1 件のクチコミ", "rating": 5.0, "date": "最終編集: 3 週間前", "text": "かわいいくてみんな親切。\n楽しみました💖", "location": ""}, {"source": "google_maps", "reviewer_name": "kanya 11 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "充電器を貸していただいたり、子どものサービスが良く、対応してくれた店員さんも凄くいい印象だった。", "location": ""}, {"source": "google_maps", "reviewer_name": "009 Mrs.3 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "料理も美味しくて、お店の雰囲気も良くて大変満足です！😌", "location": ""}, {"source": "google_maps", "reviewer_name": "ku Rei3 件のクチコミ", "rating": 4.0, "date": "1 か月前", "text": "家族10人でお正月に利用しました。掘りごたつでゆっくりできました。新しくキレイなお店で、居心地は良かった。\nお店の人（男の子）はみんな親切で子どもにも優しく対応は良かった。女の子はつんつんした印象で、冷たい雰囲気に感じた。わが家以外にも満席で、長居するお客さんが多かったように思うし、子連れが圧倒的に多かった。ハイボールは炭酸がきいて美味しい。飲みパス使ったけど会計見ると高いなぁとは串カツ田中あるあな印象。", "location": ""}, {"source": "google_maps", "reviewer_name": "尾崎美代子1 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "リーズナムで美味しく　スタッフの皆さんも元気いっぱいで 楽しかったです", "location": ""}, {"source": "google_maps", "reviewer_name": "asahi nijino1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "はじめて来ました。店員さんも丁寧で、熱々の串カツ美味しかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "紫堂1 件のクチコミ", "rating": 5.0, "date": "3 週間前", "text": "ご飯も美味しいし接客やサービスもよかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "keroru19 件のクチコミ · 1 枚の写真", "rating": 2.0, "date": "2 か月前", "text": "料理は良かったが店員がうるさすぎるし飲み物も遅かった\nうるさくする前に飲み物くらいさっさと持ってきて欲しかった\n乾杯の音頭も断ったのに伝わってなくて本当に迷惑だった", "location": ""}, {"source": "google_maps", "reviewer_name": "cmonローカルガイド · 31 件のクチコミ · 207 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "鉄道博物館に来たついでに友人らと来店しました。めっちゃ美味いです。", "location": ""}, {"source": "google_maps", "reviewer_name": "高田千夏1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "衣もサクサクで美味しかったです！\n無限土手みそのホルモン串が特に\n美味しかったですー！", "location": ""}, {"source": "google_maps", "reviewer_name": "内藤蒼空6 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "店員さんの対応もよく！すごく良い時間になりました！", "location": ""}, {"source": "google_maps", "reviewer_name": "mitsuo nakamura2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "サービスもよく楽しく飲める店でした。\n値段も安い", "location": ""}, {"source": "google_maps", "reviewer_name": "yusuke1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ファーストドリンク全く来なくて、フードが次々に。喉渇いてたので困ってスタッフ（はるさん）に言った所、自らドリンク作ってすぐに持ってきて下さりめちゃめちゃ良い接客でイライラ吹き飛びました。ご飯も美味しくまた来させて頂きます。", "location": ""}, {"source": "google_maps", "reviewer_name": "222さん3 件のクチコミ", "rating": 5.0, "date": "3 週間前", "text": "めちゃくちゃ店員さんも楽しくて、いい人ばかりでした！また絶対いきます！！✨", "location": ""}, {"source": "google_maps", "reviewer_name": "YOSHIDA MIKAローカルガイド · 11 件のクチコミ · 4 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "子連れでも行きやすいメニューと雰囲気で毎度楽しく食事させてもらっています。また来たいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "綾野剛3 件のクチコミ · 3 枚の写真", "rating": 1.0, "date": "2 週間前", "text": "まじで過去最高レベルに終わっているお店でした。\nなんでこんなに口コミいいのか分からんレベル。\nソフドリに対してストローお願いすると、\n「切らしちゃってます」で会話終了。\n\nオーダー通してるのに30分弱届かない商品ちゃんと通っているのか聞くと、\n「通るのは通ってます！」と謎に威勢だけ良い返事。\nそして提供時にはすみませんの一言もなし。", "location": ""}, {"source": "google_maps", "reviewer_name": "M E7 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "美味しいし、新規オープンで混んでいたのに，対応が素晴らしかったです。またきます。", "location": ""}, {"source": "google_maps", "reviewer_name": "J2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "自分で作れる卵焼きとたこ焼きがお気に入りでよく来ています！子供達が喜ぶような事もたくさんあって良いお店です！！", "location": ""}, {"source": "google_maps", "reviewer_name": "大森愛ニャン2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "味も美味しくて、楽しい雰囲気で最高︎^ ^✌🏻\nけんしょうくんが面白かった‼️", "location": ""}, {"source": "google_maps", "reviewer_name": "Q太郎3 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "梅小路でオープンした串カツ田中!隣の花伝抄に宿泊した時に利用しました。\n近場で、夕食出来る所が出来てとても嬉しい!\nお店の雰囲気も若いスタッフで活気があり、料理も美味しいです。", "location": ""}, {"source": "google_maps", "reviewer_name": "はっさく1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "店舗が綺麗で明るくて、店員さんが元気で楽しかった！！\n特に接客が良くて、あゆみちゃんの笑顔に癒されました🥰", "location": ""}, {"source": "google_maps", "reviewer_name": "石倉康司1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "とても美味しく、対応もよかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "ERI H5 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんも愛想良く活気があって良いです！", "location": ""}, {"source": "google_maps", "reviewer_name": "WAKAKO2 件のクチコミ", "rating": 4.0, "date": "3 か月前", "text": "オープンして満席が続きながらも店員さんが元気よく接客してらっしゃって素晴らしいです", "location": ""}, {"source": "google_maps", "reviewer_name": "きょんきょん1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんの雰囲気がすごく良く居心地が良かった！", "location": ""}, {"source": "google_maps", "reviewer_name": "姜英子4 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "串カツ美味しいです。\n店舗は梅小路公園近くで前回来た時家族連れの方も使いやすい掘り炬燵のテーブルもあり、家族の外食もしやすいなぁと感じました。たこ焼きも焼いておられて（お得ですよ🉐）安心してパパママ、お子さんも楽しめるいい空間だと思いました。", "location": ""}, {"source": "google_maps", "reviewer_name": "安田琉2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "駅チカでGOOD！\n職場にも近くて便利\n若い従業員が多く活気があってとても良い", "location": ""}, {"source": "google_maps", "reviewer_name": "清水友紀3 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "子連れにサービスがたくさんあり助かりました！ゆらちゃんが良い接客してくださりました\nまた来ます♪", "location": ""}, {"source": "google_maps", "reviewer_name": "久実2 件のクチコミ", "rating": 4.0, "date": "3 か月前", "text": "近所に出来たので何度か利用しています。\n飲み放題や酒パスなどお酒がお得に飲める設定もありながら、子供も連れてきやすい雰囲気で来やすいお店です。", "location": ""}, {"source": "google_maps", "reviewer_name": "S Yhn1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "昼も夜も元気で皆さん子供に優しく利用しやすかったです", "location": ""}, {"source": "google_maps", "reviewer_name": "こんにんちゃ1 件のクチコミ", "rating": 4.0, "date": "3 か月前", "text": "最初は店の雰囲気に圧倒されましたが、店員さんのノリの良さや笑顔により、こちらも自然と受け入れられました。\n子連れでも、子連れだからこそ楽しめるギミックやメニューがあり、とても楽しめました。\n料理の味は美味しかったです。ただ、会計を見て少し高いと感じました。\n梅小路公園が近いこともあり、今後もまた寄らせていただくと思います。", "location": ""}, {"source": "google_maps", "reviewer_name": "五十嵐友暉1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "すごくいい接客していただきました！\n料理もおいしかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "牛尾勝一1 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "若い店員さんたちで、活気に溢れておいしくいただきました。ご馳走さま。", "location": ""}, {"source": "google_maps", "reviewer_name": "R3 件のクチコミ", "rating": 4.0, "date": "1 か月前", "text": "料理も美味しいし、サービスもよくて満足です", "location": ""}, {"source": "google_maps", "reviewer_name": "松村文仁1 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "楽しい雰囲気で美味しくいただきました", "location": ""}, {"source": "google_maps", "reviewer_name": "ながせ“SAYU”まり3 件のクチコミ · 3 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "開店初日に伺いました！店員の皆さんが明るくて元気がでます。串カツもおいしい、一品もおいしかったです。子ども向けのたこ焼きとアイスチャレンジもあって、大人も子どもも家族で楽しめるお店です。", "location": ""}, {"source": "google_maps", "reviewer_name": "内山葉月1 件のクチコミ", "rating": 4.0, "date": "4 週間前", "text": "味も美味しくサービスも良かったです", "location": ""}, {"source": "google_maps", "reviewer_name": "ZERO〆神夜1 件のクチコミ", "rating": 1.0, "date": "3 か月前", "text": "オープンから数日が経ち（まだ予約が出来ない日数）近場に出来たこともあり楽しみにして入ろうとしたらタイミング的に満席だったので名前を聞かれて外で待つ様に言われ待っていると後から来た家族連れが先に席に案内されていて凄く腹が立ちました。\n\n因みに席は時間が経つにつれて空いてきていて状況を見ても入れそうな感じでした。\n\n有名店と聞いていたのに、自店の名前を傷つける様な事をスタッフがするのはいかがなものかと。\n\n接客業をしている事の自覚と配慮が足りないのでは？\n\n元気に声出しだけをしていても周りが見えていないと意味がないと思います。\n\n入れてすらいないので下にある項目の写真、", "location": ""}, {"source": "google_maps", "reviewer_name": "橋本知哉ローカルガイド · 9 件のクチコミ · 30 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "串カツが美味しい(*´～｀*)ŧ‹\"ŧ‹\"ŧ‹\"", "location": ""}, {"source": "google_maps", "reviewer_name": "山下正美1 件のクチコミ", "rating": 4.0, "date": "3 か月前", "text": "明るくて、活気があります。\n安くて美味しいです。\nスタッフが、若いです。\nモカちゃん親切で、かわいいです。", "location": ""}, {"source": "google_maps", "reviewer_name": "藤田亮人2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "美味しかったです。子供とまた行きます。", "location": ""}, {"source": "google_maps", "reviewer_name": "荒木優那3 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ご飯美味しかったです！また来ますね", "location": ""}, {"source": "google_maps", "reviewer_name": "ゆりね3 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "サービスが良くてじゃんけんやサイコロが楽しかった✨️中３の娘達は受験に向けて「キットカツ」で気合いを入れることができました💪🏻", "location": ""}, {"source": "google_maps", "reviewer_name": "麻美2 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "店内が綺麗で店員さんの活気が最高！子どもとじゃんけんしてドリンクがサービスになったり、串カツ一本当たるゲームがあったり家族でも楽しめるお店。店員のけんしょうさんの明るさ、声の大きさ接客態度素敵でした！", "location": ""}, {"source": "google_maps", "reviewer_name": "山田志乃1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "スタッフの皆さん全員素敵でした！メニューは、ホタテのクリーミーコロッケがおすすめです^ ^", "location": ""}, {"source": "google_maps", "reviewer_name": "きーちゃん4 件のクチコミ · 2 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "近くにできたので利用しました。\n串カツも名物の無限ニンニクホルモンも美味しくて満足です。\nお店の活気も良く、店員さん達の雰囲気も明るいので楽しいです♪", "location": ""}, {"source": "google_maps", "reviewer_name": "矢島わかば1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "食事も美味しく、店員のケーキさんも最高です😆", "location": ""}, {"source": "google_maps", "reviewer_name": "ゆず1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "じゃんけんで勝つと飲み物無料などサービスが豊富で楽しかったです", "location": ""}, {"source": "google_maps", "reviewer_name": "Johnny OTAローカルガイド · 29 件のクチコミ · 27 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "梅小路公園で遊んだ帰りに寄りました。\nケーキさんをはじめ、どのスタッフさんも親切で愛想が良く、食事を楽しめました。\n子供が喜ぶイベント性のあるメニューも多かったので、5歳の子もしっかりご飯を食べました！\n梅小路公園で遊んでからの串カツ田中、\nこれからの定番の流れになりそうです。\nありがとうござました。", "location": ""}, {"source": "google_maps", "reviewer_name": "内田創1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "店員さんもハートフルで美味しい食事が出来ました！", "location": ""}, {"source": "google_maps", "reviewer_name": "松田恭佳1 件のクチコミ", "rating": 5.0, "date": "4 週間前", "text": "めちゃめちゃ美味しかったです！また行きます！", "location": ""}, {"source": "google_maps", "reviewer_name": "濱田千里1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "とても美味しいです\nゆうとくんの接客がとても良かったです", "location": ""}, {"source": "google_maps", "reviewer_name": "柴田健一1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "近所に住んでいます。\nオープン前から何度も練習されていたせいか、とても気持ちいい接客でした。\n楽しい企画もたくさんあり、楽しく美味しかったです。\n「無限ホルモンニンニク串」でたくさん飲みました。", "location": ""}, {"source": "google_maps", "reviewer_name": "おぱんちゅうさぎ1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "スタッフさんも元気があってよかったです串カツもおいしかったです", "location": ""}, {"source": "google_maps", "reviewer_name": "平田若菜1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "定員さんがみんな優しく子供たちも大喜びでした！\nまた次回はきます！", "location": ""}, {"source": "google_maps", "reviewer_name": "みちゃん1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "子供向けメニューが多くて良かったです！！", "location": ""}, {"source": "google_maps", "reviewer_name": "Y S1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "お昼からお酒が飲めるところがありがたいです。\n平日もお願いしたいです‼️", "location": ""}, {"source": "google_maps", "reviewer_name": "道子小西1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "美味しかった🎵楽しかった、スタッフがサイコー、その中でもゆうとくんの乾杯ががサイコーでした。また来ます！", "location": ""}, {"source": "google_maps", "reviewer_name": "来来2 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "幼児連れにとっても優しいお店です♡", "location": ""}, {"source": "google_maps", "reviewer_name": "ゆす3 件のクチコミ · 2 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "接客も良く美味しかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "山本澄子1 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "家の近くで、オーダーも口頭で、親切に聞いてくれました。", "location": ""}, {"source": "google_maps", "reviewer_name": "山田敬子4 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "串屋さんか初めてでしたので、飲み放題の安さお手軽で16:00過ぎに入店したので混んで無かったので頼み安く。\nゆったりした気分で飲食出来たのと家では作らない揚げ物の揚げたては飲みのあてにはサイコ～でした！", "location": ""}, {"source": "google_maps", "reviewer_name": "横田浩之4 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "初めて来ましたが、とても元気が良くて良かったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "藤野暁信3 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店員さんの雰囲気良かったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "ほしにし3 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "スタッフみんな、最高に楽しくて、楽しませてくれるので、みんな来たら楽しく飲めると思います(^^)", "location": ""}, {"source": "google_maps", "reviewer_name": "spray cold3 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "とても賑やかな雰囲気！\nいつもの串カツ田中と相違ない！\n客層は立地的に観光客や家族連れも多く、居酒屋としては新鮮な感覚を持った！", "location": ""}, {"source": "google_maps", "reviewer_name": "sr2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ケーキさんの愛想がとても良く居心地よかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "わちゃちゃ2 件のクチコミ · 3 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "子供も楽しめるメニューもたくさん。\n気軽に何度も来れそうです。", "location": ""}, {"source": "google_maps", "reviewer_name": "Mローカルガイド · 7 件のクチコミ · 3 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "けんしょうさんの対応が素晴らしい\n料理も美味しく\nまた期待と思いました", "location": ""}, {"source": "google_maps", "reviewer_name": "小柴大和ローカルガイド · 10 件のクチコミ · 12 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "みなさんものすごく対応が素敵でした！\n子供達に対してとても優しかった！", "location": ""}, {"source": "google_maps", "reviewer_name": "Tao Uchiyamaローカルガイド · 281 件のクチコミ · 504 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "Great location near Umekoji Station.\nNew, clean restaurant with very friendly staff.\nThe highball and kushikatsu were especially delicious.\nHighly recommended!\n\n梅小路駅からすぐの便利な場所にあります。\nできたばかりのお店でとても綺麗です。\nケーキさんが接客してくれましたが、とても元気で明るい接客でした。\nハイボールも串カツも他の店舗より美味しかったです。\n串カツが食べたい時は、おすすめのお店です！", "location": ""}, {"source": "google_maps", "reviewer_name": "インフォメーション結緣ローカルガイド · 17 件のクチコミ · 27 枚の写真", "rating": 5.0, "date": "3 週間前", "text": "店員のゆうと君がとても良かったです✨", "location": ""}, {"source": "google_maps", "reviewer_name": "TAKAHIRO TAKASE1 件のクチコミ", "rating": 5.0, "date": "3 日前", "text": "5歳の子どももたこ焼き作りやソフトクリーム作りで楽しめました😊", "location": ""}, {"source": "google_maps", "reviewer_name": "양지2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "犬も一緒に入れてよかったです！店員さんも優しくて、ご飯もおいしかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "ぢゃむるーちぇ2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "12/30他の店が閉まってた中やってて、安くてメニューも色々あり美味しかったです\n店員さんがマヨネーズ抜き対応も快く対応して下さり助かりました", "location": ""}, {"source": "google_maps", "reviewer_name": "早見敦子2 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "50円のホルモンが最高に美味しかったです。\n口コミの依頼があったのでしてみました。", "location": ""}, {"source": "google_maps", "reviewer_name": "加藤敬暁1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "初めてきましたが、おいしかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "鈴木光治4 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ケーキさんの接客が特に良いです！ユーモアあって、店員さんにも惹かれるお店でした！\n無限ホルモンにんにくは無くなる前に1度は食べるべきですよ。", "location": ""}, {"source": "google_maps", "reviewer_name": "彦2 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "とても元気があって楽しい食事でした😊", "location": ""}, {"source": "google_maps", "reviewer_name": "T& S4 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "初めて串カツ田中さんを利用させて頂いたのですが、スタッフさんの愛想もよく、気遣いもあり、とてもおいしかったです\n串カツはあっさりとして何串でもいけました！\nハッピーアワーも破格なお値段で、またリピートします\nありがとうございました！", "location": ""}, {"source": "google_maps", "reviewer_name": "田井中かよ6 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "今日はケーキさんに担当して頂きました。\n笑顔に接客して頂いて朝からいい気分になりました。美味しい串カツでした。\nまたケーキさん指名して来たいと思いまーす。", "location": ""}, {"source": "google_maps", "reviewer_name": "理麒1 件のクチコミ", "rating": 4.0, "date": "2 か月前", "text": "もちが美味しい。はっきり言うて最高ですね。", "location": ""}, {"source": "google_maps", "reviewer_name": "しき3 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "雰囲気が良く 美味しかった", "location": ""}, {"source": "google_maps", "reviewer_name": "ATあっちゃん1 件のクチコミ", "rating": 5.0, "date": "3 週間前", "text": "建物もすごく綺麗だし、すごく美味しかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "香西真治1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "ゆうとくんが親切で店の雰囲気が盛り上がっていて良かったです", "location": ""}, {"source": "google_maps", "reviewer_name": "ひゃーひゃー4 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ベリーグッドでした\n酒ちょーうまい\n串カツ最高\nまた来たい", "location": ""}, {"source": "google_maps", "reviewer_name": "栗田桂子2 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "オープンしたのを知って、楽しみに来ました♪\n店員さんが皆んな明るくて楽しく食事できました！\nまた来たいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "服加7 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "店員さんがすごく素敵だったので、美味しさ倍増でした♪\nチンチロも19歳以下ジャンケンも楽しかったし、お腹も心も大満足です。\nまた行きたいと思います。", "location": ""}, {"source": "google_maps", "reviewer_name": "中川弘一1 件のクチコミ", "rating": 4.0, "date": "3 か月前", "text": "最近オープンしたので、試しに行った。店員のモカさんが元気でよかった。", "location": ""}, {"source": "google_maps", "reviewer_name": "大塚駿介4 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "お酒、ホルモン串も安くとても美味しかったです", "location": ""}, {"source": "google_maps", "reviewer_name": "宮川幸輔1 件のクチコミ", "rating": 5.0, "date": "2 週間前", "text": "土手味噌のホルモン串が安くて、本当に美味しいです！お酒が進む進む！ぜひ！", "location": ""}, {"source": "google_maps", "reviewer_name": "NORI1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "串が全部美味しかったです\n焼きうどんは少し味が薄かった気がしますけど　田中ソースを付ければ美味しいです", "location": ""}, {"source": "google_maps", "reviewer_name": "MASAshiKO ikunumahanローカルガイド · 37 件のクチコミ · 55 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "ゆうとがもりあげてくれた！", "location": ""}, {"source": "google_maps", "reviewer_name": "國石京世3 件のクチコミ", "rating": 5.0, "date": "4 週間前", "text": "店員さんがとても丁寧に対応してくれました", "location": ""}];
+const KANDO_DATA = {"labels": ["①しきい値突破", "②意外性", "③共鳴・共感", "④救済", "⑤崇高", "⑥参加", "⑦成長"], "scores": [1.66, 0.74, 0.21, 1.85, 0.04, 0.57, 0.97]};
+const SITE_LABELS = {google_maps:"Google マップ",tabelog:"食べログ",tripadvisor:"TripAdvisor"};
+
+// 感動レーダーチャート
+(function(){
+  const el = document.getElementById('kandoChart');
+  if(!el || !KANDO_DATA.labels) return;
+  new Chart(el, {
+    type: 'radar',
+    data: {
+      labels: KANDO_DATA.labels,
+      datasets: [{
+        label: '感動スコア',
+        data: KANDO_DATA.scores,
+        backgroundColor: 'rgba(26,115,232,0.15)',
+        borderColor: '#1a73e8',
+        borderWidth: 2,
+        pointBackgroundColor: '#1a73e8',
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        r: {
+          min: 0, max: 5,
+          ticks: { stepSize: 1, font: { size: 11 } },
+          pointLabels: { font: { size: 12 }, color: '#2c2c2c' },
+        }
+      }
+    }
+  });
+})();
+
+// 口コミ一覧
+function filterReviews(){
+  const fSource = document.getElementById('f-source').value;
+  const filtered = REVIEWS.filter(r => !fSource || r.source === fSource);
+  document.getElementById('review-count').textContent = filtered.length + '件表示';
+  document.getElementById('review-list').innerHTML = filtered.slice(0,300).map(r => `
+    <div class="rc">
+      <div class="rc-meta">
+        <span class="badge">${SITE_LABELS[r.source]||r.source}</span>
+        ${r.reviewer_name||'匿名'}${r.date?' · '+r.date:''}
+      </div>
+      <div class="rc-text">${(r.text||'').slice(0,500)}${r.text&&r.text.length>500?'…':''}</div>
+    </div>
+  `).join('');
+}
+filterReviews();
+</script>
+</body>
+</html>
