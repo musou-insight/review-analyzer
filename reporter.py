@@ -25,9 +25,10 @@ def generate_report(store_name: str, analysis: dict, output_path: str = "report.
     experience           = analysis.get("experience", {})
     timeseries_keywords  = analysis.get("timeseries_keywords", {})
     kando                = analysis.get("kando", {})
+    gap                  = analysis.get("gap", None)
 
     site_stats = _calc_site_stats(reviews)
-    html = _build_html(store_name, reviews, keywords, experience, timeseries_keywords, kando, site_stats)
+    html = _build_html(store_name, reviews, keywords, experience, timeseries_keywords, kando, site_stats, gap=gap)
 
     with open(output_path, "w", encoding="utf-8") as f:
         f.write(html)
@@ -63,7 +64,7 @@ def _site_color(src):
 # HTML 全体構築
 # ---------------------------------------------------------------------------
 
-def _build_html(store_name, reviews, keywords, experience, timeseries_keywords, kando, site_stats):
+def _build_html(store_name, reviews, keywords, experience, timeseries_keywords, kando, site_stats, gap=None):
     today = datetime.now().strftime("%Y年%m月%d日")
     total = len(reviews)
     recent_n = timeseries_keywords.get("recent_count", 0)
@@ -71,9 +72,10 @@ def _build_html(store_name, reviews, keywords, experience, timeseries_keywords, 
 
     site_cards_html      = _build_site_cards(site_stats)
     experience_html      = _build_experience_section(experience)
-    keyword_table_html   = _build_keyword_table(keywords)
+    keyword_table_html   = _build_keyword_table(keywords, total)
     timeseries_html      = _build_timeseries_section(timeseries_keywords)
     kando_html           = _build_kando_section(kando)
+    gap_html             = _build_gap_section(gap) if gap else ""
     reviews_json         = json.dumps(reviews, ensure_ascii=False)
     kando_radar_json     = _build_kando_radar_json(kando)
 
@@ -184,6 +186,28 @@ def _build_html(store_name, reviews, keywords, experience, timeseries_keywords, 
     .kando-dot {{ font-size:0.7em; color:var(--muted); }}
     .ai-comment {{ background:#f8faff; border-left:4px solid var(--primary); border-radius:8px; padding:16px 18px; margin-top:16px; font-size:0.93em; line-height:1.75; white-space:pre-wrap; }}
 
+    /* 顧客ギャップ分析 */
+    .gap-grid {{ display:grid; gap:16px; margin-bottom:20px; }}
+    .gap-card {{ border-radius:12px; border:1px solid var(--border); padding:18px 20px; background:#fff; }}
+    .gap-card-header {{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }}
+    .gap-title {{ font-size:1em; font-weight:700; }}
+    .gap-badge {{ padding:3px 10px; border-radius:12px; font-size:0.78em; font-weight:700; white-space:nowrap; }}
+    .gap-badge.satisfied {{ background:#d1fae5; color:#065f46; }}
+    .gap-badge.partial {{ background:#fef3c7; color:#92400e; }}
+    .gap-badge.gap {{ background:#fee2e2; color:#991b1b; }}
+    .gap-score-bar {{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }}
+    .gap-score-label {{ font-size:0.82em; color:var(--muted); white-space:nowrap; width:70px; }}
+    .gap-bar-wrap {{ flex:1; background:#f1f5f9; border-radius:4px; height:10px; }}
+    .gap-bar {{ height:10px; border-radius:4px; }}
+    .gap-score-val {{ font-size:0.82em; color:var(--muted); width:30px; text-align:right; }}
+    .gap-desc {{ font-size:0.88em; color:var(--text); margin-bottom:10px; line-height:1.6; }}
+    .gap-evidence {{ margin:0; padding:0; list-style:none; }}
+    .gap-evidence li {{ font-size:0.83em; color:var(--muted); padding:3px 0 3px 16px; position:relative; line-height:1.5; }}
+    .gap-evidence li::before {{ content:"›"; position:absolute; left:4px; color:var(--primary); }}
+    .gap-evidence-title {{ font-size:0.82em; font-weight:600; color:var(--muted); margin:8px 0 4px; }}
+    .gap-overall {{ background:#f0f7ff; border:1px solid #c7dcf7; border-radius:10px; padding:16px 18px; font-size:0.93em; line-height:1.75; white-space:pre-wrap; margin-top:4px; }}
+    .gap-section-label {{ font-size:0.82em; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px; }}
+
     /* 口コミ一覧 */
     .filter-bar {{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; align-items:center; }}
     .filter-bar select {{ padding:6px 10px; border:1px solid var(--border); border-radius:6px; font-size:0.88em; }}
@@ -217,6 +241,9 @@ def _build_html(store_name, reviews, keywords, experience, timeseries_keywords, 
     <h2>感動の7類型分析</h2>
     {kando_html}
   </div>
+
+  <!-- 顧客ギャップ分析 -->
+  {f'<div class="section"><h2>顧客ギャップ分析（来店前動機 vs 期待充足度）</h2>{gap_html}</div>' if gap_html else ''}
 
   <!-- キーワードランキング -->
   <div class="section">
@@ -327,16 +354,21 @@ def _build_experience_section(exp: dict) -> str:
     <div class="value-grid">{s_html}{w_html}</div>"""
 
 
-def _build_keyword_table(keywords: list[dict]) -> str:
+def _build_keyword_table(keywords: list[dict], total_reviews: int = 0) -> str:
     if not keywords:
         return "<p>キーワードデータなし</p>"
-    max_count = keywords[0]["count"] if keywords else 1
     rows = []
     for i, kw in enumerate(keywords[:30], 1):
         word = kw["word"]
         count = kw["count"]
         sentiment = kw.get("sentiment", "neutral")
-        pct = round(count / max_count * 100)
+        # 出現率 = 当該キーワード出現件数 ÷ 総口コミ数（最大100%）
+        if total_reviews > 0:
+            rate_pct = round(count / total_reviews * 100, 1)
+        else:
+            rate_pct = 100.0
+        # バー幅は出現率をそのまま%として使う（100%基準）
+        bar_pct = min(rate_pct, 100)
         if sentiment == "positive":
             bar_color, badge_style, label = "#34d399", "background:#d1fae5;color:#065f46;", "ポジ"
         elif sentiment == "negative":
@@ -348,17 +380,18 @@ def _build_keyword_table(keywords: list[dict]) -> str:
     <td class="kw-rank">{i}</td>
     <td class="kw-word">{word}</td>
     <td class="kw-badge"><span style="{badge_style}padding:2px 7px;border-radius:10px;font-size:0.78em;">{label}</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:{pct}%;background:{bar_color};"></div></div></td>
-    <td class="kw-count">{count}回</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:{bar_pct}%;background:{bar_color};"></div></div></td>
+    <td class="kw-count">{rate_pct}%</td>
   </tr>""")
     return f"""
+<p style="color:var(--muted);font-size:0.85em;margin-bottom:12px;">出現率 = キーワードが含まれる口コミ件数 ÷ 総口コミ数。バーは100%を基準に表示。</p>
 <div class="kw-legend">
   <span class="legend-item"><span class="legend-dot" style="background:#34d399;"></span>ポジティブ</span>
   <span class="legend-item"><span class="legend-dot" style="background:#f87171;"></span>ネガティブ</span>
   <span class="legend-item"><span class="legend-dot" style="background:#94a3b8;"></span>中立</span>
 </div>
 <table class="kw-table">
-  <thead><tr><th>#</th><th>キーワード</th><th>種別</th><th>頻度</th><th>回数</th></tr></thead>
+  <thead><tr><th>#</th><th>キーワード</th><th>種別</th><th>出現率（100%基準）</th><th>出現率</th></tr></thead>
   <tbody>{"".join(rows)}</tbody>
 </table>"""
 
@@ -529,6 +562,74 @@ def _build_kando_section(kando: dict) -> str:
 <div class="ai-comment">📊 分析結果
 
 {ai_comment}</div>"""
+
+
+def _build_gap_section(gap: dict) -> str:
+    if not gap:
+        return "<p>データなし</p>"
+    motivations = gap.get("motivations", [])
+    overall = gap.get("overall_comment", "")
+
+    SATISFACTION_LABEL = {
+        "satisfied": ("充足", "satisfied"),
+        "partial":   ("部分充足", "partial"),
+        "gap":       ("ギャップあり", "gap"),
+    }
+    SCORE_COLOR = {1: "#f87171", 2: "#fb923c", 3: "#facc15", 4: "#34d399", 5: "#10b981"}
+
+    cards = []
+    for m in motivations:
+        title = m.get("title", "")
+        description = m.get("description", "")
+        evidence = m.get("evidence", [])
+        satisfaction = m.get("satisfaction", "partial")
+        score = m.get("satisfaction_score", 3)
+        sat_desc = m.get("satisfaction_desc", "")
+        sat_evidence = m.get("satisfaction_evidence", [])
+
+        sat_label, sat_cls = SATISFACTION_LABEL.get(satisfaction, ("不明", "partial"))
+        bar_color = SCORE_COLOR.get(score, "#94a3b8")
+        bar_pct = score / 5 * 100
+
+        evidence_html = "".join(
+            f'<li>（口コミ{e.get("index","?")+1}）「{e.get("quote","")}」</li>'
+            for e in evidence
+        )
+        sat_ev_html = "".join(
+            f'<li>（口コミ{e.get("index","?")+1}）「{e.get("quote","")}」</li>'
+            for e in sat_evidence
+        )
+
+        cards.append(f"""
+<div class="gap-card">
+  <div class="gap-card-header">
+    <span class="gap-title">🎯 {title}</span>
+    <span class="gap-badge {sat_cls}">{sat_label}</span>
+  </div>
+  <p class="gap-desc">{description}</p>
+  <p class="gap-section-label">来店前動機の根拠</p>
+  <ul class="gap-evidence">{evidence_html}</ul>
+  <div class="gap-score-bar" style="margin-top:12px;">
+    <span class="gap-score-label">期待充足度</span>
+    <div class="gap-bar-wrap"><div class="gap-bar" style="width:{bar_pct:.0f}%;background:{bar_color};"></div></div>
+    <span class="gap-score-val">{score}/5</span>
+  </div>
+  <p class="gap-desc" style="margin-bottom:6px;">{sat_desc}</p>
+  <p class="gap-section-label">充足度の根拠</p>
+  <ul class="gap-evidence">{sat_ev_html}</ul>
+</div>""")
+
+    return f"""
+<p style="color:var(--muted);font-size:0.87em;margin-bottom:16px;">
+  口コミの文脈から来店前の動機を推測し、実際の体験と照らして期待充足度を分析しました。
+  <span style="color:#065f46;font-weight:700;">■充足</span>
+  <span style="color:#92400e;font-weight:700;margin-left:8px;">■部分充足</span>
+  <span style="color:#991b1b;font-weight:700;margin-left:8px;">■ギャップあり</span>
+</p>
+<div class="gap-grid">{"".join(cards)}</div>
+<div class="gap-overall">📊 総合インサイト
+
+{overall}</div>"""
 
 
 def _build_kando_radar_json(kando: dict) -> str:

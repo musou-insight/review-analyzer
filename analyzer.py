@@ -54,7 +54,7 @@ def _clean_text(text: str) -> str:
     return text
 
 
-def analyze_reviews(reviews: list[dict]) -> dict:
+def analyze_reviews(reviews: list[dict], include_gap: bool = False) -> dict:
     # 保存済みデータ内のメタデータを除去（--skip-scrape 時も対応）
     reviews = [dict(r, text=_clean_text(r.get("text", ""))) for r in reviews]
     print(f"\n🤖 Gemini 分析開始（{len(reviews)}件）...")
@@ -63,14 +63,18 @@ def analyze_reviews(reviews: list[dict]) -> dict:
     experience = _analyze_experience(reviews, keywords)
     timeseries_keywords = _analyze_timeseries_keywords(reviews, keywords)
     kando = _analyze_kando(reviews)
+    gap = _analyze_gap(reviews) if include_gap else None
 
-    return {
+    result = {
         "reviews": reviews,
         "keywords": keywords,
         "experience": experience,
         "timeseries_keywords": timeseries_keywords,
         "kando": kando,
     }
+    if gap is not None:
+        result["gap"] = gap
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -384,6 +388,71 @@ def _analyze_kando(reviews: list[dict]) -> dict:
         "ai_comment": ai_comment,
         "total_analyzed": total,
     }
+
+
+# ---------------------------------------------------------------------------
+# 顧客ギャップ分析（来店前動機 vs 期待充足度）
+# ---------------------------------------------------------------------------
+
+def _analyze_gap(reviews: list[dict]) -> dict:
+    """口コミから来店前動機を抽出し、期待が充足されているかを分析する。"""
+    print("  🔍 顧客ギャップ分析中...")
+
+    all_texts = "\n".join(
+        f"[{i}] {r.get('text', '')[:300]}"
+        for i, r in enumerate(reviews[:80])
+    )
+
+    prompt = f"""以下は飲食店の口コミ一覧です。
+
+---
+{all_texts}
+---
+
+これらの口コミを読んで、次の2ステップで分析してください。
+
+## ステップ1: 来店前動機の抽出
+口コミの文脈から「来店前にどんな期待・目的を持って来たか」を推測し、主要な来店動機を3〜5個抽出してください。
+各動機について：
+- 動機のタイトル（10〜20文字）
+- 動機の説明（30〜50文字）
+- その動機を推測した根拠となる口コミの引用（2〜4件、各口コミ番号[N]と50文字以内の引用テキスト）
+
+## ステップ2: 期待充足度の分析
+各動機に対して、口コミ全体から「その期待が実際に満たされていたか」を評価してください。
+- 充足状況: "satisfied"（充足）/ "partial"（部分的）/ "gap"（ギャップあり）
+- 充足度スコア: 1〜5（5が完全充足）
+- 充足状況の説明（40〜60文字）
+- 充足・不充足を示す口コミの引用（2〜4件、各口コミ番号[N]と50文字以内の引用テキスト）
+
+## 総合コメント
+来店動機と実体験のギャップについて、店舗の打ち出し（マーケティング）へのインサイトを含めて200文字程度で記述してください。
+主観的評価語は避け、口コミのデータに基づいた客観的な表現を使うこと。
+
+出力形式（JSONのみ、前置き不要）:
+{{
+  "motivations": [
+    {{
+      "title": "動機タイトル",
+      "description": "動機の説明",
+      "evidence": ["{{"index": 数字, "quote": "引用テキスト"}}"],
+      "satisfaction": "satisfied|partial|gap",
+      "satisfaction_score": 1〜5,
+      "satisfaction_desc": "充足状況の説明",
+      "satisfaction_evidence": [{{"index": 数字, "quote": "引用テキスト"}}]
+    }}
+  ],
+  "overall_comment": "総合コメント"
+}}"""
+
+    try:
+        response_text = _generate(prompt)
+        json_match = re.search(r"\{.*\}", response_text, re.DOTALL)
+        if json_match:
+            return json.loads(json_match.group())
+    except Exception as e:
+        print(f"    ⚠️ ギャップ分析エラー: {e}")
+    return {"motivations": [], "overall_comment": "分析エラー"}
 
 
 # ---------------------------------------------------------------------------

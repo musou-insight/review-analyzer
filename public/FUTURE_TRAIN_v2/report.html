@@ -105,6 +105,28 @@
     .kando-dot { font-size:0.7em; color:var(--muted); }
     .ai-comment { background:#f8faff; border-left:4px solid var(--primary); border-radius:8px; padding:16px 18px; margin-top:16px; font-size:0.93em; line-height:1.75; white-space:pre-wrap; }
 
+    /* 顧客ギャップ分析 */
+    .gap-grid { display:grid; gap:16px; margin-bottom:20px; }
+    .gap-card { border-radius:12px; border:1px solid var(--border); padding:18px 20px; background:#fff; }
+    .gap-card-header { display:flex; align-items:center; gap:10px; margin-bottom:10px; }
+    .gap-title { font-size:1em; font-weight:700; }
+    .gap-badge { padding:3px 10px; border-radius:12px; font-size:0.78em; font-weight:700; white-space:nowrap; }
+    .gap-badge.satisfied { background:#d1fae5; color:#065f46; }
+    .gap-badge.partial { background:#fef3c7; color:#92400e; }
+    .gap-badge.gap { background:#fee2e2; color:#991b1b; }
+    .gap-score-bar { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .gap-score-label { font-size:0.82em; color:var(--muted); white-space:nowrap; width:70px; }
+    .gap-bar-wrap { flex:1; background:#f1f5f9; border-radius:4px; height:10px; }
+    .gap-bar { height:10px; border-radius:4px; }
+    .gap-score-val { font-size:0.82em; color:var(--muted); width:30px; text-align:right; }
+    .gap-desc { font-size:0.88em; color:var(--text); margin-bottom:10px; line-height:1.6; }
+    .gap-evidence { margin:0; padding:0; list-style:none; }
+    .gap-evidence li { font-size:0.83em; color:var(--muted); padding:3px 0 3px 16px; position:relative; line-height:1.5; }
+    .gap-evidence li::before { content:"›"; position:absolute; left:4px; color:var(--primary); }
+    .gap-evidence-title { font-size:0.82em; font-weight:600; color:var(--muted); margin:8px 0 4px; }
+    .gap-overall { background:#f0f7ff; border:1px solid #c7dcf7; border-radius:10px; padding:16px 18px; font-size:0.93em; line-height:1.75; white-space:pre-wrap; margin-top:4px; }
+    .gap-section-label { font-size:0.82em; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px; }
+
     /* 口コミ一覧 */
     .filter-bar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; align-items:center; }
     .filter-bar select { padding:6px 10px; border:1px solid var(--border); border-radius:6px; font-size:0.88em; }
@@ -123,7 +145,7 @@
   <!-- ヘッダー -->
   <div class="section">
     <h1>📊 FUTURE TRAIN KYOTO DINER & CAFE</h1>
-    <p class="meta">口コミ分析レポート ／ 収集日: 2026年02月26日 ／ 総口コミ数: 124件（直近3ヶ月: 77件 ／ それ以前: 47件）</p>
+    <p class="meta">口コミ分析レポート ／ 収集日: 2026年03月02日 ／ 総口コミ数: 124件（直近3ヶ月: 77件 ／ それ以前: 47件）</p>
     <div class="site-cards">
     <div class="site-card" style="background:#4285F4;">
       <div class="s-label">Google マップ</div>
@@ -135,9 +157,9 @@
   <div class="section">
     <h2>顧客体験価値分析</h2>
     
-    <p class="headline">「非日常空間演出と体験が高評価の飲食体験」</p>
-    <p class="summary-text">総口コミ数124件中、非日常的な空間演出や体験価値に対し「素敵」(18件)、「最高」(16件)といったポジティブな評価が多数みられます。一方で、料金設定、料理の提供速度や品質、一部の衛生面やスタッフ対応に関する指摘も複数件確認されます。</p>
-    <div class="value-grid"><div class="value-box positive"><h3>✅ 非日常的な空間演出と体験価値</h3><p class="value-desc">ポジティブキーワードTop15のうち、非日常的な空間演出や体験価値を示す「素敵」(18件)、「最高」(16件)、「楽しい」(14件)、「素晴らしい」(14件)、「映え」(10件)といったキーワードが計72件出現しており、顧客からは評価されていることが分かります。</p></div><div class="value-box positive"><h3>✅ スタッフによるエンターテイメント性/ホスピタリティ</h3><p class="value-desc">「フレンドリー」(7件)というキーワードが出現しており、複数の口コミでスタッフによるエンターテイメント性や丁寧な対応が評価されている声がみられます。</p></div><div class="value-box positive"><h3>✅ 料理の見た目と一部の味</h3><p class="value-desc">「美味しい」(9件)というキーワードが出現しています。また、料理の見た目の「映え」(10件)も評価されており、一部の口コミでは具体的な料理の味についても満足する声が確認されます。</p></div><div class="value-box negative"><h3>⚠️ 料金設定（入場料、価格）</h3><p class="value-desc">「残念」(10件)、「高い」(7件)、「高め」(6件)、「高価」(2件)といったキーワードが計25件出現しており、入場料700円やワンドリンク制を含む料金設定に対し、少なくとも7件の口コミで明確な指摘が示されています。</p></div><div class="value-box negative"><h3>⚠️ 料理の提供速度</h3><p class="value-desc">「遅い」(2件)というキーワードが出現しており、料理の提供まで40分〜50分程度を要したという指摘が少なくとも4件の口コミでみられます。</p></div><div class="value-box negative"><h3>⚠️ 料理の品質・味</h3><p class="value-desc">「イマイチ」(2件)というキーワードが出現しており、料理が「冷めていた」という指摘が少なくとも3件、具体的なメニューの味や品質に対する指摘が少なくとも9件の口コミで示されています。</p></div><div class="value-box negative"><h3>⚠️ 衛生面</h3><p class="value-desc">飲み物が料理に垂れたこと、座席に食べこぼしが残っていたこと、店員のネイルなど、衛生面に関する具体的な指摘が少なくとも4件の口コミでみられます。</p></div><div class="value-box negative"><h3>⚠️ スタッフ対応の一部不足</h3><p class="value-desc">予約時の案内遅延、品切れ、お冷やスプーンの提供遅延、会計時間の長さといった、サービス提供プロセスにおける具体的な指摘が少なくとも6件の口コミでみられます。</p></div><div class="value-box negative"><h3>⚠️ 店舗コンセプトと客層・周辺環境とのミスマッチ/騒音</h3><p class="value-desc">「鉄道ファン向けかと思いきやインバウンドやパリピ向け」といったターゲット層に関する指摘や、「目がチカチカするような色使いで落ち着けない」、周辺への「騒音」に関する懸念が少なくとも5件の口コミで示されています。</p></div><div class="value-box negative"><h3>⚠️ 情報不足</h3><p class="value-desc">入場料無料クーポンの存在など、顧客にとって有益な情報が十分に周知されていないという指摘が1件みられます。</p></div></div>
+    <p class="headline">「非日常体験と価格・品質に声がみられる飲食体験」</p>
+    <p class="summary-text">総口コミ124件中、「体験」(30件)、「素敵」(18件)、「最高」(16件)といった非日常的な空間やエンターテイメント性を評価する声が多くみられます。一方で、「残念」(10件)、「普通」(9件)といった価格設定、料理の品質、サービスに関する指摘も複数みられます。</p>
+    <div class="value-grid"><div class="value-box positive"><h3>✅ 非日常的な空間とエンターテイメント性</h3><p class="value-desc">「体験」が30件、「素敵」が18件、「最高」が16件の口コミに出現しており、ピンクの車両、世界観の演出、テーマパークのような内装やデジタルアート、特別感を評価する声が複数みられます。</p></div><div class="value-box positive"><h3>✅ 接客とホスピタリティ</h3><p class="value-desc">「フレンドリー」が7件の口コミに出現しており、店員のエンターテイナー性、丁寧な対応、素晴らしい接客、お客様を盛り上げようとする姿勢を評価する声がみられます。</p></div><div class="value-box positive"><h3>✅ 料理の見た目と一部の味</h3><p class="value-desc">「美味しい」が9件の口コミに出現しており、特に映えるメニューや見た目のインパクト、ボリューム感を評価する声がみられます。一部の口コミではハンバーグやパスタの味についても肯定的な言及があります。</p></div><div class="value-box negative"><h3>⚠️ 価格設定と入場料の不明瞭さ</h3><p class="value-desc">「高い」が7件、「高め」が6件の口コミに出現しており、食事代に加えて入場料(700円)がかかることや、全体の価格設定について高すぎると指摘する声が複数みられます。入場料の無料クーポンやフリーパスに関する広報不足を指摘する声もみられます。</p></div><div class="value-box negative"><h3>⚠️ 料理の品質と提供速度</h3><p class="value-desc">「残念」が10件、「普通」が9件の口コミに出現しており、料理の味や品質（パサパサ、硬い、生焼け、味が濃い）、品切れ、注文から提供までの速度の遅さ、冷めていることなどを指摘する声がみられます。</p></div><div class="value-box negative"><h3>⚠️ 衛生面と店内環境</h3><p class="value-desc">「不安」が3件の口コミに出現しており、店内の清掃状況（食べこぼし）、店員の身だしなみ（ネイル）、お冷の提供時の問題（お弁当への混入）、店内の色使い（目がチカチカする）、騒音や景観への影響を指摘する声がみられます。</p></div><div class="value-box negative"><h3>⚠️ サービスと待ち時間</h3><p class="value-desc">予約時の案内不足や待たされること、モバイルオーダー後の提供遅延、品切れ、スプーンの提供遅れ、会計時の待ち時間など、スムーズなサービス提供に課題があることを指摘する声がみられます。</p></div><div class="value-box negative"><h3>⚠️ ターゲット層との認識齟齬</h3><p class="value-desc">鉄道ファンや特定の年齢層（中高年）の顧客が、店舗のコンセプトや雰囲気に対し、期待と異なる印象を受けたと指摘する声がみられます。</p></div></div>
   </div>
 
   <!-- 感動の7類型レーダー -->
@@ -155,45 +177,45 @@
   <div class="kando-detail">
   <div class="kando-row strength">
     <span class="kando-label">①しきい値突破 💪</span>
-    <div class="kando-bar-wrap"><div class="kando-bar" style="width:38%;"></div></div>
-    <span class="kando-score">1.9</span>
-    <span class="kando-rate">59.7%</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:42%;"></div></div>
+    <span class="kando-score">2.1</span>
+    <span class="kando-rate">66.1%</span>
   </div>
   <div class="kando-row ">
     <span class="kando-label">②意外性</span>
-    <div class="kando-bar-wrap"><div class="kando-bar" style="width:21%;"></div></div>
-    <span class="kando-score">1.1</span>
-    <span class="kando-rate">40.3%</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:20%;"></div></div>
+    <span class="kando-score">1.0</span>
+    <span class="kando-rate">37.1%</span>
   </div>
   <div class="kando-row weakness">
     <span class="kando-label">③共鳴・共感 ⚠️</span>
-    <div class="kando-bar-wrap"><div class="kando-bar" style="width:7%;"></div></div>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:6%;"></div></div>
     <span class="kando-score">0.3</span>
-    <span class="kando-rate">16.1%</span>
+    <span class="kando-rate">16.9%</span>
   </div>
   <div class="kando-row ">
     <span class="kando-label">④救済</span>
-    <div class="kando-bar-wrap"><div class="kando-bar" style="width:10%;"></div></div>
-    <span class="kando-score">0.5</span>
-    <span class="kando-rate">16.9%</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:8%;"></div></div>
+    <span class="kando-score">0.4</span>
+    <span class="kando-rate">16.1%</span>
   </div>
   <div class="kando-row strength">
     <span class="kando-label">⑤崇高 💪</span>
     <div class="kando-bar-wrap"><div class="kando-bar" style="width:35%;"></div></div>
     <span class="kando-score">1.7</span>
-    <span class="kando-rate">60.5%</span>
+    <span class="kando-rate">62.9%</span>
   </div>
   <div class="kando-row ">
     <span class="kando-label">⑥参加</span>
-    <div class="kando-bar-wrap"><div class="kando-bar" style="width:11%;"></div></div>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:9%;"></div></div>
     <span class="kando-score">0.5</span>
-    <span class="kando-rate">21.0%</span>
+    <span class="kando-rate">18.5%</span>
   </div>
   <div class="kando-row weakness">
     <span class="kando-label">⑦成長 ⚠️</span>
-    <div class="kando-bar-wrap"><div class="kando-bar" style="width:10%;"></div></div>
-    <span class="kando-score">0.5</span>
-    <span class="kando-rate">20.2%</span>
+    <div class="kando-bar-wrap"><div class="kando-bar" style="width:7%;"></div></div>
+    <span class="kando-score">0.3</span>
+    <span class="kando-rate">12.9%</span>
   </div></div>
 </div>
 <div class="kando-note">
@@ -235,16 +257,97 @@
 </div>
 <div class="ai-comment">📊 分析結果
 
-感動の7類型分析結果によると、「しきい値突破」と「崇高」のスコアが他の類型と比較して高い。
+感動の7類型ごとの分析結果を以下に記述します。
 
-「しきい値突破」はスコア1.9/5（検出率59.7%）と最も高く、顧客の期待を超える体験に関する言及が複数みられる。「一歩足を踏み入れた瞬間、ここが現実じゃないみたい」や「ありきたりのレストランよりはかなりインパクトがあります」といった口コミが、非日常的な体験への評価を示している。
+「しきい値突破」はスコア2.1/5、検出率66.1%と、最も高い検出率を示しています。「以前からSNSで見て知っていた」や「テレビで拝見して行ってみたい！」といった事前期待が、「一歩足を踏み入れた瞬間、ここが現実じゃないみたい」という体験によって満たされていることが伺えます。
 
-次に「崇高」がスコア1.7/5（検出率60.5%）と高く、圧倒的な世界観や美的体験への感動が検出されている。「外観も内装も映えるし、料理も映えます！」「店内もピンクいっぱいでめちゃくちゃ可愛かったです！」といった表現が、空間デザインやビジュアルの魅力を伝えている。
+「崇高」はスコア1.7/5、検出率62.9%と高い数値であり、「廃車となった特急サンダーバードをアップサイクルした」壮大なコンセプトや、「USJや非現実感を味わいたい人には良い」とされる徹底した世界観、演出が評価の対象となっているとみられます。
 
-「意外性」はスコア1.1/5（検出率40.3%）であり、「廃車となった特急サンダーバードをアップサイクルした」や「ピンクのサンダーバード」といった、ユニークなコンセプトや予想外の要素が評価されている。
+「意外性」はスコア1.0/5、検出率37.1%で、「ありきたりのレストランよりはかなりインパクトがあります」といった、既存のイメージを覆す要素が一定数検出されています。「場所的に鉄道ファン向けかと思いきや、どちらかというとインバウンドやパリピ向け」という声もみられます。
 
-一方で、「共鳴・共感」（スコア0.3/5, 検出率16.1%）、「救済」（スコア0.5/5, 検出率16.9%）、「参加」（スコア0.5/5, 検出率21.0%）、「成長」（スコア0.5/5, 検出率20.2%）の4類型は、スコアが0.5以下、検出率も21%以下と低い水準にある。これらの類型に関する具体的な言及は、他の類型と比較して限られている。「共鳴・共感」はスコアが最も低く、個人的な価値観との深い合致を示す表現は少ない。</div>
+一方で、「共鳴・共感」はスコア0.3/5、検出率16.9%、「救済」はスコア0.4/5、検出率16.1%、「参加」はスコア0.5/5、検出率18.5%、「成長」はスコア0.3/5、検出率12.9%と、いずれも低いスコアと検出率に留まっています。これらの類型では、ユーザーが深く共感したり、抱える問題が解決されたり、能動的に体験に関わったり、自己変革を感じたりする要素は少ないことが示されています。</div>
   </div>
+
+  <!-- 顧客ギャップ分析 -->
+  <div class="section"><h2>顧客ギャップ分析（来店前動機 vs 期待充足度）</h2>
+<p style="color:var(--muted);font-size:0.87em;margin-bottom:16px;">
+  口コミの文脈から来店前の動機を推測し、実際の体験と照らして期待充足度を分析しました。
+  <span style="color:#065f46;font-weight:700;">■充足</span>
+  <span style="color:#92400e;font-weight:700;margin-left:8px;">■部分充足</span>
+  <span style="color:#991b1b;font-weight:700;margin-left:8px;">■ギャップあり</span>
+</p>
+<div class="gap-grid">
+<div class="gap-card">
+  <div class="gap-card-header">
+    <span class="gap-title">🎯 非日常体験・空間エンタメへの期待</span>
+    <span class="gap-badge satisfied">充足</span>
+  </div>
+  <p class="gap-desc">ユニークなコンセプトやデジタル演出による、日常とは異なる特別な体験やエンターテイメント性を求めて来店。</p>
+  <p class="gap-section-label">来店前動機の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ2）「ありきたりのレストランよりはかなりインパクトがあります。「FUTURE TRAIN KYOTO DINNER ＆ CAFE」は…ユニークなコンセプトが魅力です。車両内部をアート空間として再生し、デジタル演出と融合させた空間はまさに非日常。」</li><li>（口コミ8）「USJや非現実感を味わいたい人には良いですね。切符を切ってくれて、ヒューチャーポーズを求められたり、世界観の演出はしっかりされてました。」</li><li>（口コミ9）「店員さんも皆さんエンターテイナーでテーマパークのような演出でした⭐︎」</li><li>（口コミ11）「30代には厳しいかと思っていましたが、実際は終始とても楽しかったです！！…アトラクション性もありつつお料理も美味しいので、観光の際にはオスメスです。」</li></ul>
+  <div class="gap-score-bar" style="margin-top:12px;">
+    <span class="gap-score-label">期待充足度</span>
+    <div class="gap-bar-wrap"><div class="gap-bar" style="width:80%;background:#34d399;"></div></div>
+    <span class="gap-score-val">4/5</span>
+  </div>
+  <p class="gap-desc" style="margin-bottom:6px;">コンセプト通りの非日常体験やエンタメ性は多くの顧客に高く評価され、期待が満たされている。</p>
+  <p class="gap-section-label">充足度の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ2）「ユニークなコンセプトが魅力です。車両内部をアート空間として再生し、デジタル演出と融合させた空間はまさに非日常。」</li><li>（口コミ8）「USJや非現実感を味わいたい人には良いですね。世界観の演出はしっかりされてました。」</li><li>（口コミ77）「コンセプトと演出が素晴らしく、雰囲気、ドリンク、サービスを通して、お客様を「Kawaii」の完璧な世界へと誘うために、細部までこだわって作られていました。」</li><li>（口コミ78）「創造性、優雅さ、そして未来的なセンスが完璧に調和した、これまで経験したことのないような雰囲気でした。」</li></ul>
+</div>
+<div class="gap-card">
+  <div class="gap-card-header">
+    <span class="gap-title">🎯 映え・フォトジェニック目的</span>
+    <span class="gap-badge satisfied">充足</span>
+  </div>
+  <p class="gap-desc">ピンクを基調とした内装や外観、映える料理など、SNSでの共有を目的とした写真撮影のために来店。</p>
+  <p class="gap-section-label">来店前動機の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ1）「お店の近くまで行くとピンクの車両があり一気に別世界になりました！お店を利用していない人も写真を撮って、何これ？と驚いたのが印象的でした。」</li><li>（口コミ2）「どこをとっても“映える”スポットで、アートと食を同時に楽しめる新感覚のエンタメレストランです。」</li><li>（口コミ5）「ピンク大好きな娘たちのために利用しました。ピンクのTRAINが見えた瞬間大興奮。店内もピンクいっぱいでめちゃくちゃ可愛かったです！」</li><li>（口コミ7）「外観も内装も映えるし、料理も映えます！是非日本人も外国人も行ってみてほしいと思います。」</li></ul>
+  <div class="gap-score-bar" style="margin-top:12px;">
+    <span class="gap-score-label">期待充足度</span>
+    <div class="gap-bar-wrap"><div class="gap-bar" style="width:100%;background:#10b981;"></div></div>
+    <span class="gap-score-val">5/5</span>
+  </div>
+  <p class="gap-desc" style="margin-bottom:6px;">ピンクの世界観やフォトジェニックな空間・料理は顧客の「映え」ニーズを完全に満たしている。</p>
+  <p class="gap-section-label">充足度の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ1）「お店の近くまで行くとピンクの車両があり一気に別世界になりました！」</li><li>（口コミ5）「店内もピンクいっぱいでめちゃくちゃ可愛かったです！」</li><li>（口コミ52）「世界観から素敵でしたが、特に受付のギャルめな女の子の対応がよく、最後のお見送りまで楽しく過ごせました♪ お写真も一緒に撮っていただき、可愛かったです！」</li><li>（口コミ80）「インスタ映えするだけでなく、実際に体験してみる価値もある。列車をテーマにしたデザインも素敵。」</li></ul>
+</div>
+<div class="gap-card">
+  <div class="gap-card-header">
+    <span class="gap-title">🎯 ユニークなコンセプト・鉄道要素への興味</span>
+    <span class="gap-badge partial">部分充足</span>
+  </div>
+  <p class="gap-desc">廃車となった特急サンダーバードを再活用した「日本初」というユニークなコンセプトや鉄道要素への興味。</p>
+  <p class="gap-section-label">来店前動機の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ2）「廃車となった特急サンダーバードをアップサイクルした「日本初の高架上常設店舗」というユニークなコンセプトが魅力です。」</li><li>（口コミ4）「何よりテンション上がったのは、廃線になった特急サンダーバードの車両を再活用している点です。」</li><li>（口コミ6）「場所的に鉄道ファン向けかと思いきや、どちらかというとインバウンドやパリピ向け。ピンクのサンダーバードは鉄ヲタホイホイといった感じ💦」</li><li>（口コミ18）「特急サンダーバードを紅梅色に再塗装し"未来行き"の列車として再活用した、日本初の廃線高架上エンタメレストランが梅小路京都西駅にオープン。」</li></ul>
+  <div class="gap-score-bar" style="margin-top:12px;">
+    <span class="gap-score-label">期待充足度</span>
+    <div class="gap-bar-wrap"><div class="gap-bar" style="width:60%;background:#facc15;"></div></div>
+    <span class="gap-score-val">3/5</span>
+  </div>
+  <p class="gap-desc" style="margin-bottom:6px;">ユニークなコンセプトや鉄道要素は一定の関心を集めるが、一部の顧客は作り物感や期待とのギャップを感じている。</p>
+  <p class="gap-section-label">充足度の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ4）「何よりテンション上がったのは、廃線になった特急サンダーバードの車両を再活用している点です。」</li><li>（口コミ46）「食事をする車両は、つくりものにがっくし、メニュー貧弱。とても残念。鉄道ファンにも喜ばれるホンモノにかえてください。」</li><li>（口コミ49）「料理も美味かったし、料理を食べながら鉄博を眺めるのは格別だった。鉄道ファンにはおすすめと思ってる。」</li><li>（口コミ70）「中身が作り物なのに入場料がいるのはおかしい」</li></ul>
+</div>
+<div class="gap-card">
+  <div class="gap-card-header">
+    <span class="gap-title">🎯 食事・デザートへの期待</span>
+    <span class="gap-badge gap">ギャップあり</span>
+  </div>
+  <p class="gap-desc">エンタメ性だけでなく、見た目の可愛いメニューやユニークな料理、デザートなどを味わうことを期待して来店。</p>
+  <p class="gap-section-label">来店前動機の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ4）「目玉メニューの五重の塔パフェは、見た目のインパクトが抜群で、出てきた時は思わず声を上げました。すごいボリューム感でしたが、味もちゃんと美味しかったです。」</li><li>（口コミ10）「メニューで一番目を引いたハンバーガーと、ナチョス、ドリンクを1杯ずついただきました。」</li><li>（口コミ21）「メルティ抹茶ロール(1,200円)をいただきました。まったり甘いカスタードクリームをふんわり柔らか抹茶ロールにブリュレした果肉入り甘酸っぱいミックスベリーソースが入った見た目も可愛らしいロールケーキです」</li><li>（口コミ40）「鉄道博物館を観てランチに利用しました。料理の味はしっかりしていて美味しかったです。パフォーマンスが楽しいですね。」</li></ul>
+  <div class="gap-score-bar" style="margin-top:12px;">
+    <span class="gap-score-label">期待充足度</span>
+    <div class="gap-bar-wrap"><div class="gap-bar" style="width:40%;background:#fb923c;"></div></div>
+    <span class="gap-score-val">2/5</span>
+  </div>
+  <p class="gap-desc" style="margin-bottom:6px;">見た目の魅力は評価されるが、味、提供スピード、品切れ、衛生面などで多くの不満が寄せられ、期待とのギャップが大きい。</p>
+  <p class="gap-section-label">充足度の根拠</p>
+  <ul class="gap-evidence"><li>（口コミ1）「エビフライの中が冷たい状態だったので女性の店員さんにお伝えしたところ、無愛」</li><li>（口コミ27）「提供スピードが遅すぎる。😠…お冷を注いでくれるのはいいが、それが垂れてお弁当に入ってきてショック😨」</li><li>（口コミ28）「鶏はパサパサハンバーグは硬いスープは味が濃くて飲めたもんじゃない。付け合わせのブロッコリーは生焼け。」</li><li>（口コミ35）「モバイルオーダーでほぼ同時に注文をしたにも関わらず、食事が出て来たのが40分後。しかも、料理は完全に冷めており、2800円の価値は到底ありません。」</li></ul>
+</div></div>
+<div class="gap-overall">📊 総合インサイト
+
+店舗は「非日常体験」と「映え」というマーケティングメッセージを効果的に伝え、顧客の期待を高く設定している。これらは空間演出で高い満足度を得ている一方、ユニークなコンセプト（鉄道要素）への期待は一部でギャップがあり、特に「食事・デザート」においては、品質、提供スピード、品切れ、衛生面での不満が多く、期待が満たされていない状況が顕著である。マーケティングで創出した魅力に対し、飲食店の基本的な品質とオペレーションが追いついていないことが課題であり、高価格設定や入場料に対する価値提供のバランスを見直す必要がある。</div></div>
 
   <!-- キーワードランキング -->
   <div class="section">
@@ -261,213 +364,213 @@
   <tbody>
   <tr>
     <td class="kw-rank">1</td>
-    <td class="kw-word">素敵</td>
+    <td class="kw-word">体験</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:14%;background:#34d399;"></div></div></td>
-    <td class="kw-count">14.5%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:24.2%;background:#34d399;"></div></div></td>
+    <td class="kw-count">24.2%</td>
   </tr>
   <tr>
     <td class="kw-rank">2</td>
-    <td class="kw-word">最高</td>
+    <td class="kw-word">素敵</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:13%;background:#34d399;"></div></div></td>
-    <td class="kw-count">12.9%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:14.5%;background:#34d399;"></div></div></td>
+    <td class="kw-count">14.5%</td>
   </tr>
   <tr>
     <td class="kw-rank">3</td>
-    <td class="kw-word">楽しい</td>
+    <td class="kw-word">最高</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11%;background:#34d399;"></div></div></td>
-    <td class="kw-count">11.3%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:12.9%;background:#34d399;"></div></div></td>
+    <td class="kw-count">12.9%</td>
   </tr>
   <tr>
     <td class="kw-rank">4</td>
-    <td class="kw-word">素晴らしい</td>
+    <td class="kw-word">楽しい</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11.3%;background:#34d399;"></div></div></td>
     <td class="kw-count">11.3%</td>
   </tr>
   <tr>
     <td class="kw-rank">5</td>
-    <td class="kw-word">満足</td>
+    <td class="kw-word">素晴らしい</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:10%;background:#34d399;"></div></div></td>
-    <td class="kw-count">10.5%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11.3%;background:#34d399;"></div></div></td>
+    <td class="kw-count">11.3%</td>
   </tr>
   <tr>
     <td class="kw-rank">6</td>
-    <td class="kw-word">映え</td>
+    <td class="kw-word">満足</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
-    <td class="kw-count">8.1%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:10.5%;background:#34d399;"></div></div></td>
+    <td class="kw-count">10.5%</td>
   </tr>
   <tr>
     <td class="kw-rank">7</td>
     <td class="kw-word">残念</td>
     <td class="kw-badge"><span style="background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:10px;font-size:0.78em;">ネガ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#f87171;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8.1%;background:#f87171;"></div></div></td>
     <td class="kw-count">8.1%</td>
   </tr>
   <tr>
     <td class="kw-rank">8</td>
-    <td class="kw-word">好き</td>
+    <td class="kw-word">美味しい</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
-    <td class="kw-count">8.1%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:7.3%;background:#34d399;"></div></div></td>
+    <td class="kw-count">7.3%</td>
   </tr>
   <tr>
     <td class="kw-rank">9</td>
-    <td class="kw-word">美味しい</td>
-    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:7%;background:#34d399;"></div></div></td>
+    <td class="kw-word">普通</td>
+    <td class="kw-badge"><span style="background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:10px;font-size:0.78em;">ネガ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:7.3%;background:#f87171;"></div></div></td>
     <td class="kw-count">7.3%</td>
   </tr>
   <tr>
     <td class="kw-rank">10</td>
-    <td class="kw-word">普通</td>
-    <td class="kw-badge"><span style="background:#f1f5f9;color:#475569;padding:2px 7px;border-radius:10px;font-size:0.78em;">中立</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:7%;background:#94a3b8;"></div></div></td>
-    <td class="kw-count">7.3%</td>
+    <td class="kw-word">良い</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6.5%;background:#34d399;"></div></div></td>
+    <td class="kw-count">6.5%</td>
   </tr>
   <tr>
     <td class="kw-rank">11</td>
-    <td class="kw-word">良い</td>
+    <td class="kw-word">非日常</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
-    <td class="kw-count">6.5%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5.6%;background:#34d399;"></div></div></td>
+    <td class="kw-count">5.6%</td>
   </tr>
   <tr>
     <td class="kw-rank">12</td>
     <td class="kw-word">ワクワク</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5.6%;background:#34d399;"></div></div></td>
     <td class="kw-count">5.6%</td>
   </tr>
   <tr>
     <td class="kw-rank">13</td>
     <td class="kw-word">高い</td>
     <td class="kw-badge"><span style="background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:10px;font-size:0.78em;">ネガ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#f87171;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5.6%;background:#f87171;"></div></div></td>
     <td class="kw-count">5.6%</td>
   </tr>
   <tr>
     <td class="kw-rank">14</td>
-    <td class="kw-word">良かった</td>
+    <td class="kw-word">特別</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5.6%;background:#34d399;"></div></div></td>
     <td class="kw-count">5.6%</td>
   </tr>
   <tr>
     <td class="kw-rank">15</td>
-    <td class="kw-word">特別</td>
+    <td class="kw-word">フレンドリー</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5.6%;background:#34d399;"></div></div></td>
     <td class="kw-count">5.6%</td>
   </tr>
   <tr>
     <td class="kw-rank">16</td>
-    <td class="kw-word">フレンドリー</td>
+    <td class="kw-word">良かった</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5.6%;background:#34d399;"></div></div></td>
     <td class="kw-count">5.6%</td>
   </tr>
   <tr>
     <td class="kw-rank">17</td>
-    <td class="kw-word">非日常</td>
+    <td class="kw-word">ご満足</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5.6%;background:#34d399;"></div></div></td>
     <td class="kw-count">5.6%</td>
   </tr>
   <tr>
     <td class="kw-rank">18</td>
-    <td class="kw-word">素晴らしい体験</td>
+    <td class="kw-word">楽しみ</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
-    <td class="kw-count">5.6%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.8%;background:#34d399;"></div></div></td>
+    <td class="kw-count">4.8%</td>
   </tr>
   <tr>
     <td class="kw-rank">19</td>
-    <td class="kw-word">楽しみ</td>
+    <td class="kw-word">おすすめ</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.8%;background:#34d399;"></div></div></td>
     <td class="kw-count">4.8%</td>
   </tr>
   <tr>
     <td class="kw-rank">20</td>
-    <td class="kw-word">おすすめ</td>
-    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#34d399;"></div></div></td>
+    <td class="kw-word">高め</td>
+    <td class="kw-badge"><span style="background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:10px;font-size:0.78em;">ネガ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.8%;background:#f87171;"></div></div></td>
     <td class="kw-count">4.8%</td>
   </tr>
   <tr>
     <td class="kw-rank">21</td>
-    <td class="kw-word">高め</td>
-    <td class="kw-badge"><span style="background:#fee2e2;color:#991b1b;padding:2px 7px;border-radius:10px;font-size:0.78em;">ネガ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#f87171;"></div></div></td>
+    <td class="kw-word">無料</td>
+    <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.8%;background:#34d399;"></div></div></td>
     <td class="kw-count">4.8%</td>
   </tr>
   <tr>
     <td class="kw-rank">22</td>
     <td class="kw-word">ユニーク</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.0%;background:#34d399;"></div></div></td>
     <td class="kw-count">4.0%</td>
   </tr>
   <tr>
     <td class="kw-rank">23</td>
     <td class="kw-word">可愛い</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.0%;background:#34d399;"></div></div></td>
     <td class="kw-count">4.0%</td>
   </tr>
   <tr>
     <td class="kw-rank">24</td>
-    <td class="kw-word">世界観</td>
+    <td class="kw-word">楽しめる</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.0%;background:#34d399;"></div></div></td>
     <td class="kw-count">4.0%</td>
   </tr>
   <tr>
     <td class="kw-rank">25</td>
     <td class="kw-word">魅力</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.0%;background:#34d399;"></div></div></td>
     <td class="kw-count">4.0%</td>
   </tr>
   <tr>
     <td class="kw-rank">26</td>
-    <td class="kw-word">期待</td>
+    <td class="kw-word">高評価</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:3%;background:#34d399;"></div></div></td>
-    <td class="kw-count">3.2%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:4.0%;background:#34d399;"></div></div></td>
+    <td class="kw-count">4.0%</td>
   </tr>
   <tr>
     <td class="kw-rank">27</td>
-    <td class="kw-word">ぴったり</td>
+    <td class="kw-word">印象的</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:3%;background:#34d399;"></div></div></td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:3.2%;background:#34d399;"></div></div></td>
     <td class="kw-count">3.2%</td>
   </tr>
   <tr>
     <td class="kw-rank">28</td>
-    <td class="kw-word">ホスピタリティ</td>
+    <td class="kw-word">可愛らしい</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:2%;background:#34d399;"></div></div></td>
-    <td class="kw-count">2.4%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:3.2%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3.2%</td>
   </tr>
   <tr>
     <td class="kw-rank">29</td>
-    <td class="kw-word">感謝</td>
+    <td class="kw-word">ぴったり</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:2%;background:#34d399;"></div></div></td>
-    <td class="kw-count">2.4%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:3.2%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3.2%</td>
   </tr>
   <tr>
     <td class="kw-rank">30</td>
-    <td class="kw-word">面白い</td>
+    <td class="kw-word">最高評価</td>
     <td class="kw-badge"><span style="background:#d1fae5;color:#065f46;padding:2px 7px;border-radius:10px;font-size:0.78em;">ポジ</span></td>
-    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:2%;background:#34d399;"></div></div></td>
-    <td class="kw-count">2.4%</td>
+    <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:3.2%;background:#34d399;"></div></div></td>
+    <td class="kw-count">3.2%</td>
   </tr></tbody>
 </table>
   </div>
@@ -485,6 +588,11 @@
     <table class="kw-table">
       <thead><tr><th>キーワード</th><th>頻度</th><th>出現率</th></tr></thead>
       <tbody>
+      <tr>
+        <td class="kw-word">体験</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:26%;background:#34d399;"></div></div></td>
+        <td class="kw-count">20件 (26.0%)</td>
+      </tr>
       <tr>
         <td class="kw-word">素敵</td>
         <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:13%;background:#34d399;"></div></div></td>
@@ -521,7 +629,7 @@
         <td class="kw-count">7件 (9.1%)</td>
       </tr>
       <tr>
-        <td class="kw-word">良かった</td>
+        <td class="kw-word">非日常</td>
         <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
         <td class="kw-count">5件 (6.5%)</td>
       </tr>
@@ -531,33 +639,28 @@
         <td class="kw-count">5件 (6.5%)</td>
       </tr>
       <tr>
-        <td class="kw-word">非日常</td>
+        <td class="kw-word">良かった</td>
         <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
         <td class="kw-count">5件 (6.5%)</td>
       </tr>
       <tr>
-        <td class="kw-word">映え</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#34d399;"></div></div></td>
-        <td class="kw-count">4件 (5.2%)</td>
+        <td class="kw-word">ご満足</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
+        <td class="kw-count">5件 (6.5%)</td>
       </tr>
       <tr>
         <td class="kw-word">普通</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#94a3b8;"></div></div></td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#f87171;"></div></div></td>
+        <td class="kw-count">4件 (5.2%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">最高評価</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#34d399;"></div></div></td>
         <td class="kw-count">4件 (5.2%)</td>
       </tr>
       <tr>
         <td class="kw-word">魅力</td>
         <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#34d399;"></div></div></td>
-        <td class="kw-count">4件 (5.2%)</td>
-      </tr>
-      <tr>
-        <td class="kw-word">ワクワク</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#34d399;"></div></div></td>
-        <td class="kw-count">4件 (5.2%)</td>
-      </tr>
-      <tr>
-        <td class="kw-word">高い</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:5%;background:#f87171;"></div></div></td>
         <td class="kw-count">4件 (5.2%)</td>
       </tr></tbody>
     </table>
@@ -568,19 +671,14 @@
       <thead><tr><th>キーワード</th><th>頻度</th><th>出現率</th></tr></thead>
       <tbody>
       <tr>
+        <td class="kw-word">体験</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:21%;background:#34d399;"></div></div></td>
+        <td class="kw-count">10件 (21.3%)</td>
+      </tr>
+      <tr>
         <td class="kw-word">素敵</td>
         <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:17%;background:#34d399;"></div></div></td>
         <td class="kw-count">8件 (17.0%)</td>
-      </tr>
-      <tr>
-        <td class="kw-word">好き</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:15%;background:#34d399;"></div></div></td>
-        <td class="kw-count">7件 (14.9%)</td>
-      </tr>
-      <tr>
-        <td class="kw-word">映え</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:13%;background:#34d399;"></div></div></td>
-        <td class="kw-count">6件 (12.8%)</td>
       </tr>
       <tr>
         <td class="kw-word">満足</td>
@@ -609,7 +707,7 @@
       </tr>
       <tr>
         <td class="kw-word">普通</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11%;background:#94a3b8;"></div></div></td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:11%;background:#f87171;"></div></div></td>
         <td class="kw-count">5件 (10.6%)</td>
       </tr>
       <tr>
@@ -628,9 +726,9 @@
         <td class="kw-count">4件 (8.5%)</td>
       </tr>
       <tr>
-        <td class="kw-word">感謝</td>
-        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
-        <td class="kw-count">3件 (6.4%)</td>
+        <td class="kw-word">無料</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:8%;background:#34d399;"></div></div></td>
+        <td class="kw-count">4件 (8.5%)</td>
       </tr>
       <tr>
         <td class="kw-word">ユニーク</td>
@@ -640,6 +738,11 @@
       <tr>
         <td class="kw-word">ワクワク</td>
         <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#34d399;"></div></div></td>
+        <td class="kw-count">3件 (6.4%)</td>
+      </tr>
+      <tr>
+        <td class="kw-word">高い</td>
+        <td class="kw-bar-cell"><div class="kw-bar-wrap"><div class="kw-bar" style="width:6%;background:#f87171;"></div></div></td>
         <td class="kw-count">3件 (6.4%)</td>
       </tr></tbody>
     </table>
@@ -660,28 +763,28 @@
         <td class="ts-count-cell"><span class="change-up">▲ 6.1pt</span></td>
       </tr>
       <tr>
+        <td class="kw-word">最高評価</td>
+        <td class="ts-count-cell">0.0%</td>
+        <td class="ts-count-cell">5.2%</td>
+        <td class="ts-count-cell"><span class="change-up">▲ 5.2pt</span></td>
+      </tr>
+      <tr>
         <td class="kw-word">美味しい</td>
         <td class="ts-count-cell">4.3%</td>
         <td class="ts-count-cell">9.1%</td>
         <td class="ts-count-cell"><span class="change-up">▲ 4.8pt</span></td>
       </tr>
       <tr>
-        <td class="kw-word">面白い</td>
-        <td class="ts-count-cell">0.0%</td>
-        <td class="ts-count-cell">3.9%</td>
-        <td class="ts-count-cell"><span class="change-up">▲ 3.9pt</span></td>
+        <td class="kw-word">体験</td>
+        <td class="ts-count-cell">21.3%</td>
+        <td class="ts-count-cell">26.0%</td>
+        <td class="ts-count-cell"><span class="change-up">▲ 4.7pt</span></td>
       </tr>
       <tr>
         <td class="kw-word">魅力</td>
         <td class="ts-count-cell">2.1%</td>
         <td class="ts-count-cell">5.2%</td>
         <td class="ts-count-cell"><span class="change-up">▲ 3.1pt</span></td>
-      </tr>
-      <tr>
-        <td class="kw-word">良かった</td>
-        <td class="ts-count-cell">4.3%</td>
-        <td class="ts-count-cell">6.5%</td>
-        <td class="ts-count-cell"><span class="change-up">▲ 2.2pt</span></td>
       </tr></tbody>
     </table>
   </div>
@@ -691,22 +794,10 @@
       <thead><tr><th>キーワード</th><th>以前</th><th>直近</th><th>変化</th></tr></thead>
       <tbody>
       <tr>
-        <td class="kw-word">好き</td>
-        <td class="ts-count-cell">14.9%</td>
-        <td class="ts-count-cell">3.9%</td>
-        <td class="ts-count-cell"><span class="change-down">▼ 11.0pt</span></td>
-      </tr>
-      <tr>
         <td class="kw-word">高め</td>
         <td class="ts-count-cell">10.6%</td>
         <td class="ts-count-cell">1.3%</td>
         <td class="ts-count-cell"><span class="change-down">▼ 9.3pt</span></td>
-      </tr>
-      <tr>
-        <td class="kw-word">映え</td>
-        <td class="ts-count-cell">12.8%</td>
-        <td class="ts-count-cell">5.2%</td>
-        <td class="ts-count-cell"><span class="change-down">▼ 7.6pt</span></td>
       </tr>
       <tr>
         <td class="kw-word">可愛い</td>
@@ -719,6 +810,18 @@
         <td class="ts-count-cell">10.6%</td>
         <td class="ts-count-cell">3.9%</td>
         <td class="ts-count-cell"><span class="change-down">▼ 6.7pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">楽しみ</td>
+        <td class="ts-count-cell">8.5%</td>
+        <td class="ts-count-cell">2.6%</td>
+        <td class="ts-count-cell"><span class="change-down">▼ 5.9pt</span></td>
+      </tr>
+      <tr>
+        <td class="kw-word">無料</td>
+        <td class="ts-count-cell">8.5%</td>
+        <td class="ts-count-cell">2.6%</td>
+        <td class="ts-count-cell"><span class="change-down">▼ 5.9pt</span></td>
       </tr></tbody>
     </table>
   </div>
@@ -744,7 +847,7 @@
 </div>
 <script>
 const REVIEWS = [{"source": "google_maps", "reviewer_name": "アービィコロンローカルガイド · 27 件のクチコミ · 342 枚の写真", "rating": 3.0, "date": "2 週間前", "text": "京都の梅小路駅直結のスポットです。\n以前からSNSで見て知っていたので、近くに行ったタイミングで当日にサイトで予約をして行きました。\n\n駅からの目印があまりない気がしましたが、何となく辿り着きました。\nお店の近くまで行くとピンクの車両があり一気に別世界になりました！\nお店を利用していない人も写真を撮って、何これ？と驚いたのが印象的でした。\n\n店内は撮影をしているカップルや女子会、インバウンド、お子様連れのご家族、男性おひとりなど様々なお客様がいて、賑わっていました。\n料理を楽しむというよりは、雰囲気を楽しむ場所です。\n\nエビフライの中が冷たい状態だったので女性の店員さんにお伝えしたところ、無愛想な対応。\nその後、男性の責任者らしき人が『どこ？』とスタッフに言いながら横を通り、横目で席の周りを一周した後、お詫びにきました。\nこちらは見返りを求めている訳ではなかったので、申し入れを断りましたが\nあまりに稚拙な対応でとても残念な気持ちになりました。\n\nあとは着ぐるみのキャラクターが店内を回って写真撮影などの時間がありました。\n\n帰る前にお店の奥を見せていただいたところキッチンの女性のスタッフさんは明るく笑顔で声をかけていただきとても救われました。\n\nお店はアトラクションのようなとても素敵な空間ですので、非日常の気分を味わえます。", "location": ""}, {"source": "google_maps", "reviewer_name": "Satoshi Sawadaローカルガイド · 842 件のクチコミ · 8,027 枚の写真", "rating": 5.0, "date": "最終編集: 2 か月前", "text": "結構面白かったです。ありきたりのレストランよりはかなりインパクトがあります。「FUTURE TRAIN KYOTO DINNER ＆ CAFE」は、廃車となった特急サンダーバードをアップサイクルした「日本初の高架上常設店舗」というユニークなコンセプトが魅力です。車両内部をアート空間として再生し、デジタル演出と融合させた空間はまさに非日常。ピンクを基調とした華やかな世界観のボックス席や、京都タワーや五重塔を望めるテラス席など、どこをとっても“映える”スポットで、アートと食を同時に楽しめる新感覚のエンタメレストランです。BARもあり、22:00までやってます。\n\n＜コース内容＞\n【お料理のみ】FUTURE　PARTY　COURSE\n(8品)税込6,000円\n・Appetizer：OBANZAI TAPASと季節の1品\n・Popover：米粉のポップオーバー\n・Soup：蛤のクラムチャウダー\n・Pasta：メッツェマニケのピンククリーム\n・Salad：お口直しのベリーサラダ\n・Main：AUS産リブロースステーキ100g\n・Desert ：パティシエからの贈り物\n・Cafe：コーヒー又は紅茶\n\n【料理・味】\n「FUTURE PARTY COURSE」は、見た目の華やかさと味わいの両立が印象的でした。米粉を使ったポップオーバーは軽やかで香ばしく、蛤のクラムチャウダーは旨味たっぷりで滋味深い一品。メッツェマニケのピンククリームパスタは、見た目のインパクトだけでなく、クリーミーでコクのある味わいでした。メインのリブロースステーキは程よい焼き加減で、肉のジューシーさがしっかり感じられます。デザートも華やかで、最後までコース全体の完成度が高く、見た目も味も楽しめる構成でした。上場企業のDDホールディングスは運営していつので、食事内容はやっぱり安定しています。\n\n【店雰囲気】\n店内はアート空間としての演出が見事で、列車の世界観を生かしたデザインが徹底されています。ネオンや照明の使い方が華やかで、まるで近未来の食堂車にいるようなワクワク感。どの席もコンセプトが異なり、特にピンクのボックス席は女子会や記念日にぴったり。ホーム席やテラス席からは京都の景色が見渡せ、非日常的な時間を過ごせました。\n\n【サービス】\nスタッフの方々はフレンドリーで説明も丁寧。コースの進行もテンポ良く、写真撮影にも快く応じてくださいました。初訪問でも居心地よく過ごせ、特別な時間を演出してくれるホスピタリティを感じます。\n\n【アクセス】\n京都駅からも比較的アクセスしやすい立地にあり、観光の合間にも立ち寄りやすい場所です。高架上という特異なロケーションもこの店ならではで、訪れる前から期待感が高まります。\n\n【価格・コスパ】\n税込6,000円で8品のフルコースを楽しめる内容は、コンセプトと演出を考えると十分に満足感があります。見た目の華やかさ、空間演出、料理のバランス、どれも価格以上の体験価値を感じられるコースでした。特に新しいもの好きな方、京都らしい飲食店にちょっと飽きた方にはおすすめのコスパです。", "location": ""}, {"source": "google_maps", "reviewer_name": "eriローカルガイド · 7 件のクチコミ · 249 枚の写真", "rating": 4.0, "date": "1 か月前", "text": "🚃✨京都に現れた未来型レストラン✨\n一歩足を踏み入れた瞬間、ここが現実じゃないみたい…💭\n2025年9月20日グランドオープン\nオープンする前から注目してたよ👀✨\n\n廃車となった特急サンダーバードを\nアップサイクルして生まれ変わった、\n日本初・高架上の常設店舗という唯一無二の空間。\n\nデジタル×アートが融合した店内は\nまるで近未来の美術館🎨\nしかもこのサンダーバード車内、\n誰でも見学できるってすごくない？👀✨\n\n席の種類もとにかく可愛い…🤍\n🚃ピンクの世界観がたまらない「2号車ボックス席」\n🥂ちょっと大人な気分になれる「3号車ボックス席」\n🌆五重塔や京都タワーが望める「ホーム席」「テラス席」\n\nどの席を選んでも、\n非日常感100％でテンション上がること間違いなし🙌✨\n\nお料理は\nまるでコース料理みたいなワクワク感も…✨列車と同じピンク🩷の\nお料理も！映えも◎\n\nアートを見るだけじゃなく、\n食べて・感じて・体験する\n新感覚エンタメレストラン。\n\n♡京都デート\n♡女子会\n♡観光の思い出作り\nどれにも全力でおすすめ🫶\n\n「一度は行ってみたい」が\n「絶対また行きたい」に変わる場所でしたーー💗\n\nサプライズ演出も可能🎂お誕生日や記念日にも◎サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "こたつねこローカルガイド · 24 件のクチコミ · 436 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "京都・梅小路にある FUTURE TRAIN KYOTO DINER &CAFE です。2025年秋オープンで、まだ新しさが残る空間でした。何よりテンション上がったのは、廃線になった特急サンダーバードの車両を再活用している点です。鉄道の記憶がそのまま残る客席は、見た目からワクワクが止まりませんでした。目玉メニューの五重の塔パフェは、見た目のインパクトが抜群で、出てきた時は思わず声を上げました。すごいボリューム感でしたが、味もちゃんと美味しかったです。梅小路の落ち着いた雰囲気の中で、過去と未来が交差する体験ができる、かなり面白いカフェ体験でした。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "Calinローカルガイド · 23 件のクチコミ · 89 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "ピンク大好きな娘たちのために利用しました。ピンクのTRAINが見えた瞬間大興奮。店内もピンクいっぱいでめちゃくちゃ可愛かったです！ピンクの未来行きチケットも可愛かったです。ピンクのカルボナーラはしば漬け風味？少し酸っぱいですが美味しかったです。食事代とは別に入場料がかかります。ファミリーで行っても、デートで行っても楽しめると思います。", "location": ""}, {"source": "google_maps", "reviewer_name": "メカパンダローカルガイド · 339 件のクチコミ · 806 枚の写真", "rating": 2.0, "date": "3 か月前", "text": "場所的に鉄道ファン向けかと思いきや、どちらかというとインバウンドやパリピ向け。ピンクのサンダーバードは鉄ヲタホイホイといった感じ💦（車両内はただのへんてこ空間で食事スペースではない）\nランチで2,000円ちょい。さらに入場料と称して＋1人700円。料理はあまり期待出来ず、値段は場所・雰囲気代がほとんどと思うしかないです。", "location": ""}, {"source": "google_maps", "reviewer_name": "しんやローカルガイド · 9 件のクチコミ · 13 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "京都に出来た新スポット！\n外観も内装も映えるし、料理も映えます！\n是非日本人も外国人も行ってみてほしいと思います。\n\nただ価格がちょっと高めなので、今後入場料(700円)を払ってまでお客さんが来るのかなと思います。\nまた料理が来たときに30cmのパフェと言われましたが、実物は器の高さも入れてるように感じました。\nあと説明で全てシェフが手作りで作っていますと言っていましたが、普通シェフが手作りするものなんじゃないでしょうか…\n色々爪が甘いと感じました。\n\n最後にプレオープンだからなのか、お客さんが少ないからなのか、学生の店員さんの私語多めでした。\n話すのは良いんですが、お客さんの見えない所でやってほしいと思います。", "location": ""}, {"source": "google_maps", "reviewer_name": "FULL SATORU4 件のクチコミ · 11 枚の写真", "rating": 3.0, "date": "5 か月前", "text": "USJや非現実感を味わいたい人には良いですね。\n切符を切ってくれて、ヒューチャーポーズを求められたり、世界観の演出はしっかりされてました。予約でいっぱいです。と断れつつも、何とかお席を用意してくれました✨対応サービスもちゃんとされておられましたね。\n料理の味はまぁこんなもんかという感じで、USJの中で食べるご飯と同じくらいのレベルなので、非日常を味わいに行くと割り切れば十分楽しめると思います。", "location": ""}, {"source": "google_maps", "reviewer_name": "しーちゃんローカルガイド · 88 件のクチコミ · 469 枚の写真", "rating": 4.0, "date": "2 週間前", "text": "テレビで拝見して\n行ってみたい！となり、行きました♪\n高架の上にあるので\nわりとすぐ見つけれました🔜\n入り口が改札風だったり\n入る前からワクワク٩( 'ω' )و\n店員さんも皆さん\nエンターテイナーで\nテーマパークのような演出でした⭐︎\nこういうところでは珍しく\nご飯もしっかりしてて\n美味しかったですよ∩^ω^∩\n1号車が体験型になってるのですが\n映えはするものの、見るだけで\nなにかアクションが起こるわけでは\n無くて少し残念でした⤵︎\nそこだけもう少し頑張ってほしいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "aink iaw5 件のクチコミ · 13 枚の写真", "rating": 5.0, "date": "6 か月前", "text": "プレオープン2日目の夜に2人でお邪魔しました。\nメニューで一番目を引いたハンバーガーと、ナチョス、ドリンクを1杯ずついただきました。\nレビュー見て少し不安でしたが、内装やスタッフさんの雰囲気も楽しく、お料理も美味しく、良い思い出になりました！グランドオープン後からは入場料がかかるので、そこは注意した方がいいと思います。\n\nお料理はハンバーガーからパスタからパンケーキから様々でした。\nお料理が出るのが遅いとレビューあり、遅かったとしてもプレオープン期間なので良いかと思っていたのですが、私たちが行った時はごく普通の提供スピードでした。\nハンバーガーは煙の演出が素敵でした！写真を見てドライアイスかなと思っていたんですが、燻製っぽいような感じがしました。3000円台で少しお高いですが、2人でシェアできるくらいボリュームがありますし、可愛くて美味しかったので大満足です˖ ࣪⊹\n\n日本の古風な雰囲気が好きな海外の方やミドル層以上の方には合わないかもしれませんが、若い子や電車好きの子供たちはすごく楽しいと思います。\nスタッフの方々がすごくコンセプトを重んじて接客しておられて、テーマパークみたいで楽しかったです！入場時にもらえるチケットも思い出に残りました🎟.·\nグランドオープン後もまた行きたいです！", "location": ""}, {"source": "google_maps", "reviewer_name": "del brローカルガイド · 11 件のクチコミ · 21 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "体験＆ディナーコースを夫婦で利用しました。\n30代には厳しいかと思っていましたが、実際は終始とても楽しかったです！！\n\n店員さん（案内人？）がニコニコ盛り上げてくれますし、車掌のバーディ・バディもかわいい♪ そして料理は高級料亭のような大人なお味。\n\n観光価格なので日常使い向けではないですが、アトラクション性もありつつお料理も美味しいので、観光の際にはオスメスです。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "新大阪第一深情ローカルガイド · 230 件のクチコミ · 32,708 枚の写真", "rating": 4.0, "date": "6 か月前", "text": "2025年8月20日、プレオープン初日に訪問しました。事前に公式サイトから21時で予約していたので、とてもスムーズに入店できました。受付で最初に出迎えてくれたスタッフのお姉さんは、車掌さんの制服姿でとても可愛らしく、しかも丁寧で優しい対応。入店から席案内まできちんとしていて、ホスピタリティを強く感じました。鉄道ファンだけでなく、誰でもワクワクできる雰囲気です。\n\n案内されたのは「2号車」までで、実際に電車の車両を利用した空間は本当に臨場感があります。外観はサンダーバード車両で、夜のライトアップとネオン演出が未来的でフォトジェニック。座席も電車そのままなので、まるで特別な旅をしているような気分になれました。さらに入店時に「記念チケット」が配られるのも嬉しいポイントです。\n\n注文は各テーブルのQRコードをスマホで読み取る方式。ワンドリンク制とのことで、私は「アイスのアールグレイロイヤルミルクティー」と、デザートから「MATCHA ME MOCHI あんみつ」を注文しました。ドリンクは香り高いアールグレイの風味とミルクのまろやかさが合わさり、すっきりしつつも濃厚。デザートは見た目も華やかで、白玉や抹茶がアクセントになっていて、和の味わいを楽しめました。鉄道カフェというより、本格的なスイーツがいただけるのも魅力です。\n\n滞在は1時間ほどで、プレオープン中だったため店内は空いていて快適。料金は合計1550円ほどでした。支払いはキャッシュレス決済のみ対応で、Suicaでスムーズに支払えました。現金不可なので要注意です。店内レジ横にはオリジナルグッズの販売もあり、鉄道好きには嬉しいスポットになっています。\n\nそして特に印象的だったのが、入店時のお迎えと、帰りの見送り。最後にスタッフさんが「発車進行！」のポーズで送り出してくれる演出がとても可愛らしく、このカフェならではの特別な体験でした。鉄道ファンはもちろん、写真映えを楽しみたい人や、旅気分を味わいたい人にもぴったりです。\n\nラストオーダーは22時頃で、比較的遅い時間まで利用可能。フードメニューは少し高めの価格設定で、海外観光客を意識している印象もありますが、雰囲気や体験を含めると十分に満足できました。\n\n総合的に、とてもユニークで満足度の高い体験型カフェです。プレオープンの段階から完成度が高く、今後のグランドオープンが楽しみ。京都で少し特別な時間を過ごしたい方には、ぜひ訪れてほしい場所です。", "location": ""}, {"source": "google_maps", "reviewer_name": "来嶋健太郎ローカルガイド · 359 件のクチコミ · 4,263 枚の写真", "rating": 4.0, "date": "5 か月前", "text": "梅小路京都西駅すぐ、梅小路短絡線線路跡に本日先行オープンした、681系の車体を活用したレストランです。増田セバスチャンプロデュースによる未来行きの列車をイメージした食の体験空間により、ファミリー主体の梅小路エリアに若者を呼び込む戦略です。ピンク一色の内装に居心地が不安でしたが、クラブ音楽が流れる店内はボックス席からバーカウンターまで揃っており、外資系パリピ向けホテルのラウンジのようで意外と落ち着きます。メニューは可愛いものからがっつり系のプレートまで豊富で、レストランとしてもちゃんと使えます。5両編成のうち681系を活用した1号車は9月オープン！", "location": ""}, {"source": "google_maps", "reviewer_name": "湯太郎ローカルガイド · 39 件のクチコミ · 49 枚の写真", "rating": 1.0, "date": "最終編集: 1 か月前", "text": "目新しさに来たものの　入場料¥700 みて\nみんな帰る　かつ　ワンドリンク制で　ひとり\n¥1500〜\n土日も連休も閑古鳥\n来年の今頃は　もう　無いかも\n\n(お店の回答)\n\n入場料に関しましては予約サイトにて無料クーポンもご用意しております。初回ご来店時にはフリーパスをお配りしておりますので、2回目以降は予約なしでも無料でご利用いただけます。\n\nだったらもっと広報したほうがいいで\nみんな　入り口の　ポスター見て\n帰ってるで", "location": ""}, {"source": "google_maps", "reviewer_name": "まみ5 件のクチコミ · 8 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "2025/9/20open✨️\n︎︎︎︎最寄り駅の梅小路京都西駅につくと、ピンクの列車がすぐ見えてきます✨️\n駅近なのが嬉しい！京都駅からも1駅です♪\n\nポップオーバーがふわふわで3種のクリームどれとも相性抜群‎🤍\n\n詳しくみれてはないが、車両を再現したピンク色が可愛いポップな席から、お洒落な個室やテラス席までありました☺️\n\n豊富なアルコールから、お洒落なノンアルコール、シェイクもあります！\n\n非日常を楽しめるので、記念日や、特別な日にオススメ🥂🏙", "location": ""}, {"source": "google_maps", "reviewer_name": "きの（きの）ローカルガイド · 618 件のクチコミ · 423 枚の写真", "rating": 5.0, "date": "6 か月前", "text": "プレオープン初日にお伺いしました。\nまだ慣れない中で皆さん頑張っておられたので、少し甘めかもしれませんがこの評価にさせていただきます。\n\n店内はとてもポップで明るくて、京都ぽさは全くないんですが、それも逆に良くて、新感覚なお店として利用できました。\n\nあまり料理には期待していなかったのですが、メニューも多く、パスタもとても美味しくいただけました。\n\nコンセプトのあるお店ということもあってか、料金はやや高めだと思います。\n\nただ、本当にこの雰囲気が好きな方はぜひ来店してみてください。\n\n座席は、やはり車両内が良いと思うので、通される席によっては満足度が変わるかもしれません。", "location": ""}, {"source": "google_maps", "reviewer_name": "ふのローカルガイド · 623 件のクチコミ · 1,825 枚の写真", "rating": 4.0, "date": "4 か月前", "text": "入場料700円が無料になるクーポンがあったので訪問しました。\nピンクのサンダーバードで食事ができます。\nランチセットのクラシックハンバーグ2400円をいただきました。ハンバーグは肉肉しくて美味しかったです。ボリューム満点でした。", "location": ""}, {"source": "google_maps", "reviewer_name": "小林三剛ローカルガイド · 2,475 件のクチコミ · 35,885 枚の写真", "rating": 5.0, "date": "6 か月前", "text": "☆FUTURE TRAIN KYOTO DINER&CAFE☆\n\nかつて、\n\n京都と北陸を結んだ特急サンダーバードを紅梅色に再塗装し\"未来行き\"の列車として再活用した、\n\n日本初の廃線高架上エンタメレストランが梅小路京都西駅にオープン。\n\n店舗入口となる改札を抜けると未来行きの旅が始まる不思議なホーム、列車に乗り込むように切符を切ってもらったりと、想像力を刺激する空間です。\n\n先行して2号車と3号車がオープン。\n\n食堂車をモチーフとしたレトロながらも未来感ある2号車、映画のワンシーンに出てくるようなバーカウンターの3号車、駅のプラットホームをモチーフにしたホーム席など、思わず写真を撮りたくなりますね。\n\n【FUTURE EKIBEN BOX】(2800円)をオーダー。\n\nワゴンで提供、\n\nまるで駅弁のような三段のお重は、\n\n［一の重］\n・柴漬けタルタルのミニフィレオフィッシュバーガー\n・三色ミニ丼\n・ミニスフレパンケーキ\n［二の重］\n・焼きとうもろこしとグリーンアスパラの白和え\n・ワカモレ冷奴 サクサク醤油 菊花ちらし\n・市松模様の松風焼き\n［三の重］\n・海老芋コロッケ 大葉ジェノベーゼ\n・抹茶塩の松茸天ぷら\n・和風海老マヨ\n\nと9種類の和洋折衷な小鉢が彩りよく並んだ豪華な駅弁。\n\nお茶はレトロな汽車茶瓶で。\n\n※プレオープン期間は入場料(大人700円)は無料。\n\n※キャッシュレス対応、現金不可です。", "location": ""}, {"source": "google_maps", "reviewer_name": "松川哲三（instjyuuki）ローカルガイド · 430 件のクチコミ · 2,215 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "出迎えから案内～給仕、お送りまで　スタッフさん達皆さん素晴らしい接客されておられました。\nお昼のメニューはリーズナブルで、次回は夜の部で寄らせていただこうと思います。\n凄く格好いいソムリエさんとイケメンマネージャーさんによるプレオープン期間にお伺いさせて頂きました。\nありがとうございました。\nおおきにー", "location": ""}, {"source": "google_maps", "reviewer_name": "キシェルローカルガイド · 440 件のクチコミ · 718 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "ランチでお伺いしました\n料理も美味しく店員さんも愛想がいいので素晴らしいお店です\n映え重視、コンセプト重視なので、お値段が張るのは仕方ないかなと思います\nもちろんそれでも高いかなと思ったので、食事のところだけ星4ですみません\n予約時間より早く行ったのに通してくれて本当にありがとうございました", "location": ""}, {"source": "google_maps", "reviewer_name": "西野トヲルローカルガイド · 742 件のクチコミ · 24,239 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "今回は\n.\nメルティ抹茶ロール(1,200円)\n.\nをいただきました\n.\nまったり甘いカスタードクリームを\n.\nふんわり柔らか抹茶ロールにブリュレした\n.\n果肉入り甘酸っぱいミックスベリーソース\n.\nが入った見た目も可愛らしいロールケーキです", "location": ""}, {"source": "google_maps", "reviewer_name": "ジュレ3 件のクチコミ · 7 枚の写真", "rating": 5.0, "date": "6 か月前", "text": "プレオープン2日目、訪問しました。\n可愛らしい車掌さんに窓際の席に案内していただきました。夕暮れ時の店内の雰囲気、お料理共に最高でした。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "麦ローカルガイド · 44 件のクチコミ · 462 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "FUTURE TRAIN KYOTO DINER & CAFE\n\nかつて京都と北陸を結んだ特急サンダーバードが\n紅梅色の未来行きの列車に生まれ変わり\n日本初の廃線高架上レストランとしてオープン\n\nテーマパークみたいでワクワクする店内\nスタッフさんも駅員さんのコスチュームが可愛い\n切符も切っていただきました\n\nお席は食堂車やホーム席、バーカウンターなどなどありました\n今回はピンクのBOX席にご案内いただきました\n個室ではないけどプライベート感があって\nリラックスできました\n\n写真映えする可愛いメニューばかりで\nこの日のパスタは「ピンクのカルボナーラ」\nとのことで気になったけど\n「フューチャー駅弁ボックス　スープとお茶付き」をおつまみに\nビールをいただくことにしました\nピンクの花びらやピンクペッパーが使われていたり\nよく見るとハンバーガーのソースもピンク\n柴漬けのタルタルソースだそうです\nスープはカレー味で美味しかったです\n\n一号車のギャラリーは9月20日オープン\n一年間有効の入場券もいただきましたし\nまた是非お邪魔したいと思います\n\nピンク好きさん、電車好きさん是非🎶\nすぐそばに京都鉄道博物館もありました\n\nFUTURE TRAIN KYOTO DINER & CAFE\nJR梅小路京都西駅　徒歩1分\nJR京都駅　徒歩15分\n入場料（初回来店時のみ）　大人 700円／お子様　300円（小学6年生まで／3歳まで無料）\n※9月15日までのプレオープン期間は入場無料\n完全キャッシュレス", "location": ""}, {"source": "google_maps", "reviewer_name": "sakiローカルガイド · 97 件のクチコミ · 81 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "増田セバスチャンが好きで、行きました。食事は可愛くてワクワクしました。味は普通に美味しかったですが、店内をうろうろされていた男性スタッフがイマイチでした。", "location": ""}, {"source": "google_maps", "reviewer_name": "C S2 件のクチコミ · 3 枚の写真", "rating": 4.0, "date": "1 か月前", "text": "いつも見ている謎のピンクの電車…と思ってましたが、中で体験とお食事ができるのを調べて知ったので、友人とアフタヌーンティーに来ました。食事美味しく、会話を楽しめて良い体験ができました！", "location": ""}, {"source": "google_maps", "reviewer_name": "榎本詔一ローカルガイド · 47 件のクチコミ · 1,753 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "【梅小路】FUTURE TRAIN KYOTO DINER & CAFE（京都）\n@kobekinkoyabakamusuko\n👆\n詳細は、インスタグラムまで😊\nインスタグラムのフォローを\nどうかよろしく願いします(୨୧ᵕ̤ᴗᵕ̤)\nPlease follow me on Instagram✨\n请关注我的Instagram。\n인스타그램 팔로우 부탁드려요.", "location": ""}, {"source": "google_maps", "reviewer_name": "JNR 583ローカルガイド · 136 件のクチコミ · 1,032 枚の写真", "rating": 1.0, "date": "最終編集: 5 か月前", "text": "プレオープン11:00に予約して訪問。\n駅弁？¥2,800を11:10頃に注文。\n提供されたのは11:54頃。\n\n提供スピードが遅すぎる。😠\nそしてお冷を注いでくれるのはいいが、それが垂れてお弁当に入ってきてショック😨\n\n次も行くかと言われたら微妙。\n\n営業初日だから、厳しいと言われるかもしれないが、鉄道博物館や東寺の近くで海外さんも多い観光地であり、飲食店なのだから衛生面はしっかりしてほしいところ。\n\n9/4追記\n工事の音や工事作業員の話し声がやかましい。\nまた、態度も悪い。最悪最低のお店だね。", "location": ""}, {"source": "google_maps", "reviewer_name": "野村純1 件のクチコミ", "rating": 1.0, "date": "3 か月前", "text": "まず700円の入場料払ってご飯食べな見学できへん。それでも観る価値あるんかなぁと入ってみたらこれ価値ある？って感じ。席に座ってメニューみたらファミレスみたいなんでミックスグリル2600円セットのスープご飯550円頼んだ。来てびっくり‼️2種類のポテトてんこ盛り鶏はパサパサハンバーグは硬いスープは味が濃くて飲めたもんじゃない。付け合わせのブロッコリーは生焼け。\nスタッフは真ん中に固まって笑いながらおしゃべり。2度といきません。", "location": ""}, {"source": "google_maps", "reviewer_name": "ゆきローカルガイド · 82 件のクチコミ · 12 枚の写真", "rating": 1.0, "date": "最終編集: 3 週間前", "text": "まず入って受付で待つも予約をしているのにも関わらず、人が全くやってこなくて全然案内してくれなくて何分も待ちました…この時点で嫌な予感はしました。やっと案内されるも品切ればかりで食べるものが全くなくて残念すぎてガッカリしました…12時に品切ればかりてどうなってるん！しかもデザートは来るのに45分ぐらいかかりました。\nオープンしたばかりならまだわかりますがオープンしてだいぶたってるのにもこれはちょっと\nもうリピはないかなあ。品切れ多すぎです。\nあと入っても特にアトラクションなどもないので外から見るだけで充分だと思います。\nがっかりしました。これなら鉄道博物館の中で食べた方が良かったです", "location": ""}, {"source": "google_maps", "reviewer_name": "京めぐローカルガイド · 39 件のクチコミ · 272 枚の写真", "rating": 5.0, "date": "4 週間前", "text": "とても楽しいレストラン\nアフタヌーンティセット\nとても美味しかったです\n子供連れの方にもオススメです。", "location": ""}, {"source": "google_maps", "reviewer_name": "つむら4 件のクチコミ", "rating": 2.0, "date": "4 週間前", "text": "外装は田舎のパチ屋、内装はコンカフェといった風情。\n予約したのに汚い机に案内され、すぐお拭きしますと拭いてくれたが椅子は拭いてくれず、前のお客さんの食べこぼしが普通に椅子にのこってて気持ち悪い思いをしました。飲食店なのに店員さんがネイルをしているのもあり、衛生面で不安\n食事は少ししょっぱかったですが食べられないほどではありません。体験としては面白いという人もいるのかも。", "location": ""}, {"source": "google_maps", "reviewer_name": "Johnローカルガイド · 32 件のクチコミ · 29 枚の写真", "rating": 4.0, "date": "1 週間前", "text": "スタッフサービスはイマイチだが料理は意外にも本格的で美味しい。\n\nレストランに入るために入場料として700円必要である点が足が遠のく一因であろう。\n\n客層としては、カップルと子連れのファミリー、一部鉄オタと行った形", "location": ""}, {"source": "google_maps", "reviewer_name": "前田春香3 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ピンクの食堂車のようなお席が\nテンション上がります！\n駅の横なので雨の日でも濡れずにいけます。\n\nかわいいだけじゃなくお料理はどれも美味しかったです。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "PO Nローカルガイド · 73 件のクチコミ · 6 枚の写真", "rating": 1.0, "date": "3 か月前", "text": "プレオープンに行きました。\n子連れや鉄道ファンぽい若い男性グループには駅員さんコスチュームの店員さんが席まで案内したりして楽しそうでしたが、私がおばちゃんで1人だったからか入ってから食事の提供までずっと黒服の男性女性店員が応対で、レジと見送りだけが駅員コスチュームの人だったのが残念だった。\n駅弁がもう無いと言われて別のメニューにしたが、ボリュームがあるだけで特別おいしいとも思えなかった。", "location": ""}, {"source": "google_maps", "reviewer_name": "笹尾真比胡5 件のクチコミ", "rating": 1.0, "date": "最終編集: 6 か月前", "text": "一言で言うと、最低でした…\n\n友人と行きましたが、モバイルオーダーでほぼ同時に注文をしたにも関わらず、食事が出て来たのが40分後。\nしかも、料理は完全に冷めており、2800円の価値は到底ありません。\n近くのテーブルに座られていたお子様連れのご家族様も、料理が一向に出て来ず、怒って途中で帰られる始末。\n\nまた、店の雰囲気も「よくこの内装で、飲食店をしようと思ったな」というのが正直な所で、どこを見てもピンク1色…\n目がチカチカして、とても落ち着いて飲食出来るような店ではありません。\n\n開店前は楽しみにしていましたが、「JR西日本と某有名？アーティストが監修してこれか…」と、レベルの低さにがっかりさせられた時間でした。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "谷川具子ローカルガイド · 16 件のクチコミ · 693 枚の写真", "rating": 4.0, "date": "3 か月前", "text": "お洒落でインスタ映えするところでした。少しお高いサービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "Yassinローカルガイド · 14 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "🇯🇵\nこのリオープンに参加できて本当に良かったです。とてもユニークなコンセプトで、心地よい雰囲気と素敵な音楽、そして最高のDJのおかげで特別な体験になりました。スタッフの皆さんもとても親切で温かく迎えてくれて、本当に感謝しています。次に来るとき、この場所がさらに花開いているのを楽しみにしています。\n\n🇬🇧\nI’m really glad I was able to attend this re-opening. It’s such a unique concept, and thanks to the pleasant atmosphere, great music, and an amazing DJ, it turned into a special experience. The staff were also very kind and welcoming, and I truly appreciate that. I look forward to seeing this place bloom even more the next time I come.サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "やまちゃんローカルガイド · 651 件のクチコミ · 15,239 枚の写真", "rating": 2.0, "date": "4 か月前", "text": "予約をして行ったので待ち時間なく着席でき、デザートも普通。ただ以下の点で問題がある。\n・お冷が言わないと出てこなかった\n・プリンを注文したのにスプーンがなく、スプーンだけでも少々待たされる\n・会計ボタンを押したが一度店員が来てその後また伝票を持ってくるのに待たされる\n席に着くこと自体は待たないが、それ以外の場面でムダな待ち時間が多い印象。サンダーバードに興味があるから訪問したが一度訪問すればよい。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "市枝麻衣子1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "子どもが見かけて行きたい！とのことで訪問。写真で見るよりkawaiiを感じれる、楽しい空間でした！\nお値段は高めと感じられるかもですが、その分ボリュームがあって満足でした♡スタッフの方々もとてもフレンドリーで楽しいひと時を過ごせました。", "location": ""}, {"source": "google_maps", "reviewer_name": "村岡良介2 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "鉄道博物館を観てランチに利用しました。料理の味はしっかりしていて美味しかったです。パフォーマンスが楽しいですね。子どもも喜びますよ。", "location": ""}, {"source": "google_maps", "reviewer_name": "soichiro takeda10 件のクチコミ · 12 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "空間への没入感と食事でもさらなる感動が素晴らしかった。また来たいね", "location": ""}, {"source": "google_maps", "reviewer_name": "noki yuzuローカルガイド · 188 件のクチコミ · 137 枚の写真", "rating": 1.0, "date": "5 か月前", "text": "通路にも駅にもFUTURE TRAINと繰り返す音がかなり大きく漏れ聞こえておりすごく迷惑です。こんなドピンク色がサンダーバードというのもよくわからない。デザイン価格的には外国人向きなのか。\n京都は景観条例があり看板も建物の色も自由にはできないのですがこんな目立つどピンク色の店舗、派手なステッカー、騒音が許可されるなら矛盾ですね。梅小路公園の景観が崩れ騒々しくなるばかりなのが心配です。せめて音楽やめてほしい。店内だけでも落ち着かなさそうだけど店外に聞かせ歩行者や駅利用者を巻き込まないでほしい。", "location": ""}, {"source": "google_maps", "reviewer_name": "S N (MMSK)ローカルガイド · 30 件のクチコミ · 28 枚の写真", "rating": 4.0, "date": "6 か月前", "text": "プレオープンに行きました。バタバタした感じはありますが、海外のパーティーぽくて楽しかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "ピカチュウローカルガイド · 44 件のクチコミ · 5 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "ステーキはかなり美味しくて良かったです。また行きたい！", "location": ""}, {"source": "google_maps", "reviewer_name": "Yousuke Tanaka6 件のクチコミ · 20 枚の写真", "rating": 1.0, "date": "6 か月前", "text": "値段も高く店内も目がチカチカするような色使いで落ち着けないです\n食事メニューもハンバーガーと駅弁ランチボックスを注文しましたが注文から提供までかなり時間がかかり味も冷めていたためかお世辞にも美味しいとはいえず\n決して安くないのに非常に残念な思いをしました…\n鉄道を題材としたお店を営むのであれば近所の鉄道カフェ様のホスピタリティを学んできてください。\n非常に残念です。", "location": ""}, {"source": "google_maps", "reviewer_name": "T Kローカルガイド · 77 件のクチコミ · 31 枚の写真", "rating": 1.0, "date": "6 か月前", "text": "食事をする車両は、つくりものにがっくし、メニュー貧弱。\nとても残念。\n鉄道ファンにも喜ばれるホンモノにかえてください。\nレストランなのに¥700入場料おかしいでしょ。\n違和感しかない。", "location": ""}, {"source": "google_maps", "reviewer_name": "藤本正彰ローカルガイド · 26 件のクチコミ · 86 枚の写真", "rating": 3.0, "date": "5 か月前", "text": "若者特にオタク系が喜びそうな店。オヤジだけでは入り難い。", "location": ""}, {"source": "google_maps", "reviewer_name": "なるみローカルガイド · 15 件のクチコミ · 3 枚の写真", "rating": 4.0, "date": "2 か月前", "text": "食事はしていないので評価はできませんが、とても可愛らしい雰囲気の中で、電車をみながらゆったりと過ごせました。", "location": ""}, {"source": "google_maps", "reviewer_name": "上亘祐6 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "この店は去年に行ったことある。料理も美味かったし、料理を食べながら鉄博を眺めるのは格別だった。鉄道ファンにはおすすめと思ってる。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "K Iローカルガイド · 48 件のクチコミ · 3 枚の写真", "rating": 4.0, "date": "1 か月前", "text": "スタッフの制服がかわいい\n非日常を味わうにはいい場所でした\n食事はコスパのいいメニューを用意してくれれば普段使いでリピートするかもしれないですサービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "tomomi goto1 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "1号車の体験含めたのしかったーーー！！\nまたいきたい！！", "location": ""}, {"source": "google_maps", "reviewer_name": "pipetto komagome1 件のクチコミ", "rating": 4.0, "date": "6 か月前", "text": "土曜日のディナーで行きました。世界観から素敵でしたが、特に受付のギャルめな女の子の対応がよく、最後のお見送りまで楽しく過ごせました♪ お写真も一緒に撮っていただき、可愛かったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "iNARI1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "コスミックプラットフォームという、パール入りのお酒がキラキラしててめっちゃ綺麗でした💕 今度は未来の文字が刺さってるバーガーも食べたいです♪", "location": ""}, {"source": "google_maps", "reviewer_name": "レビュー作成用3 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "鉄道博物館からの流れできました！めちゃくちゃ店内もメニューもかわいくて素敵でした💓", "location": ""}, {"source": "google_maps", "reviewer_name": "Ggl Gglローカルガイド · 566 件のクチコミ · 1,148 枚の写真", "rating": 3.0, "date": "3 か月前", "text": "従来の鉄道跡利用とは一線を画すお店。面白いね。鉄道博物館のついでに、廃線の上で過ごすのも良い。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "Maria U1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "ゆめかわな世界観で、思いの外すごく楽しめて癒されました！メニューのランチも美味しかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "じなローカルガイド · 9 件のクチコミ · 25 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "未来に来た感じ。キャッシュレス決済です。", "location": ""}, {"source": "google_maps", "reviewer_name": "tomio8025 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "2人の孫とジジババでも楽しく食事をたのしめました。\nまた夜にも来たいと思います♪", "location": ""}, {"source": "google_maps", "reviewer_name": "元気1 件のクチコミ", "rating": 4.0, "date": "1 か月前", "text": "少し甘味が多すぎる感はあるけどどれも美味しい！\nバーディーカワユス\nピンクバードもカワユス！", "location": ""}, {"source": "google_maps", "reviewer_name": "鶏白湯ぽ1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "店内もお食事もかわいくて、素敵な体験が出来ました💞\n駅から近くて行きやすいのも、良かったです！🫶", "location": ""}, {"source": "google_maps", "reviewer_name": "ナプ4 件のクチコミ", "rating": 1.0, "date": "6 か月前", "text": "かなり強気な価格設定。フューチャー駅弁を頂きましたが、お値段以上ということは全くなく、リピはないです。\n外国人観光客向けなんですかねサービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "C Tローカルガイド · 88 件のクチコミ · 10 枚の写真", "rating": 3.0, "date": "4 か月前", "text": "食事の値段が高め。現金が使えないのでPayPay携帯アプリで決済の場合はバッテリーに余裕もってないと不便。", "location": ""}, {"source": "google_maps", "reviewer_name": "Shirathuchi Mikako5 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "楽しかった！\nキャストさんのパフォーマンスが大変良かった\nお料理も美味しかった", "location": ""}, {"source": "google_maps", "reviewer_name": "遊び人のキツネローカルガイド · 142 件のクチコミ · 186 枚の写真", "rating": 4.0, "date": "5 か月前", "text": "好きな人は好きな空間としか言いようがないです（笑）ガチな男性より女性向きかも", "location": ""}, {"source": "google_maps", "reviewer_name": "西村嘉幸ローカルガイド · 4 件のクチコミ · 4 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "新幹線の中で食事して結構珍しい商品があって最高に楽しいです。", "location": ""}, {"source": "google_maps", "reviewer_name": "辻井英希9 件のクチコミ · 2 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "値段は少し高めですが、近未来的に雰囲気で美味しくいただくことが出来ました。", "location": ""}, {"source": "google_maps", "reviewer_name": "工藤真一1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "店内がオシャレで、斬新でした。楽しかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "Stella ayano7 件のクチコミ · 2 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "料理も美味しくいただけました！！", "location": ""}, {"source": "google_maps", "reviewer_name": "おりローカルガイド · 165 件のクチコミ · 186 枚の写真", "rating": 2.0, "date": "1 か月前", "text": "うーんって感じでした", "location": ""}, {"source": "google_maps", "reviewer_name": "drymasa 923ローカルガイド · 59 件のクチコミ · 2 枚の写真", "rating": 1.0, "date": "4 か月前", "text": "中身が作り物なのに入場料がいるのはおかしい", "location": ""}, {"source": "google_maps", "reviewer_name": "ととえみ4 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "他にはない空間で楽しく過ごせました!", "location": ""}, {"source": "google_maps", "reviewer_name": "藤原慎介1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "とてもよかつ☻たて☻す", "location": ""}, {"source": "google_maps", "reviewer_name": "みむローカルガイド · 2,454 件のクチコミ · 19,258 枚の写真", "rating": 4.0, "date": "1 日前", "text": "昔の特急車両を使った、食事処", "location": ""}, {"source": "google_maps", "reviewer_name": "K4 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "4 日前", "text": "他にはない体験ができました。鉄道博物館の近くで、周辺ホテルに宿泊される方おすすめです。期間限定なのか分かりませんが鉄博のチケットを見せると入場料が無料でした。車掌さんとお姉さんがとても可愛くて、一緒に写真も撮って貰えてそれだけで価値があると思いました。お料理とドリンクも美味しかったです。派手な見た目ながら所々に京都らしさもあり拘りを感じました。", "location": ""}, {"source": "google_maps", "reviewer_name": "Paul Tomlin3 件のクチコミ · 5 枚の写真", "rating": 5.0, "date": "3 週間前", "text": "2025年の夏に旅行を計画していた時に妻がこのお店を見つけて、どうしても行きたがっていました。ところが、東京へ飛ぶ前日にグランドオープンしたので、グランドオープンの数日後、京都に到着した時にサプライズで夕食を振る舞い、「未来想像コース」を事前予約しておきました。私は妻よりも新しいものを試すことに少し冒険心があり、いくつか気に入らない点もありましたが、メディアアートのショー、7品のコース料理（各コースには、コース内容が書かれたトランプが付いていて、持ち帰ることができた）、そしてスタッフとの交流で、全体的には素晴らしい夜を過ごしました。事前に予約していたイベントや観光スポットのスケジュールの関係で、京都滞在中に再訪することはできませんでしたが、間違いなくまた行きたかったです。", "location": ""}, {"source": "google_maps", "reviewer_name": "KCローカルガイド · 5 件のクチコミ · 8 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "全体的に素晴らしい食事体験でした。友人と駅の近くで広告を見て、ふらりと入店することにしました。幸運にも窓際の席に座ることができました。\n\n二人ともピンクシュリンプとホタテのパスタと5階建てのパフェを注文しました。パスタは絶品です。クリーミーな味わいなので、もう少しスパイスが効いているともっと美味しくなるかもしれません。それでも、しっかりとした味わいです。\n\nパフェはまるで何層にも重なった、予想外の食感と風味が楽しめる、隠れたスイーツのようです。甘いもの好きの方はぜひお試しください。さらに、地元の食材をふんだんに取り入れているのが、特別な一品です！サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "Sarah Sローカルガイド · 12 件のクチコミ · 4 枚の写真", "rating": 5.0, "date": "4 週間前", "text": "Future Trainでの食事は忘れられない体験でした！コンセプトと演出が素晴らしく、雰囲気、ドリンク、サービスを通して、お客様を「Kawaii」の完璧な世界へと誘うために、細部までこだわって作られていました。他ではなかなか味わえない、素晴らしい体験をぜひお試しください。他に類を見ない、そしてとてもフレンドリーなスタッフです。", "location": ""}, {"source": "google_maps", "reviewer_name": "Andrew D Raab7 件のクチコミ · 5 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "幸運にもFuture Trainの予約が空いており、到着した瞬間から圧倒されました。ドラマチックなレストランへの入場から、没入感あふれるダイニング体験そのものに至るまで、その演出はまさに圧巻でした。\n\n創造性、優雅さ、そして未来的なセンスが完璧に調和した、これまで経験したことのないような雰囲気でした。料理、スタッフ、そしてエンターテイメントなど、あらゆるディテールが細心の注意と独創性をもって演出され、ディナーは真のパフォーマンスへと昇華しました。\n\nFuture Trainでの食事は、京都での滞在だけでなく、日本旅行全体を通して最も忘れられないハイライトの一つとなりました。一生忘れられない夜を演出してくれた素晴らしいチームの皆様に、心から感謝申し上げます。", "location": ""}, {"source": "google_maps", "reviewer_name": "Ryan Parsonsローカルガイド · 47 件のクチコミ · 72 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "なんて素敵な場所でしょう！家族で楽しい夜を過ごしました。食事も美味しく、子供たちも大喜びでした。\n\n料理はどれも素晴らしかったです。妻、父、そして子供たちの食事はどれも絶品でした。どれも味も良く、完璧に調理されていました。私のバーガーは見た目はクールでしたが、少し水っぽかったです。\n\n雰囲気も最高でした。たくさんの人がいて、新幹線の中にいるのは素晴らしいと思いました。色彩も奇抜でしたが、素晴らしかったです。照明が少しムーディーでしたが、料理はよく見えました。\n\n全体的に、ただの食事ではなく、素晴らしい体験でした。とても気に入りました。", "location": ""}, {"source": "google_maps", "reviewer_name": "Zachary Schmidtローカルガイド · 191 件のクチコミ · 269 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "この店は雰囲気抜群！料理は普通だけど、選択肢は豊富でワイルド。インスタ映えするだけでなく、実際に体験してみる価値もある。列車をテーマにしたデザインも素敵。初回は入場料がかかるけど、1年間は無料。旅行者にはあまりおすすめできない（外国のパスポートを持っている人は免除してほしい）。", "location": ""}, {"source": "google_maps", "reviewer_name": "Dawn Mostow (Dawnamatrix)4 件のクチコミ · 9 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "京都駅から1駅という好立地で、開店以来ずっと楽しみにしていました。ボリュームたっぷりで美味しい料理、クリエイティブな盛り付け、そして素晴らしい雰囲気。カワイイモンスターカフェの素晴らしい続編です。ランチで行きましたが、ディナーにもまた来ます。", "location": ""}, {"source": "google_maps", "reviewer_name": "Momoka Kuru4 件のクチコミ · 11 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "とても素敵なレストランで、素晴らしい体験ができました。すべてが本当に素晴らしいです。JRの線路跡地に古い車両の中にレストランがあるなんて、シンプルだけど素敵なアイデアですね。すべてがMasudaらしさを物語っています。料理は可愛らしいだけでなく、とても美味しく、ドリンクだけでも特別な体験になります。\n一生に一度の体験として、ぜひ訪れてみてはいかがでしょうか。", "location": ""}, {"source": "google_maps", "reviewer_name": "Linh Tranローカルガイド · 84 件のクチコミ · 522 枚の写真", "rating": 4.0, "date": "4 か月前", "text": "1. 料理\nとても美味しく、見た目も美しく、とても良かったです。フライドポテトは私には少し塩辛かったです。\n2. 入場料\n少し驚きました。でも、私が店内を歩き回って写真を撮った時も、スタッフの方々は気さくに接してくれたので、喜んで引き受けました。\n3. スタッフ\nほとんどのスタッフはフレンドリーで笑顔でしたが、店内が狭かったせいか、笑い声がかなりはっきりと聞こえてしまいました。\nまた、常に人が行き交う狭い空間だったことも、少し居心地が悪く感じました。\n4. 店内の空間と装飾\nピンクの車両がとても目立っていましたが、実際はラブホテルにしか見えませんでした。可愛らしさはあまり感じませんでした。\n明るすぎて、照明のせいで写真があまり綺麗ではありませんでした。ピンク色で暗すぎました。なので、写真を撮るのが好きな人にとっては、物足りないかもしれません。\n隣の車両はとても美しく装飾されていて目を引きます。まるでバーのようです。笑\nとても明るくて、写真映えします。ただ、事前予約が必要なのか、指定席にできるのかは分かりません。\n端はバルコニーのような場所で、ここから見る夕日はとても美しいでしょう。私が到着した時はスタッフがそこで休憩していましたが、私が立ち寄りたいと思った時にとても親切に対応してくれました。\n5. ルール\n三脚の使用は禁止されていますが、それほど厳しくも失礼でもありません。ただ、レストランのスペースが少し狭いので、一人で来てカメラを設置したり、自分で写真を撮ったりするのは難しいかもしれません。\n\n結論として、料理はまあまあで、スタッフはフレンドリーで、レストランとその周辺は面白く、価格もそれほど安くはありません。試してみる価値はあると思います。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "Lana Booローカルガイド · 36 件のクチコミ · 182 枚の写真", "rating": 4.0, "date": "1 か月前", "text": "スタッフはとてもフレンドリーで、英語しか話せない私に理解してもらおうと最善を尽くしてくれました。食べ物は期待していたほど美味しくありませんでした。私が食べた中で一番美味しかったのはクラムチャウダースープです。写真でわかるように、飲み物は少しケチですが、雰囲気はとても魅力的で、リラックスして違った雰囲気を楽しむのにとても素敵な場所です。", "location": ""}, {"source": "google_maps", "reviewer_name": "William Xiaローカルガイド · 440 件のクチコミ · 4,289 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "近くのホテルに泊まっているので駅を出ると、遠くから聞こえてくるテクノロジーと音楽に迎えられました。数日後、再び駅に足を運び、ビルのポスターと暗闇に輝くピンクの光を見ながら、美味しい食事と飲み物を楽しみながら、この非日常的で楽しい体験をしました。", "location": ""}, {"source": "google_maps", "reviewer_name": "樺樺ローカルガイド · 99 件のクチコミ · 427 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "@futuretrain.kyoto 京都未来列車レストラン\n総評として、食事に大満足でした。ネットで話題のレストランというだけではない、まさに「未来的な色彩」と京都らしさが融合した、見た目も味も圧巻です。値段は少々張りますが、ぜひ一度足を運んでみてください。", "location": ""}, {"source": "google_maps", "reviewer_name": "Jack Fローカルガイド · 27 件のクチコミ · 12 枚の写真", "rating": 5.0, "date": "4 週間前", "text": "楽しい！みんなどこにいるの？音楽はファンキー。食べ物も美味しい！ベジタリアンメニューもある。カラフルでキャンプっぽくて、観光にも最高。\n中は寂しい。残念。\nスタッフもフレンドリー！♥️♥️♥️", "location": ""}, {"source": "google_maps", "reviewer_name": "Alex Rieglerローカルガイド · 9 件のクチコミ · 21 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "楽しいコンセプトと美味しい料理！日本語が話せないので、少し没入感を味わえなかった気がしましたが、それでも全体的にとても楽しめました。", "location": ""}, {"source": "google_maps", "reviewer_name": "Tamara Pijnenburg1 件のクチコミ · 5 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "とても親切で素敵なスタッフでした！料理も素晴らしく、テーブルに近づいてきたバーディーはとても可愛かったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "Simona4 件のクチコミ · 1 枚の写真", "rating": 3.0, "date": "2 か月前", "text": "雰囲気は本当に素晴らしく、すべてが清潔でモダン、そして視覚的にも印象的です。残念ながら、料理は平均以下とまではいかないまでも、ごく普通でした。ハンバーガーは肉の質が悪く、水っぽく、崩れやすく、まともに食べるのがほぼ不可能でした。ヨーロッパで食べ慣れているものとは全く比較になりません。パンケーキも平均的で、店内はほぼ空いていたにもかかわらず、注文から30分も待たされました。\n\n雰囲気と体験を楽しむために夜に訪れる価値はあるかもしれませんが、料理は値段に見合うものではありません。", "location": ""}, {"source": "google_maps", "reviewer_name": "Nathaniel Blank (zero.)6 件のクチコミ · 4 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "楽しい体験でした。目的地としては価値がありました。少し値段は張りますが（3000円以下では無理です）、絶対に訪れるべき場所です。夜に来ることをお勧めします。私はランチに行きましたが、未来の雰囲気を味わえなかったと思います。サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "Alyssa Porras1 件のクチコミ", "rating": 5.0, "date": "4 か月前", "text": "素晴らしい体験だったので、絶対に行きます。フルコースを頼みましたが、どれも美味しかったです。雰囲気、スタッフ、そして料理はどれも最高でした。バーディーとユリは素晴らしいエンターテイナーでした。ちょっと立ち寄ってみるのも良いですし、フルコースの予約もおすすめです。", "location": ""}, {"source": "google_maps", "reviewer_name": "Rolando Perézローカルガイド · 32 件のクチコミ · 8 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "最高の体験でした！食事と飲み物は最高でした。唯一残念だったのは、1号車に乗る体験です。テーマパークの雰囲気は、未来の列車に乗っているような気分にはさせませんでした。でも、それ以外は素晴らしかったので、ぜひフューチャートレインで旅することをお勧めします！サービスイートイン", "location": ""}, {"source": "google_maps", "reviewer_name": "Alicia Glick1 件のクチコミ", "rating": 5.0, "date": "3 か月前", "text": "日本でのハネムーンを計画していた時に、偶然このお店がオープンするというTikTokを見つけて、すごく素敵だなと思いました。そこで、イマジネーション7コースの食事と体験を予約しました。私たちは日本語が全く話せないので、ほとんど理解できませんでしたが、それでも素晴らしい体験でした。俳優やスタッフの皆さんが私たちを温かく迎えてくれました。料理も素晴らしかったです！", "location": ""}, {"source": "google_maps", "reviewer_name": "Jess Moorhouse3 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "4 か月前", "text": "端的に言うと、鉄道博物館に行くなら、夕食はここで食べるべきです！\n\nこの店の素晴らしさを伝えたくて、そして成功を願って、初めてレビューを書かざるを得ませんでした！\n\n見た目も素晴らしく、素晴らしくまとまった空間です。料理も素晴らしく、独特の美的感覚を醸し出していますが、鼻であしらうような、あるいはエキゾチックすぎると感じるようなものではありません。\n\nスタッフはとてもフレンドリーで、京都鉄道博物館に行くなら、一日を締めくくるには最高の場所です！", "location": ""}, {"source": "google_maps", "reviewer_name": "Michael Hurenkamp1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "最高にクールな体験でした！食事も最高だったし、未来の電車のコンセプト全体がすごくカワイイ！京都では他にはない、本当にユニークな体験でした。", "location": ""}, {"source": "google_maps", "reviewer_name": "Bibianne Berings11 件のクチコミ", "rating": 5.0, "date": "4 か月前", "text": "コンセプト全体のテーマは非常によく考え抜かれ、細部までこだわって実現されています。到着時に切符にスタンプを押すなど、素敵なディテールが数多くあります。\n料理の盛り付けも美しく、料理自体も素晴らしいです。高級レストランではありませんが。\nこの店を訪れる価値があるのは、主に雰囲気、装飾、そしてテーマです。私たちはランチタイムに訪れましたが、ディナータイムの方がさらに素晴らしい体験になると思います。", "location": ""}, {"source": "google_maps", "reviewer_name": "Dasnyl Miller1 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "鉄道博物館の近くにあります。娘たちとスターバックスに行ってから電車に乗ろうと思っていたら、電車が目に入ったので、代わりにここに来ることにしました。とても楽しくて可愛い体験でした。9月20日にオープンしたばかりなので、すべてが新しくて、テーマパークのフードやギフトショップも素敵でした。ピンク色でガーリーな雰囲気で、女の子にぴったりの楽しい場所です。", "location": ""}, {"source": "google_maps", "reviewer_name": "Muckii Alera1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "とても素敵な雰囲気で、スタッフの方々もとても丁寧で、Future Trainのコンセプトについても説明していただきました。料理は美味しく、量もちょうど良く、全体的に文句のつけようがありません。5/5の評価です。強くお勧めします。", "location": ""}, {"source": "google_maps", "reviewer_name": "Blake Beckerローカルガイド · 11 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "フューチャー・トレインでの休憩は本当に楽しかったです。コンセプトが素晴らしく、景色にプレミアム料金を払うのは当然ですが、食事は同種の施設の中では平均以上だと思いました。", "location": ""}, {"source": "google_maps", "reviewer_name": "Justin Meekローカルガイド · 111 件のクチコミ · 62 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "キッチュで楽しくて、大げさ…デザートとドリンクは最高、メインディッシュも美味しい。ダイナースタイルで、とても折衷的。レストラン自体が魅力です。", "location": ""}, {"source": "google_maps", "reviewer_name": "Magdalena Heuft1 件のクチコミ", "rating": 5.0, "date": "1 か月前", "text": "すごく居心地が良くて、すべてがFuture Trainのテーマにぴったりでした！本当に素晴らしい体験でした！ソニアさんはとても素敵な方でした！", "location": ""}, {"source": "google_maps", "reviewer_name": "Marta Jurcenko2 件のクチコミ", "rating": 1.0, "date": "1 か月前", "text": "この店に行くのはお勧めしません。非常に高価で、料理の質も平均以下で、ただでさえ高い食事にさらに一人当たりの入場料が上乗せされました。席の変更をお願いしましたが、レストランはほとんど空いていたにもかかわらず、変更してもらえませんでした。本当に残念な経験でした。", "location": ""}, {"source": "google_maps", "reviewer_name": "Lilyan Thiessenローカルガイド · 18 件のクチコミ · 9 枚の写真", "rating": 5.0, "date": "3 か月前", "text": "楽しい夜だった。本当に最高だった。この後のコースは、塩味から甘味へ、そしてまた塩味へという展開で、ちょっと舌が肥えすぎたけど、それ以外は最高だった！", "location": ""}, {"source": "google_maps", "reviewer_name": "Blake Kang1 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "最高に楽しかった！素敵なアイデアですね。料理も美味しかったです。娘も雰囲気が気に入ってくれました！", "location": ""}, {"source": "google_maps", "reviewer_name": "Gilda Khosraviローカルガイド · 76 件のクチコミ · 123 枚の写真", "rating": 4.0, "date": "2 週間前", "text": "食べ物は普通でしたが、雰囲気はとても良かったです", "location": ""}, {"source": "google_maps", "reviewer_name": "Belkis Benitez Torres3 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "素晴らしい超豪華な体験。京都に来てここを通らなかったら、来なかったのと同じです！", "location": ""}, {"source": "google_maps", "reviewer_name": "seamonkeyonland5 件のクチコミ", "rating": 5.0, "date": "4 か月前", "text": "とても楽しい時間を過ごしました。ドリンクも素晴らしく、ユニークなレストランでした。", "location": ""}, {"source": "google_maps", "reviewer_name": "Hollyy2 件のクチコミ", "rating": 2.0, "date": "1 か月前", "text": "すべては素晴らしかったが、妹はエビのせいで食中毒になった", "location": ""}, {"source": "google_maps", "reviewer_name": "Kyle Beaupre2 件のクチコミ", "rating": 5.0, "date": "5 か月前", "text": "本当に素敵な雰囲気でした。料理も美味しくてクリエイティブでした。まさに未来の列車！", "location": ""}, {"source": "google_maps", "reviewer_name": "David Ramage4 件のクチコミ", "rating": 5.0, "date": "2 か月前", "text": "クールなテーマのとても楽しいレストラン。", "location": ""}, {"source": "google_maps", "reviewer_name": "Sven F (BlackY4Fail)1 件のクチコミ · 10 枚の写真", "rating": 5.0, "date": "1 か月前", "text": "￥3,000～4,000", "location": ""}, {"source": "google_maps", "reviewer_name": "かんのゆいなローカルガイド · 3 件のクチコミ · 22 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "この度は FUTURE TRAIN KYOTO DINER & CAFE にご来店いただき、誠にありがとうございます。最高評価をいただけましたこと、スタッフ一同大変嬉しく思っております。今後もお客様にご満足いただけるよう、より一層のサービス向上に努めてまいります。またのご来店を心よりお待ちしております。", "location": ""}, {"source": "google_maps", "reviewer_name": "Y0sh11 aローカルガイド · 20 件のクチコミ · 5,415 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "この度はFUTURE TRAINをご利用いただき、誠にありがとうございます。最高評価をいただき、スタッフ一同大変嬉しく思っております。今後もお客様にご満足いただけるよう、より一層のサービス向上に努めてまいります。またのご来店を心よりお待ちしております。", "location": ""}, {"source": "google_maps", "reviewer_name": "hina1 件のクチコミ · 1 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "この度はFUTURE TRAINをご利用いただき、誠にありがとうございます。最高評価をいただけましたこと、スタッフ一同大変嬉しく思っております。今後もお客様にご満足いただけるよう、より一層のサービス向上に努めてまいります。またのご来店を心よりお待ちしております。", "location": ""}, {"source": "google_maps", "reviewer_name": "Y NKローカルガイド · 136 件のクチコミ · 315 枚の写真", "rating": 4.0, "date": "最終編集: 4 か月前", "text": "FUTURE TRAIN KYOTO DINER & CAFEにご来店いただき、誠にありがとうございます。\r\n高評価をいただき、大変光栄です。当店の雰囲気やサービスにご満足いただけたようで、スタッフ一同嬉しく思います。今後もお客様にご満足いただけるよう、さらなるサービスの向上に努めてまいります。またのご来店を心よりお待ちしております。", "location": ""}, {"source": "google_maps", "reviewer_name": "Seiling windsローカルガイド · 139 件のクチコミ · 148 枚の写真", "rating": 2.0, "date": "最終編集: 4 週間前", "text": "2 人, 3～4 人, 5～8 人, 9 人以上", "location": ""}, {"source": "google_maps", "reviewer_name": "物件幸四郎2 件のクチコミ", "rating": 4.0, "date": "1 か月前", "text": "この度は「FUTURE TRAIN KYOTO DINER & CAFE」にご来店いただき、誠にありがとうございます。高い評価をいただき、スタッフ一同大変嬉しく思っております。またのご来店を心よりお待ちしております。今後ともご愛顧の程、よろしくお願いいたします。", "location": ""}, {"source": "google_maps", "reviewer_name": "ゆー", "rating": 4.0, "date": "2 か月前", "text": "この度は FUTURE TRAIN KYOTO DINER & CAFE にご来店いただき、誠にありがとうございます。高い評価をいただけましたこと、スタッフ一同大変嬉しく思っております。今後もお客様にご満足いただけるよう、より一層のサービス向上に努めてまいります。またのご来店を心よりお待ちしております。", "location": ""}, {"source": "google_maps", "reviewer_name": "Gerardo Arceローカルガイド · 9 件のクチコミ · 12 枚の写真", "rating": 5.0, "date": "2 か月前", "text": "この度はFUTURE TRAINをご利用いただき、誠にありがとうございます。最高評価をいただき、スタッフ一同大変嬉しく思っております。今後もお客様にご満足いただけるよう、より良いサービスとお食事の提供に努めてまいります。またのご来店を心よりお待ちしております。", "location": ""}, {"source": "google_maps", "reviewer_name": "モリトn2 件のクチコミ", "rating": 1.0, "date": "3 か月前", "text": "3 か月前", "location": ""}, {"source": "google_maps", "reviewer_name": "近藤創", "rating": 5.0, "date": "4 か月前", "text": "この度はFUTURE TRAINをご利用いただきまして誠にありがとうございます。\r\n満点の評価を頂き、感謝申し上げます。当店の雰囲気やサービス、お料理などをお楽しみいただけたことを心より嬉しく思います。今後もお客様にご満足いただけるよう、スタッフ一同精進して参ります。またのご来店を心よりお待ちしております。", "location": ""}, {"source": "google_maps", "reviewer_name": "Magda Boreckaローカルガイド · 16 件のクチコミ · 17 枚の写真", "rating": 2.0, "date": "5 日前", "text": "見た目は実に独特で、盛り付けも魅力的ですが、味は見た目よりずっと劣っています。今のところ、東京、大阪、京都で食べた中で、最も高価で、最も面白くない料理です。さらに、飲み物付きの普通のディナーなのに、空いているレストランに一人700円も入場料として請求するのは、非常に奇妙で、ダサいと感じます。2品のコースと飲み物で16,000円も支払いました。", "location": ""}, {"source": "google_maps", "reviewer_name": "yutaka tanakaローカルガイド · 186 件のクチコミ · 219 枚の写真", "rating": 5.0, "date": "5 か月前", "text": "5 か月前", "location": ""}];
-const KANDO_DATA = {"labels": ["①しきい値突破", "②意外性", "③共鳴・共感", "④救済", "⑤崇高", "⑥参加", "⑦成長"], "scores": [1.9, 1.06, 0.34, 0.51, 1.74, 0.53, 0.51]};
+const KANDO_DATA = {"labels": ["①しきい値突破", "②意外性", "③共鳴・共感", "④救済", "⑤崇高", "⑥参加", "⑦成長"], "scores": [2.11, 0.98, 0.32, 0.39, 1.73, 0.46, 0.35]};
 const SITE_LABELS = {google_maps:"Google マップ",tabelog:"食べログ",tripadvisor:"TripAdvisor"};
 
 // 感動レーダーチャート
